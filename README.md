@@ -10,5 +10,7 @@ ToDO:
 1. build register module.
 2. build login module.
 3. ensure validation of both module.
-4.ensure adding of post is successful 
-5. ensure viewing of posts is successful.
+4.generating passwords for students.
+4.build voting module. 
+5. build review module.
+6. build live vote module.
