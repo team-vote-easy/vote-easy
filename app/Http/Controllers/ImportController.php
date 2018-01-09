@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Excel;
 use File;
-use App\CT400;
+use App\Student;
 use Illuminate\Database\QueryException;
 
 class ImportController extends Controller
@@ -37,14 +37,14 @@ class ImportController extends Controller
     		];
 
     		try{
-                CT400::create($student);
+                Student::create($student);
                 $counter+=1;
             } 
             catch(QueryException $e){
                 if($e->errorInfo[1]==1062){
                     $errorString = $e->errorInfo[2];
                     preg_match('/..(\/)..../', $errorString, $duplicate_matric);
-                    $existing_student = CT400::where('matric_no', $duplicate_matric[0])->first();
+                    $existing_student = Student::where('matric_no', $duplicate_matric[0])->first();
                     echo "Oops! An error occured while adding the student {$student['first_name']} {$student['last_name']}. The matric number {$duplicate_matric[0]} already belongs to {$existing_student->first_name} {$existing_student->last_name}, a {$existing_student->level} level student in {$existing_student->course}";
                     return;
                 }
