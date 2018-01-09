@@ -17,9 +17,11 @@ class CreateComputertech400Table extends Migration
             $table->increments('id');
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('matric_no');
+            $table->string('matric_no')->unique();
             $table->string('course');
             $table->integer('level');
+            $table->string('password');
+            $table->boolean('voted')->default(false);
             $table->timestamps();
         });
     }

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Excel;
 use File;
 use App\CT400;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\QueryException;
 
 class ImportController extends Controller
 {
@@ -20,6 +20,7 @@ class ImportController extends Controller
 	}
 
     public function import(Request $request){
+        $counter = 0;
     	$extension = File::extension($request->file->getClientOriginalName());
     	$path = $request->file->getRealPath();
     	$data = Excel::load($path, function($reader){
@@ -31,12 +32,24 @@ class ImportController extends Controller
     			'last_name'=>$value->last_name,
     			'matric_no'=>$value->matric_no,
     			'course'=>$request->course,
+                'password'=>strtolower(str_random(6)),
     			'level'=>$request->level
     		];
-    		CT400::create($student);
+
+    		try{
+                CT400::create($student);
+                $counter+=1;
+            } 
+            catch(QueryException $e){
+                if($e->errorInfo[1]==1062){
+                    $errorString = $e->errorInfo[2];
+                    preg_match('/..(\/)..../', $errorString, $duplicate_matric);
+                    $existing_student = CT400::where('matric_no', $duplicate_matric[0])->first();
+                    echo "Oops! An error occured while adding the student {$student['first_name']} {$student['last_name']}. The matric number {$duplicate_matric[0]} already belongs to {$existing_student->first_name} {$existing_student->last_name}, a {$existing_student->level} level student in {$existing_student->course}";
+                    return;
+                }
+            }
     	}
-
-
-    	
+        echo 'Successfully Added '.$counter.' '.$request->course.' students';
     }
 }
