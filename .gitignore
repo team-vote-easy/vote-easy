@@ -10,3 +10,6 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 .env
+/vue-sandbox
+/resources/views/vue-test.blade.php
+/resources/assets/js/alte.js

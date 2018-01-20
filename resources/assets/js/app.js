@@ -1,22 +1,56 @@
-
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
 require('./bootstrap');
 
 window.Vue = require('vue');
+window.Event = new Vue();
+import Modal from './components/Modal.vue';
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+window.app = new Vue({
+    el: '#root',
+    data: {
+        level: '',
+        course: '',
+        file: '',
+        showModal: false,
+        errors: {},
+        success: ''
+    },
+    methods: {
+        processFile: function(event){
+            this.file = event.target.files[0];
+        },
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
+        submit: function(){
+            var formData = new FormData();
+            if(this.level !== '' || this.course !== '' || this.file !== ''){
+                formData.append('level', this.level);
+                formData.append('course', this.course);
+                formData.append('file', this.file, this.file.name);
+            }
+            else{
+                this.errors.title = 'Missing field error'
+                this.errors.message = 'Some fields are missing';
+                this.showModal = true;
+                console.log(this.errors);
+                return;
+            }
+            self = this;
 
-const app = new Vue({
-    el: '#app'
-});
+            axios.post('/import', formData)
+            .then(function(data){
+                self.success = data.data;
+                self.showModal = true;
+                console.log(data);
+            })
+            .catch(function(error){
+                console.log(error);
+                console.log('Na me the error');
+                self.errors.title = 'Student already exists!';
+                self.errors.message = error.response.data.message;
+                self.showModal = true;
+            })
+        }
+    },
+    components: {Modal}
+})
+
+

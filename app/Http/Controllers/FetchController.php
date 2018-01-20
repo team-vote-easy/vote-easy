@@ -70,5 +70,28 @@ class FetchController extends Controller
     	}
     }
 
+    public function vue(Request $request){
+        $rules = [
+            'first_name'=> 'required',
+            'last_name'=> 'required',
+            'matric_no'=>'required|unique:students',
+            'course'=> 'required',
+            'level'=> 'required',
+            'password'=>'required|max:5'
+        ];
+
+        $customMessages = [
+            'first_name.required'=> 'We need your first name sir!',
+            'last_name.required'=> 'We need your last name sir!',
+            'matric_no.unique'=>'Matric number already exists'
+        ];
+
+        $this->validate($request, $rules, $customMessages);
+
+        Student::create($request);
+
+        return response()->json(['message'=>'Created Student!']);
+    }
+
 
 }
