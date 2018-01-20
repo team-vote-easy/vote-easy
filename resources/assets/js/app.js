@@ -37,6 +37,9 @@ window.app = new Vue({
 
             axios.post('/import', formData)
             .then(function(data){
+                self.level = '';
+                self.course = '';
+                self.file = '';
                 self.success = data.data;
                 self.showModal = true;
                 console.log(data);

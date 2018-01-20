@@ -19,6 +19,11 @@ Route::get('/import', 'ImportController@showImport');
 
 Route::post('/import', 'ImportController@import');
 
+Route::get('add-candidates', 'AddController@showAdd');
+
+Route::post('add-candidates', 'AddController@add');
+
+
 Route::get('/fetch/student', 'FetchController@showFetch');
 
 Route::post('/fetch/student', 'FetchController@fetchDetails');
