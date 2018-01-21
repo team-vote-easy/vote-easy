@@ -10,9 +10,9 @@ window.app = new Vue({
     data: {
         level: '',
         course: '',
-        showModal: false,
-        errors: {},
+        matricNumber: '',
         students: '',
+        studentDetails: '',
         empty: '',
         message: '',
         loading: false
@@ -32,10 +32,11 @@ window.app = new Vue({
                 self.loading = false;
 
                 if(data.data.students==''){
-                    this.message = 'Sorry... there are no students for your query';
+                    this.message = 'Sorry... there are no students that satisfy your query';
                     this.empty = true;
                     return;
                 }
+
                 this.students = data.data.students;
                 this.message = data.data.message;
                 this.empty = false;
@@ -43,6 +44,30 @@ window.app = new Vue({
             })
             .catch((error)=>{
                 console.log(error);
+            });
+        },
+
+        fetchStudent: function(){
+            self = this;
+            this.loading = true;
+            this.studentDetails = '';
+            this.message = '';
+
+            axios.post('/fetch-student', {
+                matricNumber: this.matricNumber
+            })
+            .then((data)=>{
+                self.loading = '';
+                if(Object.keys(data.data).length === 0){
+                    self.message = 'Sorry... there are no students that satisfy your query';
+                    self.empty = true;
+                    return;
+                }
+                self.studentDetails = data.data;
+                self.empty = false;
+            })
+            .catch((e)=>{
+                console.log(e);
             });
         }
     },

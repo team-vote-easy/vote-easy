@@ -8,10 +8,6 @@ use App\Student;
 
 class FetchController extends Controller
 {
-    public function showFetch(){
-    	return view('fetchDetails');
-    }
-
     public function fetchCourseView(){
         $courses = ["Computer Science", "Computer Technology", "Computer Information Systems", "All"];
         $levels = [100, 200, 300, 400, 'All'];
@@ -55,18 +51,19 @@ class FetchController extends Controller
         $students = Student::course($request->course)->level($request->level)->get();
         $count = count($students);
         $response = [
-            'message' => "There are ${count} {$request->level} Level {$request->course} students in total",
+            'message' => "There are [${count}] {$request->level} Level {$request->course} students in total",
             'students'=>$students
         ];
         return response()->json($response);
     }
 
-    public function fetchDetails(Request $request, Student $fetch){
-    	$student = $fetch->where('matric_no', $request->matric_no)->first();
-    	return view('showDetails', [
-    		'student'=>$student
+    public function fetchStudentView(){
+        return view('fetch-view-student');
+    }
 
-    	]);
+    public function fetchStudent(Request $request){
+    	$student = Student::where('matric_no', $request->matricNumber)->first();
+    	return response()->json($student);
     }
 
     public function vue(Request $request){

@@ -27,11 +27,9 @@ Route::get('/fetch-course', 'FetchController@fetchCourseView');
 
 Route::post('fetch-course', 'FetchController@fetchCourse');
 
-Route::get('/fetch-students', 'FetchController@showFetch');
+Route::get('fetch-student', 'FetchController@fetchStudentView');
 
-Route::post('/fetch/student', 'FetchController@fetchDetails');
-
-Route::get('/course/{course}', 'FetchController@fetchCourse');
+Route::post('fetch-student', 'FetchController@fetchStudent');
 
 Route::get('vue-test', function(){
 	return view('vue-test');

@@ -115,7 +115,9 @@
         <div class="content container">
                 <h1 v-if="loading">Loading...</h1>
                 <stat-card v-if="message" :message="message" :empty="empty"> </stat-card>
-                <student-card v-if="students" v-for="student in students" :student="student"> </student-card>
+                <div class="columns">
+                    <student-card v-if="students" v-for="student in students" :student="student"> </student-card>
+                </div>
         </div>
     </div>
     

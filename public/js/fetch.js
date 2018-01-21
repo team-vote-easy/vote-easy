@@ -990,9 +990,9 @@ window.app = new Vue({
     data: {
         level: '',
         course: '',
-        showModal: false,
-        errors: {},
+        matricNumber: '',
         students: '',
+        studentDetails: '',
         empty: '',
         message: '',
         loading: false
@@ -1013,16 +1013,39 @@ window.app = new Vue({
                 self.loading = false;
 
                 if (data.data.students == '') {
-                    _this.message = 'Sorry... there are no students for your query';
+                    _this.message = 'Sorry... there are no students that satisfy your query';
                     _this.empty = true;
                     return;
                 }
+
                 _this.students = data.data.students;
                 _this.message = data.data.message;
                 _this.empty = false;
                 console.log(data);
             }).catch(function (error) {
                 console.log(error);
+            });
+        },
+
+        fetchStudent: function fetchStudent() {
+            self = this;
+            this.loading = true;
+            this.studentDetails = '';
+            this.message = '';
+
+            axios.post('/fetch-student', {
+                matricNumber: this.matricNumber
+            }).then(function (data) {
+                self.loading = '';
+                if (Object.keys(data.data).length === 0) {
+                    self.message = 'Sorry... there are no students that satisfy your query';
+                    self.empty = true;
+                    return;
+                }
+                self.studentDetails = data.data;
+                self.empty = false;
+            }).catch(function (e) {
+                console.log(e);
             });
         }
     },
@@ -43129,6 +43152,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: {
@@ -43147,34 +43172,38 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card" }, [
-    _c("div", { staticClass: "card-content" }, [
-      _c("p", { staticClass: "title" }, [
-        _vm._v(
-          "\n      " +
-            _vm._s(_vm.student.first_name) +
-            " " +
-            _vm._s(_vm.student.last_name) +
-            "\n    "
-        )
-      ])
-    ]),
-    _vm._v(" "),
-    _c("footer", { staticClass: "card-footer" }, [
-      _c("p", { staticClass: "card-footer-item" }, [
-        _c("span", [
-          _vm._v("\n        " + _vm._s(_vm.student.matric_no) + "\n      ")
+  return _c("div", { staticClass: "column" }, [
+    _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "card-content" }, [
+        _c("p", { staticClass: "title" }, [
+          _vm._v(
+            "\n\t      " +
+              _vm._s(_vm.student.first_name) +
+              " " +
+              _vm._s(_vm.student.last_name) +
+              "\n\t    "
+          )
         ])
       ]),
       _vm._v(" "),
-      _c("p", { staticClass: "card-footer-item" }, [
-        _c("span", [
-          _vm._v("\n        " + _vm._s(_vm.student.course) + "\n      ")
+      _c("footer", { staticClass: "card-footer" }, [
+        _c("p", { staticClass: "card-footer-item" }, [
+          _c("span", [
+            _vm._v(
+              "\n\t        " + _vm._s(_vm.student.matric_no) + "\n\t      "
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("p", { staticClass: "card-footer-item" }, [
+          _c("span", [
+            _vm._v("\n\t        " + _vm._s(_vm.student.course) + "\n\t      ")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("p", { staticClass: "card-footer-item" }, [
+          _vm._v("\n\t    \t" + _vm._s(_vm.student.level) + "\n\t    ")
         ])
-      ]),
-      _vm._v(" "),
-      _c("p", { staticClass: "card-footer-item" }, [
-        _vm._v("\n    \t" + _vm._s(_vm.student.level) + "\n    ")
       ])
     ])
   ])
