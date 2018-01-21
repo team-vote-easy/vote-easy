@@ -23,8 +23,11 @@ Route::get('add-candidates', 'AddController@showAdd');
 
 Route::post('add-candidates', 'AddController@add');
 
+Route::get('/fetch-course', 'FetchController@fetchCourseView');
 
-Route::get('/fetch/student', 'FetchController@showFetch');
+Route::post('fetch-course', 'FetchController@fetchCourse');
+
+Route::get('/fetch-students', 'FetchController@showFetch');
 
 Route::post('/fetch/student', 'FetchController@fetchDetails');
 

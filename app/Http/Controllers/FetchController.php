@@ -12,62 +12,61 @@ class FetchController extends Controller
     	return view('fetchDetails');
     }
 
+    public function fetchCourseView(){
+        $courses = ["Computer Science", "Computer Technology", "Computer Information Systems", "All"];
+        $levels = [100, 200, 300, 400, 'All'];
+        return view('fetch-view-course', [
+            'courses'=>$courses,
+            'levels'=>$levels
+        ]);
+    }
+
+    public function fetchCourse(Request $request){
+        if($request->course=='All' && $request->level=='All'){
+            $students = Student::all();
+            $count = count($students);
+            $response = [
+                'message'=> "There are {$count} students in Total",
+                'students'=> $students
+            ];
+            return response()->json($response);
+        }
+
+        if($request->level=='All'){
+            $students = Student::course($request->course)->get();
+            $count = count($students);
+            $response = [
+                'message'=> "There are {$count} {$request->course} students in Total",
+                'students'=> $students
+            ];
+            return response()->json($response);
+        }
+
+        if($request->course=='All'){
+            $students = Student::level($request->level)->get();
+            $count = count($students);
+            $response = [
+                'message'=> "There are {$count} {$request->level} Level students in total",
+                'students'=>$students
+            ];
+            return response()->json($response);
+        }
+
+        $students = Student::course($request->course)->level($request->level)->get();
+        $count = count($students);
+        $response = [
+            'message' => "There are ${count} {$request->level} Level {$request->course} students in total",
+            'students'=>$students
+        ];
+        return response()->json($response);
+    }
+
     public function fetchDetails(Request $request, Student $fetch){
     	$student = $fetch->where('matric_no', $request->matric_no)->first();
     	return view('showDetails', [
     		'student'=>$student
 
     	]);
-    }
-
-    public function fetchCourse(Request $request, $course){
-    	if($course=='ct100'){
-    		$ct100 = Student::course('Computer Technology')->level(100)->get();
-    	}
-    	if($course=='ct200'){
-    		$ct200 = Student::course('Computer Technology')->level(200)->get();
-    	}
-    	if($course=='ct300'){
-    		$ct300 = Student::course('Computer Technology')->level(300)->get();
-    	}
-    	if($course=='ct400'){
-    		$ct400 = Student::course('Computer Technology')->level(400)->get();
-    		return $ct400;
-    	}
-
-
-
-    	if($course=='cs100'){
-    		$cs100 = Student::course('Computer Science')->level(100)->get();
-    	}
-    	if($course=='cs200'){
-    		$cs200 = Student::course('Computer Science')->level(200)->get();
-    	}
-    	if($course=='cs300'){
-    		$cs300 = Student::course('Computer Science')->level(300)->get();
-    	}
-    	if($course=='cs400'){
-    		$cs400 = Student::course('Computer Science')->level(400)->get();
-    	}
-
-
-
-    	if($course=='cis100'){
-    		$cis100 = Student::course('Computer Information Systems')->level(100)->get();
-    		return $cis100;
-    	}
-    	if($course=='cis200'){
-    		$cis200 = Student::course('Computer Information Systems')->level(200)->get();
-    		return $cis200;
-    	}
-    	if($course=='cis300'){
-    		$cis300 = Student::course('Computer Information Systems')->level(300)->get();
-    		return $cis300;
-    	}
-    	if($course=='cis400'){
-    		$cis400 = Student::course('Computer Information Systems')->level(400)->get();
-    		return $cis400;
-    	}
     }
 
     public function vue(Request $request){
