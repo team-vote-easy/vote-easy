@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Student;
 
+use App\Candidate;
+
 class FetchController extends Controller
 {
     public function fetchCourseView(){
@@ -66,28 +68,39 @@ class FetchController extends Controller
     	return response()->json($student);
     }
 
-    public function vue(Request $request){
-        $rules = [
-            'first_name'=> 'required',
-            'last_name'=> 'required',
-            'matric_no'=>'required|unique:students',
-            'course'=> 'required',
-            'level'=> 'required',
-            'password'=>'required|max:5'
-        ];
+    /* Fetch Candidate */
 
-        $customMessages = [
-            'first_name.required'=> 'We need your first name sir!',
-            'last_name.required'=> 'We need your last name sir!',
-            'matric_no.unique'=>'Matric number already exists'
-        ];
-
-        $this->validate($request, $rules, $customMessages);
-
-        Student::create($request);
-
-        return response()->json(['message'=>'Created Student!']);
+    public function fetchCandidateView(){
+        return view('fetch-candidates');
     }
 
+    public function fetchCandidate(Request $request){
+        if($request->position == '' || $request->position=='All'){
+            $position = null;
+        }
+        else{
+            $position= $request->position;
+        }
+
+        if($request->course == '' || $request->course=='All'){
+            $course = null;
+        }
+        else{
+            $course = $request->course;
+        }
+
+        if($request->level == '' || $request->level=='All'){
+            $level = null;
+        }
+        else{
+           $level=$request->level;
+        }
+
+        return response()->json(Candidate::position($position)->course($course)->level($level)->get());
+    }
+
+    public function publicPath(){
+        return public_path();
+    }
 
 }

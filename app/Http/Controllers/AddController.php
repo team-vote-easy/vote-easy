@@ -22,18 +22,20 @@ class AddController extends Controller
     public function add(Request $request){
         $image = $request->file('image');
         $extension = $image->extension();
-        $fileName = "{$request->firstName}_{$request->lastName}.{$extension}";
-        $image->move(storage_path().'/candidates', $fileName);
+        $fileName = "{$request->firstName}_{$request->lastName}.jpg";
+        $image->move(public_path().'/candidate-images', $fileName);
 
     	$candidate = Candidate::create([
     		'first_name'=>$request->firstName,
     		'last_name'=>$request->lastName,
     		'level'=>$request->level,
     		'course'=>$request->course,
-    		'position'=>$request->course,
+    		'position'=>$request->position,
     		'image'=>$fileName
     	]);
 
     	return response()->json($candidate, 200);
     }
+
+    
 }

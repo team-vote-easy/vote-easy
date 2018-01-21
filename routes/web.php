@@ -1,29 +1,14 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+Route::get('import', 'ImportController@showImport');
 
-use App\Student;
-use Illuminate\Http\Request;
-use Illuminate\Database\QueryException;
-
-Route::get('/import', 'ImportController@showImport');
-
-Route::post('/import', 'ImportController@import');
+Route::post('import', 'ImportController@import');
 
 Route::get('add-candidates', 'AddController@showAdd');
 
 Route::post('add-candidates', 'AddController@add');
 
-Route::get('/fetch-course', 'FetchController@fetchCourseView');
+Route::get('fetch-course', 'FetchController@fetchCourseView');
 
 Route::post('fetch-course', 'FetchController@fetchCourse');
 
@@ -31,24 +16,9 @@ Route::get('fetch-student', 'FetchController@fetchStudentView');
 
 Route::post('fetch-student', 'FetchController@fetchStudent');
 
-Route::get('vue-test', function(){
-	return view('vue-test');
-});
+Route::get('fetch-candidates', 'FetchController@fetchCandidateView');
 
-Route::post('/vue-test', function(Request $request){
-	$student = Student::where('matric_no', $request->matric)->first();
-		return response()->json($student);
-});
+Route::post('fetch-candidates', 'FetchController@fetchCandidate');
 
-Route::get('vue-form', function(){
-	$courses = ["Computer Science", "Computer Technology", "Computer Information Systems"];
-	$levels = [100, 200, 300, 400];
-	return view('vue-form', [
-		'courses'=>$courses,
-		'levels'=>$levels
-
-	]);
-});
-
-Route::post('vue-form', 'FetchController@vue');
+Route::get('public-path', 'FetchController@publicPath');
 
