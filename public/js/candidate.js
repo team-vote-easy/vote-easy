@@ -1011,9 +1011,9 @@ window.app = new Vue({
             formData.append('image', this.image, this.image.name);
 
             axios.post('/add-candidates', formData).then(function (data) {
+                console.log(data);
                 _this.success = data.data;
                 _this.showModal = true;
-                console.log(data);
             }).catch(function (error) {
                 console.log(error);
             });

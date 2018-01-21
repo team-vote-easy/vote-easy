@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Student;
 use App\Candidate;
+use File;
 class AddController extends Controller
 {
     public function showAdd(){
@@ -19,13 +20,18 @@ class AddController extends Controller
     }
 
     public function add(Request $request){
+        $image = $request->file('image');
+        $extension = $image->extension();
+        $fileName = "{$request->firstName}_{$request->lastName}.{$extension}";
+        $image->move(storage_path().'/candidates', $fileName);
+
     	$candidate = Candidate::create([
     		'first_name'=>$request->firstName,
     		'last_name'=>$request->lastName,
     		'level'=>$request->level,
     		'course'=>$request->course,
     		'position'=>$request->course,
-    		'image'=>''
+    		'image'=>$fileName
     	]);
 
     	return response()->json($candidate, 200);

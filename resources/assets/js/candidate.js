@@ -34,9 +34,10 @@ window.app = new Vue({
 
             axios.post('/add-candidates', formData)
             .then((data)=>{
+                console.log(data);
                 this.success = data.data;
                 this.showModal = true;
-                console.log(data)
+                
             })
             .catch((error)=>{
                 console.log(error);
