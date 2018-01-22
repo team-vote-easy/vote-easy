@@ -2,6 +2,7 @@ require('./bootstrap');
 window.Vue = require('vue');
 window.Event = new Vue();
 import Modal from './components/Modal.vue';
+import Hero from './components/Hero.vue';
 import FetchCandidates from './components/FetchCandidates.vue'
 
 window.app = new Vue({
@@ -45,7 +46,7 @@ window.app = new Vue({
             });
         }
     },
-    components: {Modal, FetchCandidates}
+    components: {Modal, FetchCandidates, Hero}
 })
 
 

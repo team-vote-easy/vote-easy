@@ -49,118 +49,123 @@
     </style>
 </head>
 <body>
-    <div class="container box" id="root">
-        <form method="POST" action="/import" enctype="multipart/form-data" class="container" @submit.prevent="submit">
-            <h1>ADD CANDIDATES</h1>
+    <div id="root">
+        <hero :link="'/add-candidates'"> </hero>
 
-            <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                    <label class="label">Name: </label>
-                </div>
-                <div class="field-body">
+        <div class="container box">
+            <form method="POST" action="/import" enctype="multipart/form-data" class="container" @submit.prevent="submit">
+                <h1>ADD CANDIDATES</h1>
 
-                    <div class="field">
-                        <div class="control is-expanded">
-                            <input type="text" name="first_name" class="input" placeholder="First Name" v-model="firstName">
-                        </div>
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Name: </label>
                     </div>
+                    <div class="field-body">
 
-                    <div class="field">
-                        <div class="control is-expanded">
-                            <input type="text" name="first_name" class="input" placeholder="Last Name" v-model="lastName">
+                        <div class="field">
+                            <div class="control is-expanded">
+                                <input type="text" name="first_name" class="input" placeholder="First Name" v-model="firstName">
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                    <label class="label"> Position:</label>
-                </div>
-                <div class="field-body">
-                    <div class="field is-narrow">
-                        <div class="control">
-                            <div class="select is-fullwidth">
-                                <select name="position" v-model="role">
-                                    <option value="" disabled>Select Position</option>
-                                    @foreach($positions as $position)
-                                        <option value="{{$position}}"> {{$position}} </option>
-                                    @endforeach
-                                </select>
+                        <div class="field">
+                            <div class="control is-expanded">
+                                <input type="text" name="first_name" class="input" placeholder="Last Name" v-model="lastName">
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-
-            <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                    <label class="label">Course + Level: </label>
-                </div>
-                <div class="field-body">
-                    <div class="field">
-                        <div class="control is-expanded">
-                            <div class="select">
-                                <select name="course" v-model="course">
-                                    <option value="" disabled="">Select Course</option>
-                                    @foreach($courses as $course)
-                                        <option value="{{$course}}">{{$course}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label"> Position:</label>
                     </div>
-
-                    <div class="field">
-                        <div class="control is-expanded">
-                            <div class="select">
-                                <select name="level" v-model="level">
-                                    <option value="" disabled>Select Level</option>
-                                    @foreach($levels as $level)
-                                        <option value="{{$level}}"> {{$level}} </option>
-                                    @endforeach
-                                </select>
+                    <div class="field-body">
+                        <div class="field is-narrow">
+                            <div class="control">
+                                <div class="select is-fullwidth">
+                                    <select name="position" v-model="role">
+                                        <option value="" disabled>Select Position</option>
+                                        @foreach($positions as $position)
+                                            <option value="{{$position}}"> {{$position}} </option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="field">
-                <div class="file is-primary has-name" :class="{ 'has-name' : image}">
-                    <label class="file-label">
-                       <input type="file" name="file" class="file-input" @change="processFile($event)">
-                       <span class="file-cta">
-                            <span class="file-icon">
-                                <i class="fa fa-upload"></i>
-                            </span>
-                            <span class="file-label">
-                                Upload Candidate Image...
-                            </span>
-                       </span>
-                       <span class="file-name" v-if="image">
-                           @{{image.name}}
-                       </span>
-                    </label>
+
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Course + Level: </label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control is-expanded">
+                                <div class="select">
+                                    <select name="course" v-model="course">
+                                        <option value="" disabled="">Select Course</option>
+                                        @foreach($courses as $course)
+                                            <option value="{{$course}}">{{$course}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="control is-expanded">
+                                <div class="select">
+                                    <select name="level" v-model="level">
+                                        <option value="" disabled>Select Level</option>
+                                        @foreach($levels as $level)
+                                            <option value="{{$level}}"> {{$level}} </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        
-            <div class="field">
-                <div class="control">
-                  <input type="submit" name="Submit" value="Submit" class="button is-primary is-medium">  
+
+                <div class="field">
+                    <div class="file is-primary has-name" :class="{ 'has-name' : image}">
+                        <label class="file-label">
+                           <input type="file" name="file" class="file-input" @change="processFile($event)">
+                           <span class="file-cta">
+                                <span class="file-icon">
+                                    <i class="fa fa-upload"></i>
+                                </span>
+                                <span class="file-label">
+                                    Upload Candidate Image...
+                                </span>
+                           </span>
+                           <span class="file-name" v-if="image">
+                               @{{image.name}}
+                           </span>
+                        </label>
+                    </div>
                 </div>
-            </div>
-        </form>
+            
+                <div class="field">
+                    <div class="control">
+                      <input type="submit" name="Submit" value="Submit" class="button is-primary is-medium">  
+                    </div>
+                </div>
+            </form>
 
-        <modal v-if="showModal && errors.message" @close="showModal = false; errors={} " :green="false">
-            @{{errors.message}}
-        </modal>
+            <modal v-if="showModal && errors.message" @close="showModal = false; errors={} " :green="false">
+                @{{errors.message}}
+            </modal>
 
-        <modal v-if="showModal && success" @close="showModal = false; success='' " :green="true">
-            Successfully Added Candidate: @{{success.first_name}} @{{success.last_name}}
-        </modal>
+            <modal v-if="showModal && success" @close="showModal = false; success='' " :green="true">
+                Successfully Added Candidate: @{{success.first_name}} @{{success.last_name}}
+            </modal>
+        </div>
     </div>
+
 </body>
 </html>
 

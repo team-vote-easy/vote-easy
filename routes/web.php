@@ -20,5 +20,5 @@ Route::get('fetch-candidates', 'FetchController@fetchCandidateView');
 
 Route::post('fetch-candidates', 'FetchController@fetchCandidate');
 
-Route::get('public-path', 'FetchController@publicPath');
+Route::get('vue-test', 'FetchController@vueTest');
 

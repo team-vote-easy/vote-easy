@@ -20,7 +20,7 @@
 	    },
 	    mounted(){
 	        this.isActive = this.selected;
-	        Event.$emit('hey');
+	        
 	    }
 	}
 </script>

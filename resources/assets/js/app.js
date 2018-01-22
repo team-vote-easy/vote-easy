@@ -3,6 +3,7 @@ require('./bootstrap');
 window.Vue = require('vue');
 window.Event = new Vue();
 import Modal from './components/Modal.vue';
+import Hero from './components/Hero.vue';
 
 window.app = new Vue({
     el: '#root',
@@ -53,7 +54,7 @@ window.app = new Vue({
             })
         }
     },
-    components: {Modal}
+    components: {Modal, Hero}
 })
 
 

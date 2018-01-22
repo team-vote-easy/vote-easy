@@ -68,6 +68,7 @@
 </head>
 <body>
     <div id="root">
+        <hero :link="'/fetch-course'"> </hero>
         <div class="container box">
             <form method="POST" action="/import" enctype="multipart/form-data" class="container" @submit.prevent="submit">
                 <h1>Search Students</h1>

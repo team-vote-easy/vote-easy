@@ -99,8 +99,8 @@ class FetchController extends Controller
         return response()->json(Candidate::position($position)->course($course)->level($level)->get());
     }
 
-    public function publicPath(){
-        return public_path();
+    public function vueTest(){
+        return view('vue-test');
     }
 
 }

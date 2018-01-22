@@ -5,37 +5,22 @@
 <head>
 	<title>Vue Tests</title>
 	<link rel="stylesheet" type="text/css" href="css/bulma-0.6.2/css/bulma.css">
+	<style>
+		.spacing{
+			height: 200px;
+		}
+	</style>
 </head>
 <body>
-	<div id="app" class="container">
-		<tabs>
-			<tab name="Our Vision" :selected="true"> 
-				<h1>THis is our Vision</h1>
-			</tab>
+	<div id="root">
+		<hero> </hero>	
 
-			<tab name="Our Culture"> 
-				<h1>THis is our Culture</h1>
-			</tab>
-
-			<tab name="Our Mission"> 
-				<h1>THis is our Mission</h1>
-			</tab>
-		 </tabs>
-
-		<modal v-if="showModal" @close="showModal = false"> 
-			<template slot="title">to pimp a butterfly.</template>
-				
-			<div slot="footer">
-				<button class="button is-success">Save changes</button>
-              	<button class="button">Cancel</button>
-			</div>
-
-		</modal>
-
-		<button @click="showModal = true">Click Me!</button>		
+		<div class="spacing">
+		
+		</div>
 
 	</div>
 </body>
 </html>
 
-<script type="text/javascript" src="js/app.js"></script>
+<script type="text/javascript" src="js/candidate.js"></script>

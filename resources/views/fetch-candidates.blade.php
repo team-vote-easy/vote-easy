@@ -10,7 +10,8 @@
 </head>
 <body>
     <div id="root">
-      <fetch-candidates> </fetch-candidates>
+    	<hero :link="'/fetch-candidates'"> </hero>
+    	<fetch-candidates> </fetch-candidates>
     </div>
     
 </body>
