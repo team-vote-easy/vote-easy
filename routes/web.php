@@ -22,3 +22,11 @@ Route::post('fetch-candidates', 'FetchController@fetchCandidate');
 
 Route::get('vue-test', 'FetchController@vueTest');
 
+Route::get('student-login', 'StudentController@loginView');
+
+Route::post('student-login', 'StudentController@login');
+
+Route::get('vote', 'StudentController@voteView');
+
+Route::get('api/candidates', 'StudentController@getCandidates');
+

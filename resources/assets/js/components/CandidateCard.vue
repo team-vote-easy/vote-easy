@@ -40,7 +40,7 @@
 		},
 		methods: {
 			getPath(image){
-				return require('./../../../../public/candidate-images/'+image);
+				return require('../../../../public/candidate-images/'+image);
 			}
 		}
 	}

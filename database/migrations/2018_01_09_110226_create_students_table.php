@@ -22,6 +22,7 @@ class CreateStudentsTable extends Migration
             $table->integer('level');
             $table->string('password');
             $table->boolean('voted')->default(false);
+            $table->rememberToken();
             $table->timestamps();
         });
     }
