@@ -3,7 +3,8 @@ window.Vue = require('vue');
 window.Event = new Vue();
 import Modal from './components/Modal.vue';
 import Hero from './components/Hero.vue';
-import FetchCandidates from './components/FetchCandidates.vue'
+import FetchCandidates from './components/FetchCandidates.vue';
+import AddPost from './components/AddPost.vue';
 
 window.app = new Vue({
     el: '#root',
@@ -46,7 +47,7 @@ window.app = new Vue({
             });
         }
     },
-    components: {Modal, FetchCandidates, Hero}
+    components: {Modal, FetchCandidates, Hero, AddPost}
 })
 
 

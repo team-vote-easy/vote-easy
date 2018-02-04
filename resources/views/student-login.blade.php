@@ -87,6 +87,10 @@
                 </div>
             </form>
 
+            @if($errors->has('alreadyVoted'))
+                <modal v-if="showModal" :green="false" @close="showModal = false;"> {{$errors->first('alreadyVoted')}} </modal>
+            @endif
+
         
         </div>
     </div>
@@ -94,4 +98,4 @@
 </body>
 </html>
 
-{{-- <script type="text/javascript" src="js/student.js"></script> --}}
+<script type="text/javascript" src="js/student.js"></script>

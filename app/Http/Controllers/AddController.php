@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Student;
 use App\Candidate;
+use App\Post;
 use File;
 class AddController extends Controller
 {
@@ -35,6 +36,25 @@ class AddController extends Controller
     	]);
 
     	return response()->json($candidate, 200);
+    }
+
+    public function addPostsView(){
+        return view('add-post-view');
+    }
+
+    public function addPosts(Request $request){
+        $postExists = Post::where('post', $request->post)->first();
+        if($postExists){
+            return response()->json('Sorry! Post Exists already!', 513);
+        }
+
+        $newPost = Post::create([
+            'post'=>$request->post
+        ]);
+
+        if($newPost){
+            return response()->json("Successfully Added Post: {$newPost->post}");
+        }
     }
 
     

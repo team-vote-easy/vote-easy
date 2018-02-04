@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Excel;
 use File;
+use Hash;
 use App\Student;
 use Illuminate\Database\QueryException;
 
@@ -27,12 +28,15 @@ class ImportController extends Controller
 
         })->get();
     	foreach($data as $key=>$value){
+            $key = strtolower(str_random(6));
+
     		$student = [
     			'first_name'=>$value->first_name,
     			'last_name'=>$value->last_name,
     			'matric_no'=>$value->matric_no,
     			'course'=>$request->course,
-                'password'=>strtolower(str_random(6)),
+                'key'=>$key,
+                'password'=> Hash::make($key),
     			'level'=>$request->level
     		];
 

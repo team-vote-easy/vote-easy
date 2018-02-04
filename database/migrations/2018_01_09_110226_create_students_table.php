@@ -20,6 +20,7 @@ class CreateStudentsTable extends Migration
             $table->string('matric_no')->unique();
             $table->string('course');
             $table->integer('level');
+            $table->string('key');
             $table->string('password');
             $table->boolean('voted')->default(false);
             $table->rememberToken();

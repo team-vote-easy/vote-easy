@@ -45,6 +45,11 @@
 						selected: false
 					},
 					{
+						href: '/add-posts',
+						text: 'Add Post',
+						selected: false
+					},
+					{
 						href: '/fetch-course',
 						text: 'View Students',
 						selected: false

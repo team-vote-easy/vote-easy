@@ -32,9 +32,9 @@
 					  </footer>
 
 					  <footer>
-					  	<a href="#" class="button vote" @click.prevent="vote(currentView.position, candidate.id)"> 
+					  	<a href="#" class="button vote " @click.prevent="vote(currentView.position, candidate.id)"> 
 					  		<span class="icon">
-							  <i :class="[studentVote[makeCamel(candidate.position)] == candidate.id  ? 'fa fa-heart votedIcon' :' fa fa-heart-o voteIcon' ]"></i>
+							  <i :class="[studentVote[makeCamel(candidate.position)] == candidate.id  ? 'fa fa-heart votedIcon animated bounce' :' fa fa-heart-o voteIcon' ]"></i>
 							</span>
 					  	</a>
 					  </footer>
@@ -44,8 +44,9 @@
 		</div>
 
 		<div>
-			<a href="#" @click="prev" class="button is-danger prev"  v-if="count!=0" :disabled="count==0">Previous</a>
-			<a href="#" @click="next" class="button is-danger next"  v-if="! (count>=5)" :disabled="count>=5">Next</a>
+			<a href="#" @click.prevent="prev" class="button is-danger prev" :disabled="count==0">Previous</a>
+			<a href="#" @click.prevent="submitVotes" class="button is-primary done" :disabled="isDone()">Done</a>
+			<a href="#" @click.prevent="next" class="button is-danger next" :disabled="count>=5">Next</a>
 		</div>
 
 	</div>
@@ -63,6 +64,7 @@
 					pro: '',
 					chaplain: '',
 					socialDirector: '',
+					sportsDirector: '',
 				},
 				currentView: '',
 				candidatesData: [],
@@ -70,7 +72,9 @@
 				voted: false
 			}
 		},
+		props: ['student'],
 		created(){
+			console.log(this.student);
 			const self = this;
 			axios.get('/api/candidates')
 				.then((data)=>{
@@ -96,7 +100,6 @@
 				});
 
 			Event.$on('menuChange', (index)=>{
-				console.log(index);
 				self.count = index;
 				self.currentView = self.candidatesData[self.count];
 			});
@@ -109,13 +112,25 @@
 
 			vote(position, id){
 				this.studentVote[_.camelCase(position)] = id;
-				var keys = Object.keys(this.studentVote);
-				keys.forEach((k)=>{
-					console.log(k + ':' + this.studentVote[k]);
-				})
+
+
+
+				//Move to the next candidate
+
+				this.next();			
+
+				// var keys = Object.keys(this.studentVote);
+				// keys.forEach((k)=>{
+				// 	console.log(k + ':' + this.studentVote[k]);
+				// })
 			},
 
 			prev(){
+				//Check to ensure we don't go below the no of available posts
+				if(this.count==0){
+					return;
+				}
+
 				const self = this;
 				this.count-=1;
 				Event.$emit('menuChange', self.count);
@@ -123,6 +138,11 @@
 			},
 
 			next(){
+				//Check to ensure we don't go above the no of available posts
+				if(this.count==5){
+					return;
+				}
+
 				const self = this;
 				this.count+=1;
 				Event.$emit('menuChange', self.count);
@@ -131,6 +151,43 @@
 
 			makeCamel(toCamelString){
 				return _.camelCase(toCamelString);
+			},
+
+			isDone(){
+				//Function to ensure all positions have been selected by the student
+				var keys = Object.keys(this.studentVote);
+				var incomplete = 0;
+				keys.forEach((key)=>{
+					if(this.studentVote[key]==''){
+						incomplete+=1;
+					}
+				});
+
+				if(incomplete>=1){
+					return true;
+				}
+				else{
+					return false;
+				}
+			},
+
+			submitVotes(){
+				var voteData = new FormData();
+				voteData.append('student_id', this.student);
+				voteData.append('president', this.studentVote.president);
+				voteData.append('vice_president', this.studentVote.vicePresident);
+				voteData.append('pro', this.studentVote.pro);
+				voteData.append('chaplain', this.studentVote.chaplain);
+				voteData.append('social_director', this.studentVote.socialDirector);
+				voteData.append('sports_director', this.studentVote.sportsDirector);
+				axios.post('api/vote', voteData)
+				.then((data)=>{
+					Event.$emit('voted', data.data);
+					
+				})
+				.catch((e)=>{
+					console.log(e);
+				})
 			}
 		},
 		components: {SideBar}
@@ -138,6 +195,14 @@
 </script>
 
 <style>
+
+	.card{
+		max-width: 140%;
+	}
+
+	.card-content{
+		text-align: center;
+	}
 	.card-footer-item{
 		height: 80px;
 		text-align: center;
@@ -151,6 +216,15 @@
 		padding: 20px; 
 		top: 50px;
 		cursor: pointer;
+	}
+
+	.done{
+		width: 300px;
+		position: relative;
+		left: 480px;
+		padding: 20px;
+		cursor: pointer;
+		top: 50px;
 	}
 
 	.next{
@@ -203,7 +277,12 @@
 	}
 
 	.voteIcon:hover{
-		color: #cc5f75;
+		color: #ff3860;
+		transition: 0.7s ease-in-out;
+	}
+
+	.voteIcon:focus{
+		color: #ff3860;
 		transition: 0.7s ease-in-out;
 	}
 

@@ -2,7 +2,7 @@
   	<div class="modal is-active">
       <div class="modal-background"></div>
       <div class="modal-content">
-          <div class="box animated shake" :class="[green ? 'green' : 'heh']">
+          <div class="box animated shake notification" :class="[green ? 'is-primary' : 'is-danger']" style="text-align: center; font-size: 20px">
             <slot> </slot>
           </div>
       </div>
@@ -20,3 +20,4 @@
     props: ['green']
 	}
 </script>
+
