@@ -43408,7 +43408,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 	props: ['student'],
 	created: function created() {
-		console.log(this.student);
 		var self = this;
 		__WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/candidates').then(function (data) {
 			var candidates = data.data;
@@ -43442,15 +43441,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		},
 		vote: function vote(position, id) {
 			this.studentVote[_.camelCase(position)] = id;
-
 			//Move to the next candidate
-
-			this.next();
-
-			// var keys = Object.keys(this.studentVote);
-			// keys.forEach((k)=>{
-			// 	console.log(k + ':' + this.studentVote[k]);
-			// })
+			self = this;
+			_.delay(self.next, 1000);
 		},
 		prev: function prev() {
 			//Check to ensure we don't go below the no of available posts
@@ -43507,7 +43500,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			voteData.append('sports_director', this.studentVote.sportsDirector);
 			__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('api/vote', voteData).then(function (data) {
 				Event.$emit('voted', data.data);
-				_.delay(self.redirect, 3000);
+				_.delay(self.redirect, 4000);
 			}).catch(function (e) {
 				console.log(e);
 			});
@@ -43663,7 +43656,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		};
 	},
 	created: function created() {
-		self = this;
+		var self = this;
+
 		Event.$on('menuChange', function (index) {
 			self.positions.forEach(function (position) {
 				position.selected = self.positions.indexOf(position) == index;

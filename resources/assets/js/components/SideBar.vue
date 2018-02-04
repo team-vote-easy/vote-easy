@@ -54,7 +54,8 @@
 			}
 		},
 		created(){
-			self = this;
+			const self = this;
+			
 			Event.$on('menuChange', (index)=>{
 				self.positions.forEach((position)=>{
 					position.selected = (self.positions.indexOf(position)==index);

@@ -96,7 +96,7 @@ class StudentController extends Controller
 
 		Auth::guard('students')->logout();
 
-		return response()->json('Voted!');
+		return response()->json('Thank you for voting!');
     }
 
     public function logout(){

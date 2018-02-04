@@ -74,7 +74,6 @@
 		},
 		props: ['student'],
 		created(){
-			console.log(this.student);
 			const self = this;
 			axios.get('/api/candidates')
 				.then((data)=>{
@@ -112,17 +111,9 @@
 
 			vote(position, id){
 				this.studentVote[_.camelCase(position)] = id;
-
-
-
 				//Move to the next candidate
-
-				this.next();			
-
-				// var keys = Object.keys(this.studentVote);
-				// keys.forEach((k)=>{
-				// 	console.log(k + ':' + this.studentVote[k]);
-				// })
+				self = this;
+				_.delay(self.next, 1000);	
 			},
 
 			prev(){
@@ -184,7 +175,7 @@
 				axios.post('api/vote', voteData)
 				.then((data)=>{
 					Event.$emit('voted', data.data);
-					_.delay(self.redirect, 3000);
+					_.delay(self.redirect, 4000);
 					
 				})
 				.catch((e)=>{

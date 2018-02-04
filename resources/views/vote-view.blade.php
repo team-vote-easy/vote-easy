@@ -33,7 +33,7 @@
         <div class="container">
            <vote-card student="{{$student->id}}"> </vote-card>
 
-            <modal v-if="votedModal" :green="true" @close="votedModal = false"> Successfully Voted! </modal>
+            <modal v-if="votedModal" :green="true" @close="votedModal = false"> Thanks for voting {{$student->first_name}}! </modal>
         </div>
     </div>
 
