@@ -172,6 +172,7 @@
 			},
 
 			submitVotes(){
+				self = this;
 				var voteData = new FormData();
 				voteData.append('student_id', this.student);
 				voteData.append('president', this.studentVote.president);
@@ -183,11 +184,15 @@
 				axios.post('api/vote', voteData)
 				.then((data)=>{
 					Event.$emit('voted', data.data);
+					_.delay(self.redirect, 3000);
 					
 				})
 				.catch((e)=>{
 					console.log(e);
 				})
+			},
+			redirect(){
+				window.location.href="student-login";
 			}
 		},
 		components: {SideBar}

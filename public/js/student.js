@@ -43496,6 +43496,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			}
 		},
 		submitVotes: function submitVotes() {
+			self = this;
 			var voteData = new FormData();
 			voteData.append('student_id', this.student);
 			voteData.append('president', this.studentVote.president);
@@ -43506,9 +43507,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			voteData.append('sports_director', this.studentVote.sportsDirector);
 			__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('api/vote', voteData).then(function (data) {
 				Event.$emit('voted', data.data);
+				_.delay(self.redirect, 3000);
 			}).catch(function (e) {
 				console.log(e);
 			});
+		},
+		redirect: function redirect() {
+			window.location.href = "student-login";
 		}
 	},
 	components: { SideBar: __WEBPACK_IMPORTED_MODULE_1__SideBar_vue___default.a }
