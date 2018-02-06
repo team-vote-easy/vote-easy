@@ -57,6 +57,10 @@
         border: 4px solid #00d1b2;
         box-shadow: none;
        }
+
+       .password{
+          border-bottom: 3px solid #00d1b2;
+        }
     </style>
 </head>
 <body>
@@ -81,7 +85,35 @@
         <div class="content container">
                 <h1 v-if="loading">Loading...</h1>
                 <stat-card v-if="message" :message="message" :empty="empty"> </stat-card>
-                <student-card v-if="studentDetails" :student="studentDetails"> </student-card>
+
+                <div v-if="studentDetails">
+                  <div class="card">
+                    <div class="card-content">
+                      <p class="title">
+                        @{{studentDetails.first_name}} @{{studentDetails.last_name}}
+                      </p>
+                    </div>
+                    <footer class="card-footer">
+                      <p class="card-footer-item">
+                        <span>
+                          @{{studentDetails.matric_no}}
+                        </span>
+                      </p>
+                      <p class="card-footer-item">
+                        <span>
+                          @{{studentDetails.course}}
+                        </span>
+                      </p>
+                      <p class="card-footer-item">
+                        @{{studentDetails.level}}
+                      </p>
+
+                      <p class="card-footer-item">
+                        <strong> Password: </strong> &nbsp;&nbsp;&nbsp;&nbsp; <span class="password"> @{{studentDetails.key}} </span>
+                      </p>
+                    </footer>
+                  </div>
+                </div>
         </div>
     </div>
     

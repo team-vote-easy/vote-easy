@@ -28,4 +28,8 @@ class Candidate extends Model
       }
     	return $query->where('level', $level);
     }
+
+    public function votes(){
+      return $this->hasOne(Vote::class, 'candidate_id', 'id');
+    }
 }

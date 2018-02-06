@@ -114,11 +114,10 @@
             </form>
         </div>
         <div class="content container">
-                <h1 v-if="loading">Loading...</h1>
-                <stat-card v-if="message" :message="message" :empty="empty"> </stat-card>
-                <div class="columns">
-                    <student-card v-if="students" v-for="student in students" :student="student"> </student-card>
-                </div>
+          <h1 v-if="loading">Loading...</h1>
+          <stat-card v-if="message" :message="message" :empty="empty"> </stat-card>
+          <student-card v-if="students" v-for="(student, key) in students" :students="student" :key="key"> </student-card>
+                
         </div>
     </div>
     

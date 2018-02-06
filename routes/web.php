@@ -43,7 +43,7 @@ Route::group(['middleware'=>'studentauth'], function(){
 
 });
 
-Route::get('test', 'StudentController@test');
+Route::get('view-votes', 'VoteController@test');
 
 
 

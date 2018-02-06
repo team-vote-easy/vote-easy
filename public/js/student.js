@@ -1410,7 +1410,7 @@ window.app = new Vue({
 	created: function created() {
 		var _this = this;
 
-		Event.$on('voted', function (data) {
+		Event.$on('voted', function () {
 			_this.votedModal = true;
 		});
 	},
@@ -43491,7 +43491,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		submitVotes: function submitVotes() {
 			self = this;
 			var voteData = new FormData();
-			voteData.append('student_id', this.student);
 			voteData.append('president', this.studentVote.president);
 			voteData.append('vice_president', this.studentVote.vicePresident);
 			voteData.append('pro', this.studentVote.pro);
@@ -43499,7 +43498,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			voteData.append('social_director', this.studentVote.socialDirector);
 			voteData.append('sports_director', this.studentVote.sportsDirector);
 			__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('api/vote', voteData).then(function (data) {
-				Event.$emit('voted', data.data);
+				Event.$emit('voted');
 				_.delay(self.redirect, 4000);
 			}).catch(function (e) {
 				console.log(e);
@@ -43793,7 +43792,7 @@ module.exports = "/images/Akin_Akinbowale.jpg?16d7ba2de8ab2c6411e95ecc8f991e81";
 /* 55 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/Anike_Fisher.jpg?e91f71c6c2ff427aef6371a9d5570942";
+module.exports = "/images/Anike_Fisher.jpg?56c1746f0ffd6e4c07b7c64b18f4768b";
 
 /***/ }),
 /* 56 */
@@ -43829,7 +43828,7 @@ module.exports = "/images/Chidinma_Annaker.jpg?6d8f1aa441be1f3f1b09424e87120a6f"
 /* 61 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/Chukwudi_Oranu.jpg?edf3a576906a0722605332ff4013e442";
+module.exports = "/images/Chukwudi_Oranu.jpg?16d7ba2de8ab2c6411e95ecc8f991e81";
 
 /***/ }),
 /* 62 */
@@ -43853,7 +43852,7 @@ module.exports = "/images/Frank_Ocean.jpg?d8eb28c54bb9623219f3d9b7405445fb";
 /* 65 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/Gbemisola_Abijo.jpg?00eee4e6746360ea55e1d838b6d91a4c";
+module.exports = "/images/Gbemisola_Abijo.jpg?d8eb28c54bb9623219f3d9b7405445fb";
 
 /***/ }),
 /* 66 */
@@ -44019,7 +44018,7 @@ var render = function() {
                         class: [
                           _vm.studentVote[_vm.makeCamel(candidate.position)] ==
                           candidate.id
-                            ? "fa fa-heart votedIcon animated bounce"
+                            ? "fa fa-heart votedIcon animated wobble"
                             : " fa fa-heart-o voteIcon"
                         ]
                       })

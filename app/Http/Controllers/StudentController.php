@@ -72,27 +72,26 @@ class StudentController extends Controller
     }
 
     public function test(){
-    	$candidates = Candidate::where('position', 'Social Director')->get();
-
-    	dd($candidates);
+    	$candidates = Candidate::where('position', 'president')->get();
 
     	foreach ($candidates as $candidate) {
-    		$votes = Vote::candidate('social_director', $candidate->id);
-    		$votes = count($votes);
+    		$votes = Vote::candidate('president', $candidate->id)->count();
     		echo "{$candidate->first_name} {$candidate->last_name} had {$votes} votes <hr/>";
     	}
     }
 
     public function postVotes(Request $request){
-		Vote::create([
-			'student_id'=> $request->student_id,
-			'president'=> $request->president,
-			'vice_president'=> $request->vice_president,
-			'pro'=> $request->pro,
-			'chaplain'=> $request->chaplain,
-			'social_director'=> $request->social_director,
-			'sports_director'=> $request->sports_director 
-		]);
+        $candidates = $request->all();
+
+        foreach($candidates as $candidate){
+            $vote = Vote::where('candidate_id', $candidate)->first();
+            if($vote){
+                $vote->increment('count', 1);
+            }
+            else{
+                Vote::create(['candidate_id'=>$candidates, 'count'=>1]);
+            }
+        }
 
 		Auth::guard('students')->logout();
 

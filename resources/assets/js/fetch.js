@@ -38,10 +38,10 @@ window.app = new Vue({
                     return;
                 }
 
-                this.students = data.data.students;
+                this.students = _.chunk(data.data.students, 3);
                 this.message = data.data.message;
                 this.empty = false;
-                console.log(data)
+                console.log(this.students);
             })
             .catch((error)=>{
                 console.log(error);
@@ -65,6 +65,7 @@ window.app = new Vue({
                     return;
                 }
                 self.studentDetails = data.data;
+                console.log(self.studentDetails);
                 self.empty = false;
             })
             .catch((e)=>{

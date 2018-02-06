@@ -12,7 +12,7 @@ window.app = new Vue({
 		votedModal: false
 	},
 	created(){
-		Event.$on('voted', (data)=>{
+		Event.$on('voted', ()=>{
 			this.votedModal = true;
 		})
 	},

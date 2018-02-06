@@ -9,11 +9,7 @@ class Vote extends Model
 {
     protected $guarded = [];
 
-    public function scopeCandidate($query, $position, $candidateID){
-    	return $query->where($position, $candidateID);
+    public function candidate(){
+    	return $this->belongsTo(Candidate::class, 'candidate_id', 'id');
     }
-
-    // public function scopeCandidate($query, $position){
-    // 	$candidate = 
-    // }
 }

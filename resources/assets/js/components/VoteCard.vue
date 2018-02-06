@@ -34,7 +34,7 @@
 					  <footer>
 					  	<a href="#" class="button vote " @click.prevent="vote(currentView.position, candidate.id)"> 
 					  		<span class="icon">
-							  <i :class="[studentVote[makeCamel(candidate.position)] == candidate.id  ? 'fa fa-heart votedIcon animated bounce' :' fa fa-heart-o voteIcon' ]"></i>
+							  <i :class="[studentVote[makeCamel(candidate.position)] == candidate.id  ? 'fa fa-heart votedIcon animated wobble' :' fa fa-heart-o voteIcon' ]"></i>
 							</span>
 					  	</a>
 					  </footer>
@@ -165,7 +165,6 @@
 			submitVotes(){
 				self = this;
 				var voteData = new FormData();
-				voteData.append('student_id', this.student);
 				voteData.append('president', this.studentVote.president);
 				voteData.append('vice_president', this.studentVote.vicePresident);
 				voteData.append('pro', this.studentVote.pro);
@@ -174,7 +173,7 @@
 				voteData.append('sports_director', this.studentVote.sportsDirector);
 				axios.post('api/vote', voteData)
 				.then((data)=>{
-					Event.$emit('voted', data.data);
+					Event.$emit('voted');
 					_.delay(self.redirect, 4000);
 					
 				})
