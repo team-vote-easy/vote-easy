@@ -35,6 +35,11 @@
 
 <script>
 	export default{
+		data(){
+			return{
+				image: '../../../../public/images/Tony_Kellogs.jpg'
+			}
+		},
 		props: {
 			candidates: {required: true}
 		},
@@ -47,4 +52,22 @@
 </script>
 
 <style>
+	/*.card{
+		width: 1300px;
+	}
+*/
+	.card-image{
+		width: 400px;
+	}
+	.title{
+		height: 55px;
+	}
+
+	.card-content{
+		text-align: center;
+	}
+	.card-footer-item{
+		height: 80px;
+		text-align: center;
+	}
 </style>

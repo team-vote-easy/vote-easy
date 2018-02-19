@@ -4,7 +4,7 @@
 			<div class="card">
 			  <div class="card-content">
 			    <p class="title">
-			      {{student.first_name}} {{student.last_name}}
+			      {{student.name}} 
 			    </p>
 			  </div>
 			  <footer class="card-footer">
@@ -41,6 +41,11 @@
 
 			}
 		},
+		methods: {
+			normalizeName(){
+				
+			}
+		}
 	}
 </script>
 

@@ -4,6 +4,7 @@ window.Vue = require('vue');
 window.Event = new Vue();
 import Modal from './components/Modal.vue';
 import Hero from './components/Hero.vue';
+import LoadingModal from './components/LoadingModal.vue';
 
 window.app = new Vue({
     el: '#root',
@@ -12,6 +13,7 @@ window.app = new Vue({
         course: '',
         file: '',
         showModal: false,
+        loading: '',
         errors: {},
         success: ''
     },
@@ -21,6 +23,7 @@ window.app = new Vue({
         },
 
         submit: function(){
+            self = this;
             var formData = new FormData();
             if(this.level !== '' || this.course !== '' || this.file !== ''){
                 formData.append('level', this.level);
@@ -34,10 +37,12 @@ window.app = new Vue({
                 console.log(this.errors);
                 return;
             }
-            self = this;
+
+            this.loading = true;
 
             axios.post('/import', formData)
             .then(function(data){
+                self.loading = false;
                 self.level = '';
                 self.course = '';
                 self.file = '';
@@ -48,13 +53,14 @@ window.app = new Vue({
             .catch(function(error){
                 console.log(error);
                 console.log('Na me the error');
+                self.loading = false;
                 self.errors.title = 'Student already exists!';
                 self.errors.message = error.response.data.message;
                 self.showModal = true;
             })
         }
     },
-    components: {Modal, Hero}
+    components: {Modal, Hero, LoadingModal}
 })
 
 

@@ -45,6 +45,7 @@
 </head>
 <body>
     <div id="root">
+        <loading-modal v-if="loading"> </loading-modal>
         <hero :link="'/import'"> </hero>
 
         <div class="container box">

@@ -25,10 +25,13 @@ class StudentController extends Controller
     	$rules = ['matricNumber' => 'required|max:7', 'password'=>'required'];
     	$this->validate($request, $rules);
 
-    	// $student = Student::where('matric_no', $request->matricNumber)->where('key', $request->password)->first();
-    	// if($student->voted == true){
-    	// 	return redirect()->back()->withErrors(['alreadyVoted'=>'Candidate has voted already!']);
-    	// }
+    	$student = Student::where('matric_no', $request->matricNumber)->where('key', $request->password)->first();
+
+        if($student){
+            if($student->voted == true){
+                return redirect()->back()->withErrors(['alreadyVoted'=>'Candidate has voted already!']);
+            }
+        }
 
     	if(Auth::guard('students')->attempt(['matric_no'=>$request->matricNumber, 'password'=>$request->password])){
     		$loggedStudent = Student::where('id', Auth::guard('students')->user()->id)->first();
@@ -89,7 +92,7 @@ class StudentController extends Controller
                 $vote->increment('count', 1);
             }
             else{
-                Vote::create(['candidate_id'=>$candidates, 'count'=>1]);
+                Vote::create(['candidate_id'=>$candidate, 'count'=>1]);
             }
         }
 

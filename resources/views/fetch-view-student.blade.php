@@ -59,7 +59,10 @@
        }
 
        .password{
-          border-bottom: 3px solid #00d1b2;
+          border-bottom: 8px solid #00d1b2;
+          position: relative;
+          top: -18px;
+          font-size: 50px;
         }
     </style>
 </head>
@@ -90,7 +93,7 @@
                   <div class="card">
                     <div class="card-content">
                       <p class="title">
-                        @{{studentDetails.first_name}} @{{studentDetails.last_name}}
+                        @{{studentDetails.name}}
                       </p>
                     </div>
                     <footer class="card-footer">
@@ -109,7 +112,7 @@
                       </p>
 
                       <p class="card-footer-item">
-                        <strong> Password: </strong> &nbsp;&nbsp;&nbsp;&nbsp; <span class="password"> @{{studentDetails.key}} </span>
+                        <strong> <span class="password"> @{{studentDetails.key}} </span> </strong>
                       </p>
                     </footer>
                   </div>

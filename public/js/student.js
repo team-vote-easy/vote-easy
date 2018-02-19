@@ -1381,7 +1381,7 @@ function applyToTag (styleElement, obj) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(14);
-module.exports = __webpack_require__(82);
+module.exports = __webpack_require__(66);
 
 
 /***/ }),
@@ -1392,7 +1392,7 @@ module.exports = __webpack_require__(82);
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_VoteCard_vue__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_VoteCard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_VoteCard_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Modal_vue__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Modal_vue__ = __webpack_require__(63);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Modal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_Modal_vue__);
 __webpack_require__(15);
 
@@ -43210,7 +43210,7 @@ var normalizeComponent = __webpack_require__(3)
 /* script */
 var __vue_script__ = __webpack_require__(45)
 /* template */
-var __vue_template__ = __webpack_require__(78)
+var __vue_template__ = __webpack_require__(62)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -43283,7 +43283,7 @@ exports = module.exports = __webpack_require__(11)(false);
 
 
 // module
-exports.push([module.i, "\n.card{\n\tmax-width: 140%;\n}\n.card-content{\n\ttext-align: center;\n}\n.card-footer-item{\n\theight: 80px;\n\ttext-align: center;\n}\n.prev{\n\tfloat: left;\n\tposition: relative;\n\tleft: -90px;\n\twidth: 100px;\n\tpadding: 20px; \n\ttop: 50px;\n\tcursor: pointer;\n}\n.done{\n\twidth: 300px;\n\tposition: relative;\n\tleft: 480px;\n\tpadding: 20px;\n\tcursor: pointer;\n\ttop: 50px;\n}\n.next{\n\tfloat: right;\n\tposition: relative;\n\tleft: 90px;\n\twidth: 100px;\n\tpadding: 20px;\n\ttop: 50px;\n\tcursor: pointer;\n}\nh1{\n\tfont-family: Helveticaneue;\n    font-size: 40px;\n    text-align: center;\n    padding-bottom: 10px;\n    position: relative;\n    left: 600px;\n    color: black;\n\tborder-bottom: 4px solid #ff3860;\n\twidth: 400px;\n\tmargin-bottom: 50px;\n}\n.vote{\n\tborder: 1px solid white;\n\tborder-top: 1px solid #dbdbdb;\n\tborder-radius: 0px;\n\twidth: 100%;\n\tpadding: 20px 0px;\n\tbackground-color: none;\n}\n.vote:hover{\n\tborder: none;\n\tborder-top: 1px solid #dbdbdb; \n\tcursor: pointer;\n}\n.vote:focus{\n\tborder: none;\n\toutline: none;\n\t-webkit-box-shadow: none;\n\t        box-shadow: none;\n}\n.voteIcon{\n\tfont-size: 24px;\n\tcolor: grey;\n}\n.voteIcon:hover{\n\tcolor: #ff3860;\n\t-webkit-transition: 0.7s ease-in-out;\n\ttransition: 0.7s ease-in-out;\n}\n.voteIcon:focus{\n\tcolor: #ff3860;\n\t-webkit-transition: 0.7s ease-in-out;\n\ttransition: 0.7s ease-in-out;\n}\n.votedIcon{\n\tfont-size: 24px;\n\tcolor: #ff3860;\n}\n", ""]);
+exports.push([module.i, "\n.card{\n\tposition: relative;\n\tleft: -40px;\n}\n.card-content{\n\ttext-align: center;\n}\n.card-footer-item{\n\theight: 80px;\n\ttext-align: center;\n}\n.prev{\n\tfloat: left;\n\tposition: relative;\n\tleft: -90px;\n\twidth: 100px;\n\tpadding: 20px; \n\ttop: 25px;\n\tcursor: pointer;\n}\n.done{\n\twidth: 300px;\n\tposition: relative;\n\tleft: 480px;\n\tpadding: 20px;\n\tcursor: pointer;\n\ttop: 25px;\n}\n.next{\n\tfloat: right;\n\tposition: relative;\n\tleft: 90px;\n\twidth: 100px;\n\tpadding: 20px;\n\ttop: 25px;\n\tcursor: pointer;\n}\nh1{\n\tfont-family: Helveticaneue;\n    font-size: 40px;\n    text-align: center;\n    padding-bottom: 10px;\n    position: relative;\n    left: 600px;\n    color: black;\n\tborder-bottom: 4px solid #ff3860;\n\twidth: 400px;\n\tmargin-bottom: 50px;\n}\n.vote{\n\tborder: 1px solid white;\n\tborder-top: 1px solid #dbdbdb;\n\tborder-radius: 0px;\n\twidth: 100%;\n\tpadding: 20px 0px;\n\tbackground-color: none;\n}\n.vote:hover{\n\tborder: none;\n\tborder-top: 1px solid #dbdbdb; \n\tcursor: pointer;\n}\n.vote:focus{\n\tborder: none;\n\toutline: none;\n\t-webkit-box-shadow: none;\n\t        box-shadow: none;\n}\n.voteIcon{\n\tfont-size: 24px;\n\tcolor: grey;\n}\n.voteIcon:hover{\n\tcolor: #ff3860;\n\t-webkit-transition: 0.7s ease-in-out;\n\ttransition: 0.7s ease-in-out;\n}\n.voteIcon:focus{\n\tcolor: #ff3860;\n\t-webkit-transition: 0.7s ease-in-out;\n\ttransition: 0.7s ease-in-out;\n}\n.votedIcon{\n\tfont-size: 24px;\n\tcolor: #ff3860;\n}\n", ""]);
 
 // exports
 
@@ -43498,6 +43498,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			voteData.append('social_director', this.studentVote.socialDirector);
 			voteData.append('sports_director', this.studentVote.sportsDirector);
 			__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('api/vote', voteData).then(function (data) {
+				console.log(data);
 				Event.$emit('voted');
 				_.delay(self.redirect, 4000);
 			}).catch(function (e) {
@@ -43727,32 +43728,16 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./Adako_Leke.jpg": 52,
-	"./Akin-Taylor_Akinbowale.jpg": 53,
-	"./Akin_Akinbowale.jpg": 54,
-	"./Anike_Fisher.jpg": 55,
-	"./Basit_Alaka.jpg": 56,
-	"./Brian_Nate.jpg": 57,
-	"./Charles_Bukowski.jpg": 58,
-	"./Chidinma_Anakwe.jpg": 59,
-	"./Chidinma_Annaker.jpg": 60,
-	"./Chukwudi_Oranu.jpg": 61,
-	"./Damola_Adegbuyi.jpg": 62,
-	"./Ego_Oranu.jpeg": 63,
-	"./Frank_Ocean.jpg": 64,
-	"./Gbemisola_Abijo.jpg": 65,
-	"./James_Blake.jpg": 66,
-	"./James_Fauntleroy.jpg": 67,
-	"./Kola_Popoola.jpg": 68,
-	"./Mark_Noble.jpg": 69,
-	"./Prince_Emanuel.jpg": 70,
-	"./Thomas_Ebere.jpg": 71,
-	"./Tiwa_Lade.jpg": 72,
-	"./Tobi_Oyewole.jpg": 73,
-	"./Tony_Pulis.jpg": 74,
-	"./Tyler_Okonma.jpg": 75,
-	"./Yinka_Onaduja.jpg": 76,
-	"./hehe_Oranu.jpg": 77
+	"./Basit_mLD0Pi.jpg": 52,
+	"./Chinko_HPyCL5.jpg": 53,
+	"./Chinko_dZbeZD.jpg": 54,
+	"./Chukwudi_WXVIHP.jpg": 55,
+	"./Emma_F8hwkE.jpg": 56,
+	"./James_kF86ZV.jpg": 57,
+	"./Jean-Michel_dmbAmc.jpg": 58,
+	"./Sandra_PbrRv8.jpg": 59,
+	"./Tyler_uC9WaD.jpg": 60,
+	"./Yinka_NDDMe0.jpg": 61
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -43774,160 +43759,64 @@ webpackContext.id = 51;
 /* 52 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/Adako_Leke.jpg?970b139903e6d3e61d0e0cb16435be6c";
+module.exports = "/images/Basit_mLD0Pi.jpg?1033e9e55820adde977e5f429455ecf9";
 
 /***/ }),
 /* 53 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/Akin-Taylor_Akinbowale.jpg?16d7ba2de8ab2c6411e95ecc8f991e81";
+module.exports = "/images/Chinko_HPyCL5.jpg?63e34eb43d947766113575dbdb9debdd";
 
 /***/ }),
 /* 54 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/Akin_Akinbowale.jpg?16d7ba2de8ab2c6411e95ecc8f991e81";
+module.exports = "/images/Chinko_dZbeZD.jpg?8c5c4bfaa24930b2d7b6f0ca2d16a7c4";
 
 /***/ }),
 /* 55 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/Anike_Fisher.jpg?56c1746f0ffd6e4c07b7c64b18f4768b";
+module.exports = "/images/Chukwudi_WXVIHP.jpg?255dc7a95f132fb23a79271bf6458693";
 
 /***/ }),
 /* 56 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/Basit_Alaka.jpg?bda114f6af826307a1b101886f319e1c";
+module.exports = "/images/Emma_F8hwkE.jpg?33dcd82ea501a61eb8fffe5c1c805ff9";
 
 /***/ }),
 /* 57 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/Brian_Nate.jpg?56c1746f0ffd6e4c07b7c64b18f4768b";
+module.exports = "/images/James_kF86ZV.jpg?3c28aec10c50813e9f1df80ab6cf6afa";
 
 /***/ }),
 /* 58 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/Charles_Bukowski.jpg?13e0acdeba24faa12c5dac1ae80da701";
+module.exports = "/images/Jean-Michel_dmbAmc.jpg?7636af9a8885792682d871ebe67bee87";
 
 /***/ }),
 /* 59 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/Chidinma_Anakwe.jpg?47002f07a9b37008de5790ef398599b7";
+module.exports = "/images/Sandra_PbrRv8.jpg?9bcf710efdc87f3b4fd57f6c133a82b7";
 
 /***/ }),
 /* 60 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/Chidinma_Annaker.jpg?6d8f1aa441be1f3f1b09424e87120a6f";
+module.exports = "/images/Tyler_uC9WaD.jpg?df03bf45ef40be9febf9949e4dbcae8f";
 
 /***/ }),
 /* 61 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/Chukwudi_Oranu.jpg?16d7ba2de8ab2c6411e95ecc8f991e81";
+module.exports = "/images/Yinka_NDDMe0.jpg?13e0acdeba24faa12c5dac1ae80da701";
 
 /***/ }),
 /* 62 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/Damola_Adegbuyi.jpg?83fcf519ecda36a1ee86efeb0b79fe56";
-
-/***/ }),
-/* 63 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/Ego_Oranu.jpeg?d1ca7070f961962781326e460baf3d5e";
-
-/***/ }),
-/* 64 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/Frank_Ocean.jpg?d8eb28c54bb9623219f3d9b7405445fb";
-
-/***/ }),
-/* 65 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/Gbemisola_Abijo.jpg?d8eb28c54bb9623219f3d9b7405445fb";
-
-/***/ }),
-/* 66 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/James_Blake.jpg?4dd6b30c732537bd621069b68147cc31";
-
-/***/ }),
-/* 67 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/James_Fauntleroy.jpg?f7bbe30971e7b6e2cd5c9f573842af13";
-
-/***/ }),
-/* 68 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/Kola_Popoola.jpg?d1857975126f5751511ed6afa81d8509";
-
-/***/ }),
-/* 69 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/Mark_Noble.jpg?6ac21514f54cd4ae309c522f5146efc1";
-
-/***/ }),
-/* 70 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/Prince_Emanuel.jpg?d1857975126f5751511ed6afa81d8509";
-
-/***/ }),
-/* 71 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/Thomas_Ebere.jpg?1afb272200c0c9a7e9af512b6393c5bc";
-
-/***/ }),
-/* 72 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/Tiwa_Lade.jpg?4bb6d5e6a341087f04345ee39ece0773";
-
-/***/ }),
-/* 73 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/Tobi_Oyewole.jpg?0053b3843a1696d7de20d8b8f8f5e602";
-
-/***/ }),
-/* 74 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/Tony_Pulis.jpg?c23be6decbe0e9113a8b5c93c78ed6c8";
-
-/***/ }),
-/* 75 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/Tyler_Okonma.jpg?2e24b9b00a9a8c5c3d83ec7500669b4c";
-
-/***/ }),
-/* 76 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/Yinka_Onaduja.jpg?1afb272200c0c9a7e9af512b6393c5bc";
-
-/***/ }),
-/* 77 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/hehe_Oranu.jpg?d8eb28c54bb9623219f3d9b7405445fb";
-
-/***/ }),
-/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -44092,15 +43981,15 @@ if (false) {
 }
 
 /***/ }),
-/* 79 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(3)
 /* script */
-var __vue_script__ = __webpack_require__(80)
+var __vue_script__ = __webpack_require__(64)
 /* template */
-var __vue_template__ = __webpack_require__(81)
+var __vue_template__ = __webpack_require__(65)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -44139,7 +44028,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 80 */
+/* 64 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -44167,7 +44056,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 81 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -44208,7 +44097,7 @@ if (false) {
 }
 
 /***/ }),
-/* 82 */
+/* 66 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

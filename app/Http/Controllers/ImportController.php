@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+set_time_limit(0);
+
 use Illuminate\Http\Request;
 use Excel;
 use File;
@@ -27,12 +29,12 @@ class ImportController extends Controller
     	$data = Excel::load($path, function($reader){
 
         })->get();
+
     	foreach($data as $key=>$value){
             $key = strtolower(str_random(6));
 
     		$student = [
-    			'first_name'=>$value->first_name,
-    			'last_name'=>$value->last_name,
+    			'name'=>$value->name,
     			'matric_no'=>$value->matric_no,
     			'course'=>$request->course,
                 'key'=>$key,
@@ -49,7 +51,7 @@ class ImportController extends Controller
                     $errorString = $e->errorInfo[2];
                     preg_match('/..(\/)..../', $errorString, $duplicate_matric);
                     $existing_student = Student::where('matric_no', $duplicate_matric[0])->first();
-                    $message = "Oops! An error occured while adding the student {$student['first_name']} {$student['last_name']}. The matric number {$duplicate_matric[0]} already belongs to {$existing_student->first_name} {$existing_student->last_name}, a {$existing_student->level} level student in {$existing_student->course}";
+                    $message = "Oops! An error occured while adding the student {$student['name']}. The matric number {$duplicate_matric[0]} already belongs to {$existing_student->name}, a {$existing_student->level} level student in {$existing_student->course}";
                     return response()->json([
                         'status'=>'error',
                         'message'=>$message

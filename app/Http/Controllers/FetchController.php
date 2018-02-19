@@ -20,7 +20,7 @@ class FetchController extends Controller
     }
 
     public function fetchCourse(Request $request){
-        if($request->course=='All' && $request->level=='All'){
+        if(($request->course=='All' || $request->course=='') && ($request->level=='All' || $request->level=='')){
             $students = Student::all();
             $count = count($students);
             $response = [
@@ -30,7 +30,7 @@ class FetchController extends Controller
             return response()->json($response);
         }
 
-        if($request->level=='All'){
+        if($request->level=='All' || $request->level==''){
             $students = Student::course($request->course)->get();
             $count = count($students);
             $response = [
@@ -40,7 +40,7 @@ class FetchController extends Controller
             return response()->json($response);
         }
 
-        if($request->course=='All'){
+        if($request->course=='All' || $request->course==''){
             $students = Student::level($request->level)->get();
             $count = count($students);
             $response = [

@@ -173,6 +173,7 @@
 				voteData.append('sports_director', this.studentVote.sportsDirector);
 				axios.post('api/vote', voteData)
 				.then((data)=>{
+					console.log(data);
 					Event.$emit('voted');
 					_.delay(self.redirect, 4000);
 					
@@ -192,12 +193,13 @@
 <style>
 
 	.card{
-		max-width: 140%;
+		position: relative;
+		left: -40px;
 	}
-
 	.card-content{
 		text-align: center;
 	}
+
 	.card-footer-item{
 		height: 80px;
 		text-align: center;
@@ -209,7 +211,7 @@
 		left: -90px;
 		width: 100px;
 		padding: 20px; 
-		top: 50px;
+		top: 25px;
 		cursor: pointer;
 	}
 
@@ -219,7 +221,7 @@
 		left: 480px;
 		padding: 20px;
 		cursor: pointer;
-		top: 50px;
+		top: 25px;
 	}
 
 	.next{
@@ -228,7 +230,7 @@
 		left: 90px;
 		width: 100px;
 		padding: 20px;
-		top: 50px;
+		top: 25px;
 		cursor: pointer;
 	}
 

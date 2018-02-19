@@ -23,7 +23,8 @@ class AddController extends Controller
     public function add(Request $request){
         $image = $request->file('image');
         $extension = $image->extension();
-        $fileName = "{$request->firstName}_{$request->lastName}.jpg";
+        $random = str_random(6);
+        $fileName = "{$request->firstName}_{$random}.jpg";
         $image->move(public_path().'/candidate-images', $fileName);
 
     	$candidate = Candidate::create([

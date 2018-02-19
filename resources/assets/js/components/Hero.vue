@@ -61,9 +61,15 @@
 					},
 					{
 						href: '/fetch-candidates',
-						text: 'Search candidate',
+						text: 'Search candidates',
+						selected: false
+					},
+					{
+						href: '/view-votes',
+						text: 'View Results',
 						selected: false
 					}
+
 				]
 			}
 		},

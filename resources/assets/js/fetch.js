@@ -5,6 +5,7 @@ import Modal from './components/Modal.vue';
 import StudentCard from './components/StudentCard.vue';
 import StatCard from './components/StatCard.vue';
 import Hero from './components/Hero.vue';
+import LoadingModal from './components/LoadingModal.vue';
 
 window.app = new Vue({
     el: '#root',
@@ -73,7 +74,7 @@ window.app = new Vue({
             });
         }
     },
-    components: {Modal, StudentCard, StatCard, Hero}
+    components: {Modal, StudentCard, StatCard, Hero, LoadingModal}
 })
 
 
