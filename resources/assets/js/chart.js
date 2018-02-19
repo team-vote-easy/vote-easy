@@ -42,17 +42,15 @@ window.app = new Vue({
 				counter++;
 			});
 
-			CanvasJS.addColorSet("greenShades", 
+			CanvasJS.addColorSet("warmShades", 
 			[
-				"#2F4F4F",
-				"#008080",
-				"#2E8B57",
-				"#3CB371",
-				"#90EE90"                
+				"#ebbe85",
+				"#e08471",
+				"#e0d771"              
 			]);
 
 			var chart = new CanvasJS.Chart(candidate.name, {
-				colorSet: "greenShades",
+				colorSet: "warmShades",
 				title:{
 					text: candidate.name            
 				},

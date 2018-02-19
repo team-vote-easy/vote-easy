@@ -24,13 +24,10 @@
 <body>
 	<div id="root">
 		<hero link="/view-votes"> </hero>
-		@foreach($result as $position)
-			<h1 class="title"> {{$position['name'] }} </h1> <hr>
-			<result-card :candidates="{{$position['candidates']}}" > </result-card>
-
-		@endforeach	
+		<chart> </chart>
 	</div>
 </body>
 </html>
 
+<script type="text/javascript" src="js/canvasjs.min.js"></script>
 <script type="text/javascript" src="js/result.js"></script>

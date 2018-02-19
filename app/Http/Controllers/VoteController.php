@@ -19,7 +19,7 @@ class VoteController extends Controller
 	public function getVotesView(){
 		$result = $this->getVotes();
 		return view('view-votes', [
-			'result'=>$result
+			'positions'=>$this->positions
 		]);
 	}
 
