@@ -21,7 +21,6 @@ class StudentController extends Controller
     }
 
     public function login(Request $request){
-    	
     	$rules = ['matricNumber' => 'required|max:7', 'password'=>'required'];
     	$this->validate($request, $rules);
 
@@ -46,9 +45,11 @@ class StudentController extends Controller
 
     public function voteView(){
     	$loggedStudent = Auth::guard('students')->user();
-
+        $firstName = explode(' ', $loggedStudent->name);
+        $firstName = title_case(end($firstName));
     	return view('vote-view', [
-    		'student'=>$loggedStudent
+    		'student'=>$loggedStudent,
+            'firstName'=>$firstName
     	]);
     }
 

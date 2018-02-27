@@ -110,9 +110,13 @@
 			},
 
 			vote(position, id){
-				this.studentVote[_.camelCase(position)] = id;
-				//Move to the next candidate
 				self = this;
+				this.studentVote[_.camelCase(position)] = id;
+
+				//Send Event to sidebar component to check if sidebar option has been selected
+				Event.$emit('updateSideBar', self.studentVote);
+
+				//Move to the next candidate
 				_.delay(self.next, 1000);	
 			},
 
@@ -208,29 +212,29 @@
 	.prev{
 		float: left;
 		position: relative;
-		left: -90px;
+		left: -98px;
 		width: 100px;
 		padding: 20px; 
-		top: 25px;
+		top: 10px;
 		cursor: pointer;
 	}
 
 	.done{
-		width: 300px;
+		width: 340px;
 		position: relative;
-		left: 480px;
+		left: 390px;
 		padding: 20px;
 		cursor: pointer;
-		top: 25px;
+		top: 10px;
 	}
 
 	.next{
 		float: right;
 		position: relative;
-		left: 90px;
+		left: 98px;
 		width: 100px;
 		padding: 20px;
-		top: 25px;
+		top: 10px;
 		cursor: pointer;
 	}
 
@@ -240,7 +244,7 @@
 	    text-align: center;
 	    padding-bottom: 10px;
 	    position: relative;
-	    left: 600px;
+	    left: 480px;
 	    color: black;
 		border-bottom: 4px solid #ff3860;
 		width: 400px;

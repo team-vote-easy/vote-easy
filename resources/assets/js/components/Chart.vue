@@ -76,7 +76,7 @@
 							indexLabelFontFamily: "Montserrat",
 							indexLabelFontSize: 20,
 							indexLabel: "{name}: {y} votes",
-							toolTipContent: "{name}: <strong> {y} votes </strong>",
+							toolTipContent: "{name}: {y} votes.",
 							dataPoints: candidateItems
 						}
 					]

@@ -25,9 +25,12 @@ Route::get('fetch-candidates', 'FetchController@fetchCandidateView');
 Route::post('fetch-candidates', 'FetchController@fetchCandidate');
 
 
-Route::get('student-login', 'StudentController@loginView');
+Route::group(['middleware'=>'redirectauthenticatedstudents'], function(){
+	Route::get('student-login', 'StudentController@loginView');
 
-Route::post('student-login', 'StudentController@login');
+	Route::post('student-login', 'StudentController@login');
+});
+
 
 Route::group(['middleware'=>'studentauth'], function(){
 	
@@ -42,6 +45,9 @@ Route::group(['middleware'=>'studentauth'], function(){
 	Route::post('/api/vote', 'StudentController@postVotes');
 
 });
+
+
+
 
 Route::get('view-votes', 'VoteController@getVotesView');
 

@@ -25,8 +25,8 @@
 </head>
 <body>
     <ul class="nav-ting">
-        <li><h3> <a href="/logout">Logout</a> </h3></li>
-        <li><h3> Logged in as: <strong> {{$student->first_name. ' '.$student->last_name}} </strong> </h3></li>
+        {{-- <li><h3> <a href="/logout">Logout</a> </h3></li> --}}
+        <li><h3> Hey <strong> {{$firstName}} </strong>! </h3></li>
     </ul>
     
     <div id="root">

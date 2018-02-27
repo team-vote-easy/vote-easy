@@ -43941,7 +43941,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					indexLabelFontFamily: "Montserrat",
 					indexLabelFontSize: 20,
 					indexLabel: "{name}: {y} votes",
-					toolTipContent: "{name}: <strong> {y} votes </strong>",
+					toolTipContent: "{name}: {y} votes.",
 					dataPoints: candidateItems
 				}]
 			});

@@ -43283,7 +43283,7 @@ exports = module.exports = __webpack_require__(11)(false);
 
 
 // module
-exports.push([module.i, "\n.card{\n\tposition: relative;\n\tleft: -40px;\n}\n.card-content{\n\ttext-align: center;\n}\n.card-footer-item{\n\theight: 80px;\n\ttext-align: center;\n}\n.prev{\n\tfloat: left;\n\tposition: relative;\n\tleft: -90px;\n\twidth: 100px;\n\tpadding: 20px; \n\ttop: 25px;\n\tcursor: pointer;\n}\n.done{\n\twidth: 300px;\n\tposition: relative;\n\tleft: 480px;\n\tpadding: 20px;\n\tcursor: pointer;\n\ttop: 25px;\n}\n.next{\n\tfloat: right;\n\tposition: relative;\n\tleft: 90px;\n\twidth: 100px;\n\tpadding: 20px;\n\ttop: 25px;\n\tcursor: pointer;\n}\nh1{\n\tfont-family: Helveticaneue;\n    font-size: 40px;\n    text-align: center;\n    padding-bottom: 10px;\n    position: relative;\n    left: 600px;\n    color: black;\n\tborder-bottom: 4px solid #ff3860;\n\twidth: 400px;\n\tmargin-bottom: 50px;\n}\n.vote{\n\tborder: 1px solid white;\n\tborder-top: 1px solid #dbdbdb;\n\tborder-radius: 0px;\n\twidth: 100%;\n\tpadding: 20px 0px;\n\tbackground-color: none;\n}\n.vote:hover{\n\tborder: none;\n\tborder-top: 1px solid #dbdbdb; \n\tcursor: pointer;\n}\n.vote:focus{\n\tborder: none;\n\toutline: none;\n\t-webkit-box-shadow: none;\n\t        box-shadow: none;\n}\n.voteIcon{\n\tfont-size: 24px;\n\tcolor: grey;\n}\n.voteIcon:hover{\n\tcolor: #ff3860;\n\t-webkit-transition: 0.7s ease-in-out;\n\ttransition: 0.7s ease-in-out;\n}\n.voteIcon:focus{\n\tcolor: #ff3860;\n\t-webkit-transition: 0.7s ease-in-out;\n\ttransition: 0.7s ease-in-out;\n}\n.votedIcon{\n\tfont-size: 24px;\n\tcolor: #ff3860;\n}\n", ""]);
+exports.push([module.i, "\n.card{\n\tposition: relative;\n\tleft: -40px;\n}\n.card-content{\n\ttext-align: center;\n}\n.card-footer-item{\n\theight: 80px;\n\ttext-align: center;\n}\n.prev{\n\tfloat: left;\n\tposition: relative;\n\tleft: -98px;\n\twidth: 100px;\n\tpadding: 20px; \n\ttop: 10px;\n\tcursor: pointer;\n}\n.done{\n\twidth: 340px;\n\tposition: relative;\n\tleft: 390px;\n\tpadding: 20px;\n\tcursor: pointer;\n\ttop: 10px;\n}\n.next{\n\tfloat: right;\n\tposition: relative;\n\tleft: 98px;\n\twidth: 100px;\n\tpadding: 20px;\n\ttop: 10px;\n\tcursor: pointer;\n}\nh1{\n\tfont-family: Helveticaneue;\n    font-size: 40px;\n    text-align: center;\n    padding-bottom: 10px;\n    position: relative;\n    left: 480px;\n    color: black;\n\tborder-bottom: 4px solid #ff3860;\n\twidth: 400px;\n\tmargin-bottom: 50px;\n}\n.vote{\n\tborder: 1px solid white;\n\tborder-top: 1px solid #dbdbdb;\n\tborder-radius: 0px;\n\twidth: 100%;\n\tpadding: 20px 0px;\n\tbackground-color: none;\n}\n.vote:hover{\n\tborder: none;\n\tborder-top: 1px solid #dbdbdb; \n\tcursor: pointer;\n}\n.vote:focus{\n\tborder: none;\n\toutline: none;\n\t-webkit-box-shadow: none;\n\t        box-shadow: none;\n}\n.voteIcon{\n\tfont-size: 24px;\n\tcolor: grey;\n}\n.voteIcon:hover{\n\tcolor: #ff3860;\n\t-webkit-transition: 0.7s ease-in-out;\n\ttransition: 0.7s ease-in-out;\n}\n.voteIcon:focus{\n\tcolor: #ff3860;\n\t-webkit-transition: 0.7s ease-in-out;\n\ttransition: 0.7s ease-in-out;\n}\n.votedIcon{\n\tfont-size: 24px;\n\tcolor: #ff3860;\n}\n", ""]);
 
 // exports
 
@@ -43440,9 +43440,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			return __webpack_require__(51)("./" + image);
 		},
 		vote: function vote(position, id) {
-			this.studentVote[_.camelCase(position)] = id;
-			//Move to the next candidate
 			self = this;
+			this.studentVote[_.camelCase(position)] = id;
+
+			//Send Event to sidebar component to check if sidebar option has been selected
+			Event.$emit('updateSideBar', self.studentVote);
+
+			//Move to the next candidate
 			_.delay(self.next, 1000);
 		},
 		prev: function prev() {
@@ -43598,7 +43602,7 @@ exports = module.exports = __webpack_require__(11)(false);
 
 
 // module
-exports.push([module.i, "\n.menu{\n\tposition: relative;\n\ttop: 30px;\n\tleft: -70px;\n}\n.menu-list{\n\tborder-left: 3px solid #ff3860;\n}\n.menu-list a.is-active{\n\tbackground-color: #ff3860;\n\tborder-radius: 0px;\n}\n", ""]);
+exports.push([module.i, "\n.menu{\n\tposition: relative;\n\ttop: 30px;\n\tleft: -85px;\n}\n.menu-list{\n\tborder-left: 3px solid #ff3860;\n}\n.menu-list a.is-active{\n\tbackground-color: #ff3860;\n\tborder-radius: 0px;\n}\n.voted{\n\tfloat: right;\n\tcolor: #00d1b2;\n}\n", ""]);
 
 // exports
 
@@ -43609,6 +43613,8 @@ exports.push([module.i, "\n.menu{\n\tposition: relative;\n\ttop: 30px;\n\tleft: 
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
 //
 //
 //
@@ -43652,7 +43658,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				position: 'Sports Director',
 				url: '#',
 				selected: false
-			}]
+			}],
+			votes: ''
 		};
 	},
 	created: function created() {
@@ -43663,12 +43670,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				position.selected = self.positions.indexOf(position) == index;
 			});
 		});
+
+		//Check to see if the sidebar option has been voted for
+		Event.$on('updateSideBar', function (votes) {
+			self.votes = votes;
+		});
 	},
 
 	methods: {
 		menuChange: function menuChange(position) {
 			var keys = this.positions.indexOf(position);
 			Event.$emit('menuChange', keys);
+		},
+		hasVoted: function hasVoted(position) {
+
+			if (this.votes == '') {
+				return false;
+			}
+
+			if (this.votes[_.camelCase(position)] != '') {
+				return true;
+			} else {
+				return false;
+			}
 		}
 	}
 
@@ -43705,7 +43729,12 @@ var render = function() {
                   }
                 }
               },
-              [_vm._v(_vm._s(position.position))]
+              [
+                _vm._v(_vm._s(position.position) + " \n\t    \t\t"),
+                _vm.hasVoted(position.position)
+                  ? _c("span", { staticClass: "fa fa-check-circle voted" })
+                  : _vm._e()
+              ]
             )
           ])
         })

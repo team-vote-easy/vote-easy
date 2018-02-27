@@ -6,7 +6,9 @@
 		  </p>
 		  <ul class="menu-list">
 		    <li v-for="position in positions">
-		    	<a :href="position.url" :class="{'is-active' : position.selected}" @click.prevent="menuChange(position)">{{position.position}}</a>
+		    	<a :href="position.url" :class="{'is-active' : position.selected}" @click.prevent="menuChange(position)">{{position.position}} 
+		    		<span v-if="hasVoted(position.position)" class="fa fa-check-circle voted"></span>
+		    	</a>
 		    </li>
 		  </ul>
 		</aside>
@@ -48,9 +50,8 @@
 						url: '#',
 						selected: false
 					},
-
-
-				]
+				],
+				votes: ''
 			}
 		},
 		created(){
@@ -60,12 +61,31 @@
 				self.positions.forEach((position)=>{
 					position.selected = (self.positions.indexOf(position)==index);
 				})
-			})
+			});
+
+			//Check to see if the sidebar option has been voted for
+			Event.$on('updateSideBar', (votes)=>{
+				self.votes = votes;
+			});
 		},
 		methods: {
 			menuChange(position){
 				var keys = this.positions.indexOf(position);
 				Event.$emit('menuChange', keys);
+			},
+
+			hasVoted(position){
+
+				if(this.votes == ''){
+					return false;
+				}
+
+				if(this.votes[_.camelCase(position)] != ''){
+					return true;
+				}
+				else{
+					return false;
+				}
 			}
 		}
 
@@ -76,7 +96,7 @@
 	.menu{
 		position: relative;
 		top: 30px;
-		left: -70px;
+		left: -85px;
 
 	}
 
@@ -87,5 +107,10 @@
 	.menu-list a.is-active{
 		background-color: #ff3860;
 		border-radius: 0px;
+	}
+
+	.voted{
+		float: right;
+		color: #00d1b2;
 	}
 </style>
