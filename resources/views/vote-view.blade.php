@@ -26,7 +26,7 @@
 <body>
     <ul class="nav-ting">
         {{-- <li><h3> <a href="/logout">Logout</a> </h3></li> --}}
-        <li><h3> Hey <strong> {{$firstName}} </strong>! </h3></li>
+        <li><h3> Hey <strong> {{$firstName}} </strong>!  {{$emoji}} </h3></li>
     </ul>
     
     <div id="root">

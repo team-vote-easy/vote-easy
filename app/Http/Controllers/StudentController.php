@@ -44,12 +44,18 @@ class StudentController extends Controller
     }
 
     public function voteView(){
+         $emojis = [ '🔥', '🎉', '⚡️', '🦄', '👋🏿', '🤙🏿', '🏄🏾', '👻', ' 💩', '🌈', '🕊 ', '🦅 '];
+        
     	$loggedStudent = Auth::guard('students')->user();
         $firstName = explode(' ', $loggedStudent->name);
         $firstName = title_case(end($firstName));
+
+        $emoji = $emojis[array_rand($emojis)];
+
     	return view('vote-view', [
     		'student'=>$loggedStudent,
-            'firstName'=>$firstName
+            'firstName'=>$firstName,
+            'emoji'=>$emoji
     	]);
     }
 
