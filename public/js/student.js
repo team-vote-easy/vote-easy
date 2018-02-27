@@ -43602,7 +43602,7 @@ exports = module.exports = __webpack_require__(11)(false);
 
 
 // module
-exports.push([module.i, "\n.menu{\n\tposition: relative;\n\ttop: 30px;\n\tleft: -85px;\n}\n.menu-list{\n\tborder-left: 3px solid #ff3860;\n}\n.menu-list a.is-active{\n\tbackground-color: #ff3860;\n\tborder-radius: 0px;\n}\n.voted{\n\tfloat: right;\n\tcolor: #00d1b2;\n}\n", ""]);
+exports.push([module.i, "\n.menu{\n\tposition: relative;\n\ttop: 30px;\n\tleft: -85px;\n}\n.menu-list{\n\tborder-left: 3px solid #ff3860;\n}\n.menu-list a.is-active{\n\tbackground-color: whitesmoke;\n\tcolor: #ff3860;\n\tborder-right: 4px solid #ff3860;\n\t/*border: 2px solid #ff3860;*/\n\t/*border-radius: 4px;*/\n}\n.voted{\n\tfloat: right;\n\tcolor: #00d1b2;\n}\n", ""]);
 
 // exports
 

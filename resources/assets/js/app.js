@@ -4,6 +4,7 @@ window.Vue = require('vue');
 window.Event = new Vue();
 import Modal from './components/Modal.vue';
 import Hero from './components/Hero.vue';
+import Dashboard from './components/Dashboard.vue';
 import LoadingModal from './components/LoadingModal.vue';
 
 window.app = new Vue({
@@ -60,7 +61,7 @@ window.app = new Vue({
             })
         }
     },
-    components: {Modal, Hero, LoadingModal}
+    components: {Modal, Hero, LoadingModal, Dashboard}
 })
 
 

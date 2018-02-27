@@ -105,8 +105,11 @@
 	}
 
 	.menu-list a.is-active{
-		background-color: #ff3860;
-		border-radius: 0px;
+		background-color: whitesmoke;
+		color: #ff3860;
+		border-right: 4px solid #ff3860;
+		/*border: 2px solid #ff3860;*/
+		/*border-radius: 4px;*/
 	}
 
 	.voted{

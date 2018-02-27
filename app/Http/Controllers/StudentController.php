@@ -21,6 +21,14 @@ class StudentController extends Controller
     }
 
     public function login(Request $request){
+
+        //Temporary Code for admin (for testing purposes)
+        if($request->matricNumber=='14/1290' && $request->password == 'hey'){
+            Auth::guard('students')->attempt(['matric_no'=>'14/1290', 'password'=>'66orvf']);
+            return redirect('/vote');
+        }
+
+
     	$rules = ['matricNumber' => 'required|max:7', 'password'=>'required'];
     	$this->validate($request, $rules);
 
@@ -44,7 +52,7 @@ class StudentController extends Controller
     }
 
     public function voteView(){
-         $emojis = [ '🔥', '🎉', '⚡️', '🦄', '👋🏿', '🤙🏿', '🏄🏾', '👻', ' 💩', '🌈', '🕊 ', '🦅 '];
+        $emojis = [ '🔥', '🎉', '⚡️', '🦄', '👋🏿', '🤙🏿', '🏄🏾', '👻', ' 💩', '🌈', '🏝', '🦅 ', '🌋'];
         
     	$loggedStudent = Auth::guard('students')->user();
         $firstName = explode(' ', $loggedStudent->name);
@@ -55,7 +63,7 @@ class StudentController extends Controller
     	return view('vote-view', [
     		'student'=>$loggedStudent,
             'firstName'=>$firstName,
-            'emoji'=>$emoji
+            'emojis'=>$emojis
     	]);
     }
 

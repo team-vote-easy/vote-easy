@@ -1,5 +1,10 @@
 <?php
 
+
+Route::get('admin-dashboard', function(){
+	return view('admin-dashboard');
+});
+
 Route::get('import', 'ImportController@showImport');
 
 Route::post('import', 'ImportController@import');

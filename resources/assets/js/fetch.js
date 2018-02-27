@@ -5,6 +5,7 @@ import Modal from './components/Modal.vue';
 import StudentCard from './components/StudentCard.vue';
 import StatCard from './components/StatCard.vue';
 import Hero from './components/Hero.vue';
+import Dashboard from './components/Dashboard.vue';
 import LoadingModal from './components/LoadingModal.vue';
 
 window.app = new Vue({
@@ -66,7 +67,6 @@ window.app = new Vue({
                     return;
                 }
                 self.studentDetails = data.data;
-                console.log(self.studentDetails);
                 self.empty = false;
             })
             .catch((e)=>{
@@ -74,7 +74,7 @@ window.app = new Vue({
             });
         }
     },
-    components: {Modal, StudentCard, StatCard, Hero, LoadingModal}
+    components: {Modal, StudentCard, StatCard, Hero, LoadingModal, Dashboard}
 })
 
 
