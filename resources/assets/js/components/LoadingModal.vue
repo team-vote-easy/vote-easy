@@ -3,11 +3,17 @@
       <div class="modal-background"></div>
       <div class="modal-content load">
       	<i class="fa fa-spinner fa-spin load"></i>
-      	<br/> <span class="loadText">Adding Students...</span>
+      	<br/> <span class="loadText"> {{content}}</span>
       </div>
     </div>
 </template>
 
+
+<script>
+	export default{
+		props: ['content']
+	}
+</script>
 
 <style>
 	.load{

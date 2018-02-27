@@ -49,7 +49,7 @@
 </head>
 <body>
     <div id="root" v-cloak>
-        <loading-modal v-if="loading"> </loading-modal>
+        <loading-modal v-if="loading" content="Adding Students..."> </loading-modal>
         <dashboard :link="'/import'"> 
             <div class="box">
                 <form method="POST" action="/import" enctype="multipart/form-data" @submit.prevent="submit">

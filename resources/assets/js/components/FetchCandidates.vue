@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<div class="container box">
-	        <form method="POST" action="/import" enctype="multipart/form-data" class="container" @submit.prevent="fetchCandidate">
+		<div class="box">
+	        <form method="POST" action="/import" enctype="multipart/form-data" class="" @submit.prevent="fetchCandidate">
 	            <h1>Search Candidates</h1>
 
 	            <div class="field is-horizontal">
@@ -53,15 +53,15 @@
 	        
 	            <div class="field">
 	                <div class="control">
-	                  <input type="submit" name="Submit" value="Search" class="button is-primary is-medium">  
+	                  <input type="submit" name="Submit" value="Search" class="button is-dark is-medium">  
 	                </div>
 	            </div>
 	        </form>
 	    </div>
-	    <div class="content container">
-	            <h1 v-if="loading">Loading...</h1>
-	            <stat-card v-if="message" :message="message" :empty="empty"> </stat-card>
-	            <candidate-card v-if="candidates" v-for="(candidate, key) in candidates" :candidates="candidate" :key="key"> </candidate-card>
+	    <div class="content">
+            <h1 v-if="loading">Loading...</h1>
+            <stat-card v-if="message" :message="message" :empty="empty"> </stat-card>
+            <candidate-card v-if="candidates" v-for="(candidate, key) in candidates" :candidates="candidate" :key="key"> </candidate-card>
 	       
 	    </div>
 	</div>

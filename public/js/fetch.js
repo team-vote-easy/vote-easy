@@ -43947,7 +43947,7 @@ function injectStyle (ssrContext) {
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = null
+var __vue_script__ = __webpack_require__(77)
 /* template */
 var __vue_template__ = __webpack_require__(61)
 /* template functional */
@@ -44035,26 +44035,21 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal is-active" }, [
-      _c("div", { staticClass: "modal-background" }),
+  return _c("div", { staticClass: "modal is-active" }, [
+    _c("div", { staticClass: "modal-background" }),
+    _vm._v(" "),
+    _c("div", { staticClass: "modal-content load" }, [
+      _c("i", { staticClass: "fa fa-spinner fa-spin load" }),
       _vm._v(" "),
-      _c("div", { staticClass: "modal-content load" }, [
-        _c("i", { staticClass: "fa fa-spinner fa-spin load" }),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c("span", { staticClass: "loadText" }, [_vm._v("Adding Students...")])
+      _c("br"),
+      _vm._v(" "),
+      _c("span", { staticClass: "loadText" }, [
+        _vm._v(" " + _vm._s(_vm.content))
       ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -44391,6 +44386,28 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-78b73b2d", module.exports)
   }
 }
+
+/***/ }),
+/* 77 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	props: ['content']
+});
 
 /***/ })
 /******/ ]);

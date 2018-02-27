@@ -1,6 +1,6 @@
 <template>
 	<div class="columns">
-		<div v-for="candidate in candidates" class="column is-4">
+		<div v-for="candidate in candidates" class="column is-3">
 			<div class="card">
 			  <div class="card-image">
 			    <figure class="image is-4by3">
@@ -52,13 +52,13 @@
 </script>
 
 <style>
-	/*.card{
-		width: 1300px;
-	}
-*/
-	.card-image{
+	.card{
 		width: 400px;
 	}
+
+	/*.card-image{
+		width: 400px;
+	}*/
 	.title{
 		height: 55px;
 	}

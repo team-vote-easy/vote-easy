@@ -5,6 +5,8 @@ import Modal from './components/Modal.vue';
 import Hero from './components/Hero.vue';
 import FetchCandidates from './components/FetchCandidates.vue';
 import AddPost from './components/AddPost.vue';
+import Dashboard from './components/Dashboard.vue';
+import LoadingModal from './components/LoadingModal.vue';
 
 window.app = new Vue({
     el: '#root',
@@ -17,7 +19,8 @@ window.app = new Vue({
         role: '',
         showModal: false,
         errors: {},
-        success: ''
+        success: '',
+        loading: ''
     },
     methods: {
         processFile(event){
@@ -26,6 +29,9 @@ window.app = new Vue({
         },
 
         submit: function(){
+            self = this;
+
+            this.loading = true;
             var formData = new FormData();
             formData.append('firstName', this.firstName);
             formData.append('lastName', this.lastName);
@@ -37,17 +43,18 @@ window.app = new Vue({
 
             axios.post('/add-candidates', formData)
             .then((data)=>{
-                console.log(data);
+                this.loading = false;
                 this.success = data.data;
                 this.showModal = true;
                 
             })
             .catch((error)=>{
+                this.loading = false;
                 console.log(error);
             });
         }
     },
-    components: {Modal, FetchCandidates, Hero, AddPost}
+    components: {Modal, FetchCandidates, Hero, AddPost, Dashboard, LoadingModal}
 })
 
 

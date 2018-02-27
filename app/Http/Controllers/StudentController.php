@@ -52,7 +52,7 @@ class StudentController extends Controller
     }
 
     public function voteView(){
-        $emojis = [ '🔥', '🎉', '⚡️', '🦄', '👋🏿', '🤙🏿', '🏄🏾', '👻', ' 💩', '🌈', '🏝', '🦅 ', '🌋'];
+        $emojis = [ '🔥', '🎉', '⚡️', '🦄', '👋🏿', '🤙🏿', '🏄🏾', '👻', ' 💩', '🌈', '🦅 ', '🌋', '🍩', '🚣‍♀️', '🚀', '🏇', '👾', '👽', ];
         
     	$loggedStudent = Auth::guard('students')->user();
         $firstName = explode(' ', $loggedStudent->name);
