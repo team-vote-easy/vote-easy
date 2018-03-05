@@ -1,11 +1,11 @@
 <template>
 	<div>
-		<header class="hero is-light">
+		<header class="hero is-light is-bold is-medium">
 			<div class="hero-head">
 				<nav class="navbar">
 					<div class="navbar-brand">
 						<a class="navbar-item">
-						  <img src="css/images/BUCC Logo.jpg" width="112" height="28" alt="Bulma">
+						  <img src="css/images/bulma-logo.png" width="112" height="28" alt="Bulma">
 						</a>
 					</div>
 					<div class="navbar-menu">

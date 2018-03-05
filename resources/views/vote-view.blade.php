@@ -22,15 +22,18 @@
             text-decoration: none;
             color: black;
         }
+
+        [v-cloak]{
+            display: none;
+        }
     </style>
 </head>
 <body>
     <ul class="nav-ting">
-        {{-- <li><h3> <a href="/logout">Logout</a> </h3></li> --}}
         <li><h3> Hey <strong> {{$firstName}} </strong>!  {{$emojis[array_rand($emojis)]}} </h3></li>
     </ul>
     
-    <div id="root">
+    <div id="root" v-cloak>
         <div class="container">
            <vote-card student="{{$student->id}}"> </vote-card>
 

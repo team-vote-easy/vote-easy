@@ -19,12 +19,18 @@
     		position: relative;
     		left: 30%; 
     	}
+
+        [v-cloak] {
+            display: none;
+        }
     </style>
 </head>
 <body>
-	<div id="root">
-		<hero link="/view-votes"> </hero>
-		<chart> </chart>
+	<div id="root" v-cloak>
+		<dashboard link="/view-votes"> 
+            <chart> </chart>
+        </dashboard>
+		
 	</div>
 </body>
 </html>

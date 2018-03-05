@@ -48,7 +48,6 @@ Route::group(['middleware'=>'studentauth'], function(){
 	Route::get('api/candidates', 'StudentController@getCandidates');
 
 	Route::post('/api/vote', 'StudentController@postVotes');
-
 });
 
 
@@ -62,3 +61,6 @@ Route::get('/vote-test', function(){
 	return view('vote-test');
 });
 
+
+
+Route::get('my-test', 'VoteController@phpTest');

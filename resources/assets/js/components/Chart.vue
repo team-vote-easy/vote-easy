@@ -20,7 +20,6 @@
 				axios.get('api/get-votes')
 					.then((data)=>{
 						var posts = data.data;
-						console.log(posts);
 						var keys = Object.keys(posts);
 						keys.forEach((k)=>{
 							console.log(k);
