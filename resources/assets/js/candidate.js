@@ -3,7 +3,7 @@ window.Vue = require('vue');
 window.Event = new Vue();
 import Modal from './components/Modal.vue';
 import Hero from './components/Hero.vue';
-import FetchCandidates from './components/FetchCandidates.vue';
+// import FetchCandidates from './components/FetchCandidates.vue';
 import AddPost from './components/AddPost.vue';
 import Dashboard from './components/Dashboard.vue';
 import LoadingModal from './components/LoadingModal.vue';
@@ -54,7 +54,7 @@ window.app = new Vue({
             });
         }
     },
-    components: {Modal, FetchCandidates, Hero, AddPost, Dashboard, LoadingModal}
+    components: {Modal, Hero, AddPost, Dashboard, LoadingModal}
 })
 
 
