@@ -24,7 +24,8 @@ class StudentController extends Controller
 
         //Temporary Code for admin (for testing purposes)
         if($request->matricNumber=='14/1290' && $request->password == 'hey'){
-            Auth::guard('students')->attempt(['matric_no'=>'14/1290', 'password'=>'66orvf']);
+            $password = Student::where('matric_no', '14/1290')->first()->key;
+            Auth::guard('students')->attempt(['matric_no'=>'14/1290', 'password'=>$password]);
             return redirect('/vote');
         }
 
