@@ -134,7 +134,7 @@ window.app = new Vue({
 			.then((data)=>{
 				console.log(data);
 				Event.$emit('voted');
-				_.delay(self.redirect, 4000);
+				_.delay(self.redirect, 2000);
 				
 			})
 			.catch((e)=>{

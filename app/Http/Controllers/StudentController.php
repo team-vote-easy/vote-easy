@@ -31,7 +31,11 @@ class StudentController extends Controller
 
 
     	$rules = ['matricNumber' => 'required|max:7', 'password'=>'required'];
-    	$this->validate($request, $rules);
+        $messages = [
+            'matricNumber.required' => "Please enter a matric number!",
+            'password.required'=> 'Please enter a password!'
+        ];
+    	$this->validate($request, $rules, $messages);
 
     	$student = Student::where('matric_no', $request->matricNumber)->where('key', $request->password)->first();
 
@@ -48,7 +52,7 @@ class StudentController extends Controller
     		return redirect('/vote');
     	}
     	else{
-    		return redirect()->back()->withInput($request->except('password'));
+    		return redirect()->back()->withInput($request->except('password'))->withErrors(['invalid'=>'Invalid Matric Number or password']);
     	}
     }
 

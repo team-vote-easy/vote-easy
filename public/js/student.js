@@ -1525,7 +1525,7 @@ window.app = new Vue({
 			axios.post('api/vote', voteData).then(function (data) {
 				console.log(data);
 				Event.$emit('voted');
-				_.delay(self.redirect, 4000);
+				_.delay(self.redirect, 2000);
 			}).catch(function (e) {
 				console.log(e);
 			});

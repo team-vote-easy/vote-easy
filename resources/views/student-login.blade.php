@@ -42,6 +42,10 @@
        .green{
         border: 2px solid #5eaa4d;
        }
+
+       i.danger-icon{
+        color: #ff2b56;
+       }
     </style>
 </head>
 <body>
@@ -60,9 +64,19 @@
                     </div>
                     <div class="field-body">
                         <div class="field">
-                            <div class="control is-expanded">
-                                <input type="text" name="matricNumber" class="input" placeholder="Matric Number" value="{{old('matricNumber')}}">
+                            <div class="control is-expanded has-icons-left">
+                                <input type="text" name="matricNumber" class="input {{$errors->has('matricNumber') || $errors->has('invalid') ? 'is-danger' : ''}}" placeholder="Matric Number" value="{{old('matricNumber')}}">
+                                <span class="icon is-small is-left">
+                                    <i class="fa fa-user-o {{$errors->has('matricNumber') || $errors->has('invalid') ? 'is-danger danger-icon' : ''}}"></i>
+                                </span>
                             </div>
+                            @if($errors->has('matricNumber'))
+                                <p class="help is-danger"> {{$errors->first('matricNumber')}} </p>
+                            @endif
+
+                            @if($errors->has('invalid'))
+                                <p class="help is-danger"> {{$errors->first('invalid')}} </p>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -73,9 +87,19 @@
                     </div>
                     <div class="field-body">
                         <div class="field is-narrow">
-                            <div class="control">
-                                <input type="password" name="password" class="input" placeholder="Password" >
+                            <div class="control has-icons-left">
+                                <input type="password" name="password" class="input {{$errors->has('password') || $errors->has('invalid') ? 'is-danger' : ''}}" placeholder="Password">
+                                <span class="icon is-small is-left">
+                                    <i class="fa fa-lock {{$errors->has('password') || $errors->has('invalid') ? 'is-danger danger-icon' : ''}}"></i>
+                                </span>
                             </div>
+                            @if($errors->has('password'))
+                                <p class="help is-danger"> {{$errors->first('password')}} </p>
+                            @endif
+
+                            @if($errors->has('invalid'))
+                                <p class="help is-danger"> {{$errors->first('invalid')}} </p>
+                            @endif
                         </div>
                     </div>
                 </div>

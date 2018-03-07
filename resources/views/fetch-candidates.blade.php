@@ -86,7 +86,7 @@
 
 		            <div class="columns" v-if="candidates" v-for="(candidateSet, key) in candidates" :key="key">
 						<div v-for="candidate in candidateSet" class="column is-3">
-							<div class="card">
+							<div class="card view">
 								<div class="card-image">
 							    	<figure class="image is-4by3">
 							      		<img :src="getPath(candidate.image)" alt="Candidate Image">
