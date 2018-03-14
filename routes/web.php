@@ -1,13 +1,21 @@
 <?php
 
-
-Route::get('admin-dashboard', function(){
-	return view('admin-dashboard');
+Route::get('/', function(){
+	return redirect('/import');
 });
+
+
+// Route::get('admin-dashboard', function(){
+// 	return view('admin-dashboard');
+// });
 
 Route::get('import', 'ImportController@showImport');
 
 Route::post('import', 'ImportController@import');
+
+Route::get('/add-student', 'ImportController@addStudentView');
+
+Route::post('/add-student', 'ImportController@addStudent');
 
 Route::get('add-candidates', 'AddController@showAdd');
 
@@ -64,3 +72,4 @@ Route::get('/vote-test', function(){
 
 
 Route::get('my-test', 'VoteController@phpTest');
+

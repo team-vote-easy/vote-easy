@@ -17,7 +17,10 @@ use Hash;
 class StudentController extends Controller
 {
     public function loginView(){
-    	return view('student-login');
+        $emojis = [ '🏄🏾', '🚣‍♀️'];
+    	return view('student-login', [
+            'emojis'=>$emojis
+        ]);
     }
 
     public function login(Request $request){

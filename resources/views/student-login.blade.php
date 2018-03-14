@@ -24,9 +24,10 @@
        }
 
        input[type=submit]{
-        width: 300px;
+        width: 600px;
         position: relative;
-        left: 440px;
+        margin-top: 20px;
+        left: 300px;
        }
 
        .meh{
@@ -106,7 +107,7 @@
             
                 <div class="field">
                     <div class="control">
-                      <input type="submit" name="Submit" value="Submit" class="button is-danger is-medium">  
+                      <input type="submit" name="Submit" value="Login {{$emojis[array_rand($emojis)]}}" class="button is-success is-medium">  
                     </div>
                 </div>
             </form>

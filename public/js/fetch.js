@@ -44098,6 +44098,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					icon: 'fa fa-graduation-cap',
 					selected: false
 				}, {
+					href: '/add-student',
+					text: 'Add a Student',
+					icon: 'fa fa-graduation-cap',
+					selected: false
+				}, {
 					href: '/fetch-student',
 					text: 'Search For A Student',
 					icon: 'fa fa-search',
