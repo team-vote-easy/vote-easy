@@ -27,7 +27,7 @@
 </head>
 <body>
 	<div id="root" v-cloak>
-		<dashboard link="/view-votes"> 
+		<dashboard link="/view-votes" admin={{$admin}}> 
             <chart> </chart>
         </dashboard>
 		

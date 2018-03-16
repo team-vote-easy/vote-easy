@@ -55,7 +55,7 @@
 <body>
     <div id="root" v-cloak>
         <loading-modal v-if="loading" content="Adding The Student..."> </loading-modal>
-        <dashboard :link="'/add-student'"> 
+        <dashboard :link="'/add-student'" admin={{$admin}}> 
             <div class="box">
                 <form method="POST" action="/add-stunt" enctype="multipart/form-data" @submit.prevent="addStudent">
                     <h1>Add A Student</h1>

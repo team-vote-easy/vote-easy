@@ -5,20 +5,29 @@ namespace App\Http\Controllers;
 set_time_limit(0);
 
 use Illuminate\Http\Request;
+
 use Excel;
+
 use File;
+
 use Hash;
+
+use Auth;
+
 use App\Student;
+
 use Illuminate\Database\QueryException;
 
 class ImportController extends Controller
 {
 	public function showImport(){
+        $admin = Auth::guard('admin')->user()->name;
 		$courses = ["Computer Science", "Computer Technology", "Computer Information Systems"];
 		$levels = [100, 200, 300, 400];
 		return view('import', [
 			'courses'=>$courses,
-			'levels'=>$levels
+			'levels'=>$levels,
+            'admin'=>$admin
 		]);
 	}
 
@@ -63,11 +72,13 @@ class ImportController extends Controller
     }
 
     public function addStudentView(){
+        $admin = Auth::guard('admin')->user()->name;
         $courses = ["Computer Science", "Computer Technology", "Computer Information Systems"];
         $levels = [100, 200, 300, 400];
         return view('add-a-student', [
             'courses'=>$courses,
-            'levels'=>$levels
+            'levels'=>$levels,
+            'admin'=>$admin
         ]);
     }
 

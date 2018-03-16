@@ -16,7 +16,7 @@
 </head>
 <body>
 	<div id="root" v-cloak>
-		<dashboard :link="'/fetch-candidates'">
+		<dashboard :link="'/fetch-candidates'" admin={{$admin}}>
 			<div>
 				<div class="box">
 			        <form method="POST" action="/import" enctype="multipart/form-data" class="" @submit.prevent="fetchCandidate">

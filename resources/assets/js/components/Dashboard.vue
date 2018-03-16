@@ -1,21 +1,21 @@
 <template>
 	<div>
-		<header class="hero is-light is-bold is-medium">
+		<header class="hero is-light is-medium">
 			<div class="hero-head">
 				<nav class="navbar">
 					<div class="navbar-brand">
 						<a class="navbar-item">
-						  <img src="css/images/bulma-logo.png" width="112" height="28" alt="Bulma">
+						  <img src="css/images/bucc-logo.PNG" width="112" height="40" alt="BUCC">
 						</a>
 					</div>
 					<div class="navbar-menu">
 						<div class="navbar-end">
 							<span class="navbar-item">
-								Signed In as: Chudi
+								Signed In as: <span class="admin"> {{admin}} </span>
 							</span>
 
 							<span class="navbar-item">
-								<a class="button is-dark is-outlined is-rounded"> Sign Out</a>
+								<a class="button is-dark is-outlined is-rounded" href="/admin-logout"> Sign Out</a>
 							</span>
 						</div>
 					</div>
@@ -52,7 +52,7 @@
 
 <script>
 	export default{
-		props: ['link'],
+		props: ['link', 'admin'],
 		data(){
 			return{
 				tabs: [
@@ -134,5 +134,15 @@
 	.menu-list a.is-active{
 		background-color: #363636;
 		color: white;
+	}
+
+	.navbar{
+		max-height: 500px;
+	}
+
+	span.admin{
+		margin: 5px 6px;
+		padding: 1px;
+		border-bottom: 3px solid black;
 	}
 </style>
