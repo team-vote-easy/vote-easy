@@ -1427,9 +1427,7 @@ window.app = new Vue({
             this.students = '';
 
             self = this;
-            axios.post('/fetch-course', {
-                level: this.level,
-                course: this.course,
+            axios.post('/fetch-hall', {
                 hall: this.hall
             }).then(function (data) {
                 self.loading = false;
@@ -43526,18 +43524,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: {
@@ -43579,18 +43565,6 @@ var render = function() {
                   "\n\t\t        " + _vm._s(student.matric_no) + "\n\t\t      "
                 )
               ])
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "card-footer-item" }, [
-              _c("span", [
-                _vm._v(
-                  "\n\t\t        " + _vm._s(student.course) + "\n\t\t      "
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "card-footer-item" }, [
-              _vm._v("\n\t\t    \t" + _vm._s(student.level) + "\n\t\t    ")
             ]),
             _vm._v(" "),
             _c("p", { staticClass: "card-footer-item" }, [

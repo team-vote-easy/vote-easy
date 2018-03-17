@@ -13,46 +13,23 @@ use Auth;
 class FetchController extends Controller
 {
     public function fetchCourseView(){
-        $admin = Auth::guard('admin')->user()->name;
-        $courses = ["Computer Science", "Computer Technology", "Computer Information Systems", "All"];
-        $levels = [100, 200, 300, 400, 'All'];
+        $admin = Auth::guard('admin')->user()->name;  
         $halls = ["Samuel Akande", "Queen Esther", "Nelson Mandela", "Bethel Splendor", "Kings Delight Hall", "Winslow", "Gideon Troopers", "Welch", "Crystal", "Platinum", "Marigold", "FAD", "Queen Esther", "Off-Campus", "All"];
         return view('fetch-view-course', [
             'admin'=>$admin,
-            'courses'=>$courses,
-            'levels'=>$levels,
             'halls'=>$halls
         ]);
     }
 
-    public function fetchCourse(Request $request){
-
-        if($request->course=='All' || $request->course==''){
-            $course = null;
-        } else{
-            $course = $request->course;
-        }
-
-        if($request->level=='All' || $request->level==''){
-            $level = null;
-        } else{
-            $level = $request->level;
-        }
-
-        if($request->hall=='All' || $request->hall==''){
-            $hall=null;
-        } else{
-            $hall = $request->hall;
-        }
-
-        $students = Student::course($course)->level($level)->hall($hall)->get();
+    public function fetchHall(Request $request){
+        $hall = $request->hall == null ? '' : $request->hall;
+        $students = Student::hall($request->hall)->get();
         $count = count($students);
-        $course = $course == '' ? 'All courses' : $course;
-        $level = $level == '' ? 'All Levels' : "$level level";
-        $hall = $hall == '' ? 'All Halls' : "$hall hall";
+
+        $data = $hall == '' ? 'All Halls' : $hall;
 
         $response = [
-            'message' => "There are $count students from $hall in $level studying $course",
+            'message' => "There are $count students from $data",
             'students'=>$students
         ];
         return response()->json($response);

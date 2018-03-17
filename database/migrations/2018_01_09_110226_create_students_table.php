@@ -17,8 +17,6 @@ class CreateStudentsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('matric_no')->unique();
-            $table->string('course');
-            $table->integer('level');
             $table->string('hall')->default('Off-Campus');
             $table->string('key');
             $table->string('password');

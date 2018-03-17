@@ -11,6 +11,8 @@ Route::get('admin-logout', 'AdminController@logout');
 Route::get('/admin-test', 'AdminController@testAuth');
 
 
+Route::get('/add-test', 'ImportController@addTest');
+
 Route::group(['middleware'=>'adminauth'], function(){
 
 	Route::get('import', 'ImportController@showImport');
@@ -31,7 +33,7 @@ Route::group(['middleware'=>'adminauth'], function(){
 
 	Route::get('fetch-course', 'FetchController@fetchCourseView');
 
-	Route::post('fetch-course', 'FetchController@fetchCourse');
+	Route::post('fetch-hall', 'FetchController@fetchHall');
 
 	Route::get('fetch-student', 'FetchController@fetchStudentView');
 
@@ -48,6 +50,8 @@ Route::group(['middleware'=>'adminauth'], function(){
 	Route::get('/view-breakdown', 'AnalyticsController@breakDownView');
 });
 
+
+/*--------------------------------------------------------------------------*/
 
 Route::get('/', function(){
 	return redirect('/student-login');

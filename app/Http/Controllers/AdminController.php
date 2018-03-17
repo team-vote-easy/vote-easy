@@ -19,7 +19,7 @@ class AdminController extends Controller
     		'name'=>'darthchudi',
     		'password'=> Hash::make('unicornspooptoo')
     	]);
-    	echo 'Done Bitch 🏄🏾';
+    	return redirect('admin-log');
     }	
 
 

@@ -109,11 +109,8 @@
 						</p>
 						<p class="card-footer-item">
 						  <span>
-							@{{studentDetails.course}}
+							@{{studentDetails.hall == 'Off-Campus' ? studentDetails.hall : `${studentDetails.hall} Hall`}} 
 						  </span>
-						</p>
-						<p class="card-footer-item">
-						  @{{studentDetails.level}}
 						</p>
 						<p class="card-footer-item">
 						  @{{ studentDetails.voted ? 'Voted' : 'Not Voted' }}
