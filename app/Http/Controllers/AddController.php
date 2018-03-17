@@ -22,7 +22,7 @@ class AddController extends Controller
 		$levels = [100, 200, 300, 400];
 		$positions = ["PRO", "President", "Vice President", "Chaplain", "Sports Director", "Social Director", "Hall Senator"];
         $halls = ["Samuel Akande", "Queen Esther", "Nelson Mandela", "Bethel Splendor", "Kings Delight Hall", "Winslow", "Gideon Troopers", "Welch", "Crystal", "Platinum", "Marigold", "FAD", "Queen Esther", "Off-Campus"];
-        $floors=["Ground Floor (GF)", "First Floor (FF)", "Second Floor (SF)", "Third Floor (TF"];
+        $floors=["Ground Floor (GF)", "First Floor (FF)", "Second Floor (SF)", "Third Floor (TF)"];
 		return view('add-candidates', [
 			'courses'=>$courses,
 			'levels'=>$levels,

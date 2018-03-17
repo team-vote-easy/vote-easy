@@ -101,7 +101,21 @@ class FetchController extends Controller
            $level=$request->level;
         }
 
-        return response()->json(Candidate::position($position)->course($course)->level($level)->get());
+        if($request->hall == '' || $request->hall=='All'){
+            $hall = null;
+        }
+        else{
+           $hall=$request->hall;
+        }
+
+        if($request->floor == '' || $request->floor=='All'){
+            $floor = null;
+        }
+        else{
+           $floor=$request->floor;
+        }
+
+        return response()->json(Candidate::position($position)->course($course)->level($level)->hall($hall)->floor($floor)->get());
     }
 
 }

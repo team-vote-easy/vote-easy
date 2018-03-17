@@ -59,7 +59,7 @@
 			                  <div class="field is-narrow">
 			                      <div class="control">
 			                          <div class="select is-fullwidth">
-			                              <select name="position" v-model="roleData">
+			                              <select name="position" v-model="roleData" @change="handleChange">
 		                              			<option value="" disabled>Select Position</option>
 			                                    <option v-for="position in positionArray" :value="position" :key="position"> 
 			                                    	@{{position}} 
@@ -70,6 +70,37 @@
 			                  </div>
 			              </div>
 			            </div>
+
+
+						<div class="field is-horizontal" v-if="showHalls">
+	                        <div class="field-label is-normal">
+	                            <label class="label">Hall + Floor: </label>
+	                        </div>
+	                        <div class="field-body">
+	                            <div class="field">
+	                                <div class="control is-expanded">
+	                                    <div class="select">
+	                                        <select name="hall" v-model="hall">
+	                                            <option value="" disabled="">Select Hall</option>
+	                                            <option v-for="hall in hallArray"  :value="hall" :key="hall"> @{{hall}}  </option>
+	                                        </select>
+	                                    </div>
+	                                </div>
+	                            </div>
+
+	                            <div class="field">
+	                                <div class="control is-expanded">
+	                                    <div class="select">
+	                                        <select name="floor" v-model="floor">
+	                                            <option value="" disabled=>Select Floor</option>
+	                                            <option v-for="floor in floorArray" :value="floor" :key="floor"> @{{floor}}  </option>
+	                                        </select>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+
 			        
 			            <div class="field">
 			                <div class="control">
