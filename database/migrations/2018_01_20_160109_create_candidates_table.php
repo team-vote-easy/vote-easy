@@ -20,6 +20,8 @@ class CreateCandidatesTable extends Migration
             $table->integer('level');
             $table->string('course');
             $table->string('position');
+            $table->string('hall')->nullable();
+            $table->string('floor')->nullable();
             $table->string('image');
             $table->timestamps();
         });

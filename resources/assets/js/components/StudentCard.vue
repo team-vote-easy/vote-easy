@@ -22,6 +22,10 @@
 			    	{{student.level}}
 			    </p>
 
+			    <p class="card-footer-item">
+			    	{{student.hall}}
+			    </p>
+
 			    <!-- <p class="card-footer-item">
 			    	<strong> Password: </strong> &nbsp;&nbsp;&nbsp;&nbsp; <span class="password"> {{student.key}} </span>
 			    </p> -->

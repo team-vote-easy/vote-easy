@@ -132,11 +132,11 @@
 				</div>
 	
 
-					<div class="field">
-						<div class="control">
-							<input type="submit" name="Submit" value="Search" class="button is-dark is-medium">  
-						</div>
+				<div class="field">
+					<div class="control">
+						<input type="submit" name="Submit" value="Search" class="button is-dark is-medium">  
 					</div>
+				</div>
 				</form>
 			</div>
 			<div class="content">

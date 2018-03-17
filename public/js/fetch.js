@@ -43534,6 +43534,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: {
@@ -43587,6 +43591,10 @@ var render = function() {
             _vm._v(" "),
             _c("p", { staticClass: "card-footer-item" }, [
               _vm._v("\n\t\t    \t" + _vm._s(student.level) + "\n\t\t    ")
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-footer-item" }, [
+              _vm._v("\n\t\t    \t" + _vm._s(student.hall) + "\n\t\t    ")
             ])
           ])
         ])

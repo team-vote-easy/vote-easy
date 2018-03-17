@@ -1513,7 +1513,10 @@ window.app = new Vue({
         showModal: false,
         errors: {},
         success: '',
-        loading: ''
+        loading: '',
+        showHalls: '',
+        hall: '',
+        floor: ''
     },
     methods: {
         processFile: function processFile(event) {
@@ -1535,8 +1538,13 @@ window.app = new Vue({
             formData.append('course', this.course);
             formData.append('position', this.role);
             formData.append('image', this.image, this.image.name);
+            if (this.floor !== '' && this.hall != '') {
+                formData.append('floor', this.floor);
+                formData.append('hall', this.hall);
+            }
 
             axios.post('/add-candidates', formData).then(function (data) {
+                console.log(data.data);
                 _this.loading = false;
                 _this.success = data.data;
                 _this.showModal = true;
@@ -1545,11 +1553,22 @@ window.app = new Vue({
                 _this.level = '';
                 _this.course = '';
                 _this.image = '';
+                _this.hall = '';
+                _this.floor = '';
                 _this.role = '';
+                _this.showHalls = '';
             }).catch(function (error) {
                 _this.loading = false;
                 console.log(error);
             });
+        },
+
+        handleChange: function handleChange() {
+            if (this.role == 'Hall Senator') {
+                this.showHalls = true;
+            } else {
+                this.showHalls = false;
+            }
         }
     },
     components: { Modal: __WEBPACK_IMPORTED_MODULE_0__components_Modal_vue___default.a, Hero: __WEBPACK_IMPORTED_MODULE_1__components_Hero_vue___default.a, AddPost: __WEBPACK_IMPORTED_MODULE_2__components_AddPost_vue___default.a, Dashboard: __WEBPACK_IMPORTED_MODULE_3__components_Dashboard_vue___default.a, LoadingModal: __WEBPACK_IMPORTED_MODULE_4__components_LoadingModal_vue___default.a }
@@ -44185,7 +44204,7 @@ var render = function() {
             attrs: {
               src: "css/images/bucc-logo.PNG",
               width: "130",
-              height: "220",
+              height: "180",
               alt: "BUCC"
             }
           }),
