@@ -98,15 +98,6 @@
                     <h1 class="data"> <span class="digit"> {{$unvotedStudents}} </span>  <br/> Are Yet To Vote</h1>
                 </div>
             </div>
-
-            <div class="columns container">
-                @foreach($levelsData as $level=>$count)
-                    <div class="box level column is-2 container">
-                        <h1 class="data"> <span class="digit"> {{$count}} </span>  <br/><strong> {{$level}} </strong> level students have voted </h1>
-                    </div>                
-        
-                @endforeach
-            </div>
             
 
 
