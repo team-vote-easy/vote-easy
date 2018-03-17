@@ -1,27 +1,23 @@
 <template>
 	<div>
-		<header class="hero is-light is-medium">
-			<div class="hero-head">
-				<nav class="navbar">
-					<div class="navbar-brand">
-						<a class="navbar-item">
-						  <img src="css/images/bucc-logo.PNG" width="112" height="40" alt="BUCC">
-						</a>
-					</div>
-					<div class="navbar-menu">
-						<div class="navbar-end">
-							<span class="navbar-item">
-								Signed In as: <span class="admin"> {{admin}} </span>
-							</span>
+		<nav class="navbar">
+			<div class="navbar-menu">
+				<div class="navbar-end">
+					<img class="navbar-item brand" src="css/images/bucc-logo.PNG" width="130" height="220" alt="BUCC">
 
-							<span class="navbar-item">
-								<a class="button is-dark is-outlined is-rounded" href="/admin-logout"> Sign Out</a>
-							</span>
-						</div>
-					</div>
-				</nav>
+					<span class="navbar-item">
+						Signed In as: <span class="admin"> {{admin}} </span>
+					</span>
+
+					<span class="navbar-item">
+						<a class="button is-dark is-outlined is-rounded" href="/admin-logout"> Sign Out</a>
+					</span>
+
+					
+				</div>
 			</div>
-		</header>
+		</nav>
+			
 
 		<div class="section">
 		 	<div class="columns">
@@ -62,7 +58,7 @@
 								{
 									href: '/import', 
 									text: 'Add Students',
-									icon: 'fa fa-graduation-cap',
+									icon: 'fa fa-users',
 									selected: false
 								},
 								{
@@ -103,12 +99,18 @@
 							]
 						},
 						{
-							title: 'Stats',
+							title: 'Analytics',
 							subTabs: [
 								{
 									href: '/view-votes',
 									text: 'View Results',
-									icon: 'fa fa-signal',
+									icon: 'fa fa-bar-chart',
+									selected: false
+								},
+								{
+									href: '/view-breakdown',
+									text: 'View Breakdown',
+									icon: 'fa fa-line-chart',
 									selected: false
 								}
 							]
@@ -127,17 +129,23 @@
 </script>
 
 <style>
+
+	.navbar{
+		border-bottom: 6px solid whitesmoke;
+	}
+
+	.brand{
+		position: relative;
+		left: -870px;
+	}
+
 	.fa{
 		margin-right: 5px;
 	}
 
 	.menu-list a.is-active{
-		background-color: #363636;
+		background-color: #0a0a0a;
 		color: white;
-	}
-
-	.navbar{
-		max-height: 500px;
 	}
 
 	span.admin{

@@ -46,7 +46,12 @@ window.app = new Vue({
                 this.loading = false;
                 this.success = data.data;
                 this.showModal = true;
-                
+                this.firstName = '';
+                this.lastName = '';
+                this.level = '';
+                this.course = '';
+                this.image = '';
+                this.role = '';                
             })
             .catch((error)=>{
                 this.loading = false;

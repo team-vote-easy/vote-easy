@@ -63,8 +63,12 @@ class StudentController extends Controller
         $emojis = [ '🔥', '🎉', '⚡️', '🦄', '👋🏿', '🤙🏿', '🏄🏾', '👻', ' 💩', '🌈', '🦅 ', '🌋', '🍩', '🚣‍♀️', '🚀', '🏇', '👾', '👽', ];
         
     	$loggedStudent = Auth::guard('students')->user();
-        $firstName = explode(' ', $loggedStudent->name);
-        $firstName = title_case(end($firstName));
+        $name = explode(' ', $loggedStudent->name);
+        $firstName = title_case(end($name));
+
+        if(strlen($firstName) < 3){
+            $firstName = $name[0];
+        }
 
         $emoji = $emojis[array_rand($emojis)];
 

@@ -43735,7 +43735,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n.fa{\n\tmargin-right: 5px;\n}\n.menu-list a.is-active{\n\tbackground-color: #363636;\n\tcolor: white;\n}\n.navbar{\n\tmax-height: 500px;\n}\nspan.admin{\n\tmargin: 5px 6px;\n\tpadding: 1px;\n\tborder-bottom: 3px solid black;\n}\n", ""]);
+exports.push([module.i, "\n.navbar{\n\tborder-bottom: 6px solid whitesmoke;\n}\n.brand{\n\tposition: relative;\n\tleft: -870px;\n}\n.fa{\n\tmargin-right: 5px;\n}\n.menu-list a.is-active{\n\tbackground-color: #0a0a0a;\n\tcolor: white;\n}\nspan.admin{\n\tmargin: 5px 6px;\n\tpadding: 1px;\n\tborder-bottom: 3px solid black;\n}\n", ""]);
 
 // exports
 
@@ -43794,10 +43794,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['link', 'admin'],
@@ -43808,7 +43804,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				subTabs: [{
 					href: '/import',
 					text: 'Add Students',
-					icon: 'fa fa-graduation-cap',
+					icon: 'fa fa-users',
 					selected: false
 				}, {
 					href: '/add-student',
@@ -43840,11 +43836,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					selected: false
 				}]
 			}, {
-				title: 'Stats',
+				title: 'Analytics',
 				subTabs: [{
 					href: '/view-votes',
 					text: 'View Results',
-					icon: 'fa fa-signal',
+					icon: 'fa fa-bar-chart',
+					selected: false
+				}, {
+					href: '/view-breakdown',
+					text: 'View Breakdown',
+					icon: 'fa fa-line-chart',
 					selected: false
 				}]
 			}]
@@ -43870,23 +43871,27 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("header", { staticClass: "hero is-light is-medium" }, [
-      _c("div", { staticClass: "hero-head" }, [
-        _c("nav", { staticClass: "navbar" }, [
-          _vm._m(0),
+    _c("nav", { staticClass: "navbar" }, [
+      _c("div", { staticClass: "navbar-menu" }, [
+        _c("div", { staticClass: "navbar-end" }, [
+          _c("img", {
+            staticClass: "navbar-item brand",
+            attrs: {
+              src: "css/images/bucc-logo.PNG",
+              width: "130",
+              height: "220",
+              alt: "BUCC"
+            }
+          }),
           _vm._v(" "),
-          _c("div", { staticClass: "navbar-menu" }, [
-            _c("div", { staticClass: "navbar-end" }, [
-              _c("span", { staticClass: "navbar-item" }, [
-                _vm._v("\n\t\t\t\t\t\t\tSigned In as: "),
-                _c("span", { staticClass: "admin" }, [
-                  _vm._v(" " + _vm._s(_vm.admin) + " ")
-                ])
-              ]),
-              _vm._v(" "),
-              _vm._m(1)
+          _c("span", { staticClass: "navbar-item" }, [
+            _vm._v("\n\t\t\t\t\tSigned In as: "),
+            _c("span", { staticClass: "admin" }, [
+              _vm._v(" " + _vm._s(_vm.admin) + " ")
             ])
-          ])
+          ]),
+          _vm._v(" "),
+          _vm._m(0)
         ])
       ])
     ]),
@@ -43937,23 +43942,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "navbar-brand" }, [
-      _c("a", { staticClass: "navbar-item" }, [
-        _c("img", {
-          attrs: {
-            src: "css/images/bucc-logo.PNG",
-            width: "112",
-            height: "40",
-            alt: "BUCC"
-          }
-        })
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

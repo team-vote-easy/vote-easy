@@ -44,6 +44,8 @@ Route::group(['middleware'=>'adminauth'], function(){
 	Route::get('view-votes', 'VoteController@getVotesView');
 
 	Route::get('api/get-votes', 'VoteController@getVotes');
+
+	Route::get('/view-breakdown', 'AnalyticsController@breakDownView');
 });
 
 
@@ -74,9 +76,7 @@ Route::group(['middleware'=>'studentauth'], function(){
 
 
 
-Route::get('/vote-test', function(){
-	return view('vote-test');
-});
+Route::get('/get-total', 'AnalyticsController@getTotal');
 
 
 

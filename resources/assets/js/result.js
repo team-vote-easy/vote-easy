@@ -1,6 +1,5 @@
 require('./bootstrap');
 import Hero from './components/Hero.vue';
-import ResultCard from './components/ResultCard.vue';
 import Chart from './components/Chart.vue';
 import Dashboard from './components/Dashboard.vue';
 
@@ -11,5 +10,5 @@ var app = new Vue({
 	data: {
 
 	},
-	components: {Hero, ResultCard, Chart, Dashboard}
+	components: {Hero, Chart, Dashboard}
 });
