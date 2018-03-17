@@ -16,48 +16,43 @@ class FetchController extends Controller
         $admin = Auth::guard('admin')->user()->name;
         $courses = ["Computer Science", "Computer Technology", "Computer Information Systems", "All"];
         $levels = [100, 200, 300, 400, 'All'];
+        $halls = ["Samuel Akande", "Queen Esther", "Nelson Mandela", "Bethel Splendor", "Kings Delight Hall", "Winslow", "Gideon Troopers", "Welch", "Crystal", "Platinum", "Marigold", "FAD", "Queen Esther", "Off-Campus", "All"];
         return view('fetch-view-course', [
             'admin'=>$admin,
             'courses'=>$courses,
-            'levels'=>$levels
+            'levels'=>$levels,
+            'halls'=>$halls
         ]);
     }
 
     public function fetchCourse(Request $request){
-        if(($request->course=='All' || $request->course=='') && ($request->level=='All' || $request->level=='')){
-            $students = Student::all();
-            $count = count($students);
-            $response = [
-                'message'=> "There are {$count} students in Total",
-                'students'=> $students
-            ];
-            return response()->json($response);
+
+        if($request->course=='All' || $request->course==''){
+            $course = null;
+        } else{
+            $course = $request->course;
         }
 
         if($request->level=='All' || $request->level==''){
-            $students = Student::course($request->course)->get();
-            $count = count($students);
-            $response = [
-                'message'=> "There are {$count} {$request->course} students in Total",
-                'students'=> $students
-            ];
-            return response()->json($response);
+            $level = null;
+        } else{
+            $level = $request->level;
         }
 
-        if($request->course=='All' || $request->course==''){
-            $students = Student::level($request->level)->get();
-            $count = count($students);
-            $response = [
-                'message'=> "There are {$count} {$request->level} Level students in total",
-                'students'=>$students
-            ];
-            return response()->json($response);
+        if($request->hall=='All' || $request->hall==''){
+            $hall=null;
+        } else{
+            $hall = $request->hall;
         }
 
-        $students = Student::course($request->course)->level($request->level)->get();
+        $students = Student::course($course)->level($level)->hall($hall)->get();
         $count = count($students);
+        $course = $course == '' ? 'All courses' : $course;
+        $level = $level == '' ? 'All Levels' : "$level level";
+        $hall = $hall == '' ? 'All Halls' : "$hall hall";
+
         $response = [
-            'message' => "There are [${count}] {$request->level} Level {$request->course} students in total",
+            'message' => "There are $count students from $hall in $level studying $course",
             'students'=>$students
         ];
         return response()->json($response);

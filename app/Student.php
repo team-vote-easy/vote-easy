@@ -13,10 +13,18 @@ class Student extends Authenticatable
     protected $guarded = [];
 
     public function scopeCourse($query, $course){
+        if($course==null) {return;}
+
     	return $query->where('course', $course);
     }
 
     public function scopeLevel($query, $level){
+        if($level==null) {return;}
     	return $query->where('level', $level);
+    }
+
+    public function scopeHall($query, $hall){
+        if($hall==null) {return;}
+    	return $query->where('hall', $hall);
     }
 }

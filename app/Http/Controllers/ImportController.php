@@ -23,11 +23,13 @@ class ImportController extends Controller
 	public function showImport(){
         $admin = Auth::guard('admin')->user()->name;
 		$courses = ["Computer Science", "Computer Technology", "Computer Information Systems"];
+        $halls = ["Samuel Akande", "Queen Esther", "Nelson Mandela", "Bethel Splendor", "Kings Delight Hall", "Winslow", "Gideon Troopers", "Welch", "Crystal", "Platinum", "Marigold", "FAD", "Queen Esther", "Off-Campus"];
 		$levels = [100, 200, 300, 400];
 		return view('import', [
 			'courses'=>$courses,
 			'levels'=>$levels,
-            'admin'=>$admin
+            'admin'=>$admin,
+            'halls'=>$halls
 		]);
 	}
 
@@ -47,6 +49,7 @@ class ImportController extends Controller
     			'matric_no'=>$value->matric_no,
     			'course'=>$request->course,
                 'key'=>$key,
+                'hall'=>$request->hall,
                 'password'=> Hash::make($key),
     			'level'=>$request->level
     		];
@@ -75,10 +78,12 @@ class ImportController extends Controller
         $admin = Auth::guard('admin')->user()->name;
         $courses = ["Computer Science", "Computer Technology", "Computer Information Systems"];
         $levels = [100, 200, 300, 400];
+        $halls = ["Samuel Akande", "Queen Esther", "Nelson Mandela", "Bethel Splendor", "Kings Delight Hall", "Winslow", "Gideon Troopers", "Welch", "Crystal", "Platinum", "Marigold", "FAD", "Queen Esther", "Off-Campus"];
         return view('add-a-student', [
             'courses'=>$courses,
             'levels'=>$levels,
-            'admin'=>$admin
+            'admin'=>$admin,
+            'halls'=>$halls
         ]);
     }
 
@@ -94,6 +99,7 @@ class ImportController extends Controller
                 'level'=>$request->level,
                 'key'=>$key,
                 'password'=> Hash::make($key),
+                'hall'=>$request->hall
             ]);
             return response()->json('Added the student', 200);
         } 

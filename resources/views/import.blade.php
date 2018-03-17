@@ -88,6 +88,26 @@
                         </div>
                     </div>
 
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="label">Hall: </label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control is-expanded">
+                                    <div class="select">
+                                        <select name="hall" v-model="hall">
+                                            <option value="" disabled="">Select Hall</option>
+                                            @foreach($halls as $hall)
+                                                <option value="{{$hall}}">{{$hall}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="field">
                         <div class="file is-dark has-name" :class="{ 'has-name' : file}">
                             <label class="file-label">

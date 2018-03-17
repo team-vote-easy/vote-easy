@@ -1405,6 +1405,7 @@ window.app = new Vue({
     data: {
         level: '',
         course: '',
+        hall: '',
         file: '',
         showModal: false,
         loading: '',
@@ -1422,9 +1423,10 @@ window.app = new Vue({
         submit: function submit() {
             self = this;
             var formData = new FormData();
-            if (this.level !== '' || this.course !== '' || this.file !== '') {
+            if (this.level !== '' && this.course !== '' && this.file !== '' && this.hall !== '') {
                 formData.append('level', this.level);
                 formData.append('course', this.course);
+                formData.append('hall', this.hall);
                 formData.append('file', this.file, this.file.name);
             } else {
                 this.errors.title = 'Missing field error';
@@ -1441,6 +1443,7 @@ window.app = new Vue({
                 self.level = '';
                 self.course = '';
                 self.file = '';
+                self.hall = '';
                 self.success = data.data;
                 self.showModal = true;
                 console.log(data);
@@ -1456,14 +1459,15 @@ window.app = new Vue({
 
         addStudent: function addStudent() {
             self = this;
-            if (this.firstName != '' && this.lastName != '' && this.matricNumber != '' && this.level !== '' && this.course !== '') {
+            if (this.firstName != '' && this.lastName != '' && this.matricNumber != '' && this.level !== '' && this.course !== '' && this.hall != '') {
                 self.loading = true;
                 axios.post('/add-student', {
                     firstName: self.firstName,
                     lastName: self.lastName,
                     matricNumber: self.matricNumber,
                     level: self.level,
-                    course: self.course
+                    course: self.course,
+                    hall: self.hall
                 }).then(function (data) {
                     var studentName = self.firstName + ' ' + self.lastName;
                     self.loading = false;
@@ -1472,7 +1476,7 @@ window.app = new Vue({
                     self.level = '';
                     self.course = '';
                     self.matricNumber = '';
-                    self.success = 'Successfully Added Student: ' + studentName;
+                    self.hall = '', self.success = 'Successfully Added Student: ' + studentName;
                     self.showModal = true;
                     console.log(data);
                 }).catch(function (e) {

@@ -1410,6 +1410,7 @@ window.app = new Vue({
     data: {
         level: '',
         course: '',
+        hall: '',
         matricNumber: '',
         students: '',
         studentDetails: '',
@@ -1428,10 +1429,10 @@ window.app = new Vue({
             self = this;
             axios.post('/fetch-course', {
                 level: this.level,
-                course: this.course
+                course: this.course,
+                hall: this.hall
             }).then(function (data) {
                 self.loading = false;
-
                 if (data.data.students == '') {
                     _this.message = 'Sorry... there are no students that satisfy your query';
                     _this.empty = true;
