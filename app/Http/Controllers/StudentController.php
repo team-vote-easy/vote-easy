@@ -17,20 +17,28 @@ use Hash;
 class StudentController extends Controller
 {
     public function loginView(){
-    	return view('student-login');
+        $emojis = [ '🏄🏾', '🚣‍♀️'];
+    	return view('student-login', [
+            'emojis'=>$emojis
+        ]);
     }
 
     public function login(Request $request){
 
         //Temporary Code for admin (for testing purposes)
         if($request->matricNumber=='14/1290' && $request->password == 'hey'){
-            Auth::guard('students')->attempt(['matric_no'=>'14/1290', 'password'=>'66orvf']);
+            $password = Student::where('matric_no', '14/1290')->first()->key;
+            Auth::guard('students')->attempt(['matric_no'=>'14/1290', 'password'=>$password]);
             return redirect('/vote');
         }
 
 
     	$rules = ['matricNumber' => 'required|max:7', 'password'=>'required'];
-    	$this->validate($request, $rules);
+        $messages = [
+            'matricNumber.required' => "Please enter a matric number!",
+            'password.required'=> 'Please enter a password!'
+        ];
+    	$this->validate($request, $rules, $messages);
 
     	$student = Student::where('matric_no', $request->matricNumber)->where('key', $request->password)->first();
 
@@ -47,7 +55,7 @@ class StudentController extends Controller
     		return redirect('/vote');
     	}
     	else{
-    		return redirect()->back()->withInput($request->except('password'));
+    		return redirect()->back()->withInput($request->except('password'))->withErrors(['invalid'=>'Invalid Matric Number or password']);
     	}
     }
 
@@ -55,8 +63,12 @@ class StudentController extends Controller
         $emojis = [ '🔥', '🎉', '⚡️', '🦄', '👋🏿', '🤙🏿', '🏄🏾', '👻', ' 💩', '🌈', '🦅 ', '🌋', '🍩', '🚣‍♀️', '🚀', '🏇', '👾', '👽', ];
         
     	$loggedStudent = Auth::guard('students')->user();
-        $firstName = explode(' ', $loggedStudent->name);
-        $firstName = title_case(end($firstName));
+        $name = explode(' ', $loggedStudent->name);
+        $firstName = title_case(end($name));
+
+        if(strlen($firstName) < 3){
+            $firstName = $name[0];
+        }
 
         $emoji = $emojis[array_rand($emojis)];
 

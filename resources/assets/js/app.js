@@ -16,7 +16,10 @@ window.app = new Vue({
         showModal: false,
         loading: '',
         errors: {},
-        success: ''
+        success: '',
+        firstName: '',
+        lastName: '',
+        matricNumber: ''
     },
     methods: {
         processFile: function(event){
@@ -59,6 +62,43 @@ window.app = new Vue({
                 self.errors.message = error.response.data.message;
                 self.showModal = true;
             })
+        },
+
+        addStudent: function(){
+            self = this;
+            if(this.firstName != '' && this.lastName !='' && this.matricNumber !='' && this.level !== '' && this.course !== ''){
+                self.loading = true;
+                axios.post('/add-student', {
+                    firstName: self.firstName,
+                    lastName: self.lastName,
+                    matricNumber: self.matricNumber,
+                    level: self.level,
+                    course: self.course
+                })
+                    .then((data)=>{
+                        var studentName = self.firstName + ' ' + self.lastName;
+                        self.loading = false;
+                        self.firstName = '';
+                        self.lastName = '';
+                        self.level = '';
+                        self.course = '';
+                        self.matricNumber = '';
+                        self.success = `Successfully Added Student: ${studentName}`;
+                        self.showModal = true;
+                        console.log(data);
+                    })
+                    .catch((e)=>{
+                        self.loading = false;
+                        self.errors.title = 'Student already exists!';
+                        self.errors.message = e.response.data;
+                        self.showModal = true;
+                        console.log(self.errors.message);
+                    })
+
+            }
+            else{
+                console.log('some fields are missing');
+            }
         }
     },
     components: {Modal, Hero, LoadingModal, Dashboard}

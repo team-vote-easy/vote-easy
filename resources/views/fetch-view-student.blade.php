@@ -73,7 +73,7 @@
 </head>
 <body>
 	<div id="root" v-cloak>
-		<dashboard :link="'/fetch-student'"> 
+		<dashboard :link="'/fetch-student'" admin={{$admin}}> 
 			<div class="box">
 			  <form method="POST" action="/import" enctype="multipart/form-data" class="" @submit.prevent="fetchStudent">
 				  <h1>Find Student</h1>

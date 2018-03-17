@@ -3,20 +3,29 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Student;
+
 use App\Candidate;
+
 use App\Post;
+
 use File;
+
+use Auth;
+
 class AddController extends Controller
 {
     public function showAdd(){
+        $admin = Auth::guard('admin')->user()->name;
     	$courses = ["Computer Science", "Computer Technology", "Computer Information Systems"];
 		$levels = [100, 200, 300, 400];
 		$positions = ["PRO", "President", "Vice President", "Chaplain", "Sports Director", "Social Director"];
 		return view('add-candidates', [
 			'courses'=>$courses,
 			'levels'=>$levels,
-			'positions'=>$positions
+			'positions'=>$positions,
+            'admin'=>$admin
 		]);
     }
 
