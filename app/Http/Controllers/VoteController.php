@@ -12,13 +12,17 @@ use App\Vote;
 
 use App\Post;
 
+use Auth;
+
 class VoteController extends Controller
 {
 	public $positions = ["PRO", "President", "Vice President", "Chaplain", "Sports Director", "Social Director"];
 
 	public function getVotesView(){
+		$admin = Auth::guard('admin')->user()->name;
 		$result = $this->getVotes();
 		return view('view-votes', [
+			'admin'=>$admin,
 			'positions'=>$this->positions
 		]);
 	}
@@ -43,25 +47,5 @@ class VoteController extends Controller
 			} 
 		}
 		return $result;
-	}
-
-	public function phpTest(){
-		$this->CountWords('chukwudioranu@ymail.com');
-		$this->doStuff();
-	}
-
-	public function CountWords($str){
-	   echo "<table border='1'> <tr> <th colspan='4'> Powers Table </th> <tr><th>Numbers</th> <th>Square Root</th> <th>Square</th> <th>Cube </th>";
-	   for($i=1; $i<=5; $i++){
-	   		$squareRoot = sqrt($i);
-	   		$square = pow($i, 2);
-	   		$cube = pow($i, 3);
-	   		echo "<tr><td>$i</td> <td>$squareRoot</td> <td>$square</td> <td>$cube</td> </tr>";
-	   }
-	   echo "</table>";
-	}
-
-	public function doStuff(){
-		dd($_SERVER);
 	}
 }

@@ -55,7 +55,7 @@
 <body>
     <div id="root" v-cloak>
         <loading-modal v-if="loading" content="Adding Candidate..."> </loading-modal>
-        <dashboard :link="'/add-candidates'">
+        <dashboard :link="'/add-candidates'" admin={{$admin}}>
             <div class="box">
                 <form method="POST" action="/import" enctype="multipart/form-data" class="" @submit.prevent="submit">
                     <h1>ADD CANDIDATES</h1>

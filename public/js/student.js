@@ -1381,7 +1381,7 @@ function applyToTag (styleElement, obj) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(14);
-module.exports = __webpack_require__(57);
+module.exports = __webpack_require__(62);
 
 
 /***/ }),
@@ -1390,14 +1390,15 @@ module.exports = __webpack_require__(57);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_VoteCard_vue__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_VoteCard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_VoteCard_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Modal_vue__ = __webpack_require__(54);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Modal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_Modal_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Modal_vue__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Modal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_Modal_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_SideBar_vue__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_SideBar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_SideBar_vue__);
 __webpack_require__(15);
 
 window.Vue = __webpack_require__(38);
 window.Event = new Vue();
+// import VoteCard from './components/VoteCard.vue';
 
 
 
@@ -1405,10 +1406,50 @@ window.app = new Vue({
 	el: '#root',
 	data: {
 		showModal: true,
-		votedModal: false
+		votedModal: false,
+		studentVote: {
+			president: '',
+			vicePresident: '',
+			pro: '',
+			chaplain: '',
+			socialDirector: '',
+			sportsDirector: ''
+		},
+		currentView: '',
+		candidatesData: [],
+		count: 0,
+		voted: false
 	},
 	created: function created() {
 		var _this = this;
+
+		var self = this;
+		/* API Call to fetch candidates for client-side rendering*/
+		axios.get('/api/candidates').then(function (data) {
+			var candidates = data.data;
+			var keys = Object.keys(candidates);
+
+			keys.forEach(function (key) {
+				//Remember to chunk the array into 3
+				self.candidatesData[self.count] = {
+					position: _.toUpper(_.startCase(key)),
+					candidates: candidates[key]
+				};
+				self.count += 1;
+			});
+
+			self.count = 0;
+
+			self.currentView = self.candidatesData[0];
+		}).catch(function (e) {
+			console.log(e);
+		});
+
+		/*Event Handler for when a menu change event occurs */
+		Event.$on('menuChange', function (index) {
+			self.count = index;
+			self.currentView = self.candidatesData[self.count];
+		});
 
 		Event.$on('voted', function () {
 			_this.votedModal = true;
@@ -1416,9 +1457,84 @@ window.app = new Vue({
 	},
 
 	methods: {
-		test: function test() {}
+		getPath: function getPath(image) {
+			return 'candidate-images/' + image;
+		},
+		vote: function vote(position, id) {
+			self = this;
+			this.studentVote[_.camelCase(position)] = id;
+
+			//Send Event to sidebar component to check if sidebar option has been selected
+			Event.$emit('updateSideBar', self.studentVote);
+
+			//Move to the next candidate
+			_.delay(self.next, 1000);
+		},
+		prev: function prev() {
+			//Check to ensure we don't go below the no of available posts
+			if (this.count == 0) {
+				return;
+			}
+
+			var self = this;
+			this.count -= 1;
+			Event.$emit('menuChange', self.count);
+			this.currentView = this.candidatesData[this.count];
+		},
+		next: function next() {
+			//Check to ensure we don't go above the no of available posts
+			if (this.count == 5) {
+				return;
+			}
+
+			var self = this;
+			this.count += 1;
+			Event.$emit('menuChange', self.count);
+			this.currentView = this.candidatesData[this.count];
+		},
+		makeCamel: function makeCamel(toCamelString) {
+			return _.camelCase(toCamelString);
+		},
+		isDone: function isDone() {
+			var _this2 = this;
+
+			//Function to ensure all positions have been selected by the student
+			var keys = Object.keys(this.studentVote);
+			var incomplete = 0;
+			keys.forEach(function (key) {
+				if (_this2.studentVote[key] == '') {
+					incomplete += 1;
+				}
+			});
+
+			if (incomplete >= 1) {
+				return true;
+			} else {
+				return false;
+			}
+		},
+		submitVotes: function submitVotes() {
+			self = this;
+			var voteData = new FormData();
+			voteData.append('president', this.studentVote.president);
+			voteData.append('vice_president', this.studentVote.vicePresident);
+			voteData.append('pro', this.studentVote.pro);
+			voteData.append('chaplain', this.studentVote.chaplain);
+			voteData.append('social_director', this.studentVote.socialDirector);
+			voteData.append('sports_director', this.studentVote.sportsDirector);
+			axios.post('api/vote', voteData).then(function (data) {
+				console.log(data);
+				Event.$emit('voted');
+				_.delay(self.redirect, 2000);
+			}).catch(function (e) {
+				console.log(e);
+			});
+		},
+		redirect: function redirect() {
+			window.location.href = "student-login";
+		}
 	},
-	components: { VoteCard: __WEBPACK_IMPORTED_MODULE_0__components_VoteCard_vue___default.a, Modal: __WEBPACK_IMPORTED_MODULE_1__components_Modal_vue___default.a }
+	components: { Modal: __WEBPACK_IMPORTED_MODULE_0__components_Modal_vue___default.a, SideBar: __WEBPACK_IMPORTED_MODULE_1__components_SideBar_vue___default.a }
 });
 
 /***/ }),
@@ -43198,97 +43314,9 @@ exports.clearImmediate = clearImmediate;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(6)))
 
 /***/ }),
-/* 41 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(42)
-}
-var normalizeComponent = __webpack_require__(3)
-/* script */
-var __vue_script__ = __webpack_require__(45)
-/* template */
-var __vue_template__ = __webpack_require__(53)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources\\assets\\js\\components\\VoteCard.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-4357c691", Component.options)
-  } else {
-    hotAPI.reload("data-v-4357c691", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 42 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(43);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(12)("59ef0fba", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4357c691\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./VoteCard.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4357c691\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./VoteCard.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 43 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(11)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.card{\n\tposition: relative;\n\tleft: -40px;\n}\n.card-content{\n\ttext-align: center;\n}\n.card-footer-item{\n\theight: 80px;\n\ttext-align: center;\n}\n.prev{\n\tfloat: left;\n\tposition: relative;\n\tleft: -98px;\n\twidth: 100px;\n\tpadding: 20px; \n\ttop: 10px;\n\tcursor: pointer;\n}\n.done{\n\twidth: 340px;\n\tposition: relative;\n\tleft: 390px;\n\tpadding: 20px;\n\tcursor: pointer;\n\ttop: 10px;\n}\n.next{\n\tfloat: right;\n\tposition: relative;\n\tleft: 98px;\n\twidth: 100px;\n\tpadding: 20px;\n\ttop: 10px;\n\tcursor: pointer;\n}\nh1{\n\tfont-family: Helveticaneue;\n    font-size: 40px;\n    text-align: center;\n    padding-bottom: 10px;\n    position: relative;\n    left: 480px;\n    color: black;\n\tborder-bottom: 4px solid #ff3860;\n\twidth: 400px;\n\tmargin-bottom: 50px;\n}\n.vote{\n\tborder: 1px solid white;\n\tborder-top: 1px solid #dbdbdb;\n\tborder-radius: 0px;\n\twidth: 100%;\n\tpadding: 20px 0px;\n\tbackground-color: none;\n}\n.vote:hover{\n\tborder: none;\n\tborder-top: 1px solid #dbdbdb; \n\tcursor: pointer;\n}\n.vote:focus{\n\tborder: none;\n\toutline: none;\n\t-webkit-box-shadow: none;\n\t        box-shadow: none;\n}\n.voteIcon{\n\tfont-size: 24px;\n\tcolor: grey;\n}\n.voteIcon:hover{\n\tcolor: #ff3860;\n\t-webkit-transition: 0.7s ease-in-out;\n\ttransition: 0.7s ease-in-out;\n}\n.voteIcon:focus{\n\tcolor: #ff3860;\n\t-webkit-transition: 0.7s ease-in-out;\n\ttransition: 0.7s ease-in-out;\n}\n.votedIcon{\n\tfont-size: 24px;\n\tcolor: #ff3860;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
+/* 41 */,
+/* 42 */,
+/* 43 */,
 /* 44 */
 /***/ (function(module, exports) {
 
@@ -43322,201 +43350,7 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 45 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__SideBar_vue__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__SideBar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__SideBar_vue__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-	data: function data() {
-		return {
-			studentVote: {
-				president: '',
-				vicePresident: '',
-				pro: '',
-				chaplain: '',
-				socialDirector: '',
-				sportsDirector: ''
-			},
-			currentView: '',
-			candidatesData: [],
-			count: 0,
-			voted: false
-		};
-	},
-
-	props: ['student'],
-	created: function created() {
-		var self = this;
-		__WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/candidates').then(function (data) {
-			var candidates = data.data;
-			var keys = Object.keys(candidates);
-
-			keys.forEach(function (key) {
-				//Remember to chunk the array into 3
-				self.candidatesData[self.count] = {
-					position: _.toUpper(_.startCase(key)),
-					candidates: candidates[key]
-				};
-				self.count += 1;
-			});
-
-			self.count = 0;
-
-			self.currentView = self.candidatesData[0];
-		}).catch(function (e) {
-			console.log(e);
-		});
-
-		Event.$on('menuChange', function (index) {
-			self.count = index;
-			self.currentView = self.candidatesData[self.count];
-		});
-	},
-
-	methods: {
-		getPath: function getPath(image) {
-			return __webpack_require__(51)("./" + image);
-		},
-		vote: function vote(position, id) {
-			self = this;
-			this.studentVote[_.camelCase(position)] = id;
-
-			//Send Event to sidebar component to check if sidebar option has been selected
-			Event.$emit('updateSideBar', self.studentVote);
-
-			//Move to the next candidate
-			_.delay(self.next, 1000);
-		},
-		prev: function prev() {
-			//Check to ensure we don't go below the no of available posts
-			if (this.count == 0) {
-				return;
-			}
-
-			var self = this;
-			this.count -= 1;
-			Event.$emit('menuChange', self.count);
-			this.currentView = this.candidatesData[this.count];
-		},
-		next: function next() {
-			//Check to ensure we don't go above the no of available posts
-			if (this.count == 5) {
-				return;
-			}
-
-			var self = this;
-			this.count += 1;
-			Event.$emit('menuChange', self.count);
-			this.currentView = this.candidatesData[this.count];
-		},
-		makeCamel: function makeCamel(toCamelString) {
-			return _.camelCase(toCamelString);
-		},
-		isDone: function isDone() {
-			var _this = this;
-
-			//Function to ensure all positions have been selected by the student
-			var keys = Object.keys(this.studentVote);
-			var incomplete = 0;
-			keys.forEach(function (key) {
-				if (_this.studentVote[key] == '') {
-					incomplete += 1;
-				}
-			});
-
-			if (incomplete >= 1) {
-				return true;
-			} else {
-				return false;
-			}
-		},
-		submitVotes: function submitVotes() {
-			self = this;
-			var voteData = new FormData();
-			voteData.append('president', this.studentVote.president);
-			voteData.append('vice_president', this.studentVote.vicePresident);
-			voteData.append('pro', this.studentVote.pro);
-			voteData.append('chaplain', this.studentVote.chaplain);
-			voteData.append('social_director', this.studentVote.socialDirector);
-			voteData.append('sports_director', this.studentVote.sportsDirector);
-			__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('api/vote', voteData).then(function (data) {
-				console.log(data);
-				Event.$emit('voted');
-				_.delay(self.redirect, 4000);
-			}).catch(function (e) {
-				console.log(e);
-			});
-		},
-		redirect: function redirect() {
-			window.location.href = "student-login";
-		}
-	},
-	components: { SideBar: __WEBPACK_IMPORTED_MODULE_1__SideBar_vue___default.a }
-});
-
-/***/ }),
+/* 45 */,
 /* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -43753,214 +43587,23 @@ if (false) {
 }
 
 /***/ }),
-/* 51 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var map = {
-	"./CHUDI_AE5W5K.jpg": 67,
-	"./Chinko_5zBfSG.jpg": 71,
-	"./Ife_Y2EVXd.jpg": 69,
-	"./Peter_yYJNxl.jpg": 52,
-	"./Sanya_cyfi5p.jpg": 68,
-	"./Thomas_xkudQX.jpg": 70
-};
-function webpackContext(req) {
-	return __webpack_require__(webpackContextResolve(req));
-};
-function webpackContextResolve(req) {
-	var id = map[req];
-	if(!(id + 1)) // check for number or string
-		throw new Error("Cannot find module '" + req + "'.");
-	return id;
-};
-webpackContext.keys = function webpackContextKeys() {
-	return Object.keys(map);
-};
-webpackContext.resolve = webpackContextResolve;
-module.exports = webpackContext;
-webpackContext.id = 51;
-
-/***/ }),
-/* 52 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/Peter_yYJNxl.jpg?cd3638dccc2581c8b909ea8738894a6e";
-
-/***/ }),
-/* 53 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h1", [_vm._v(_vm._s(_vm.currentView.position))]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "columns" },
-      [
-        _c("side-bar"),
-        _vm._v(" "),
-        _vm._l(_vm.currentView.candidates, function(candidate) {
-          return _c("div", { staticClass: "column is-3" }, [
-            _c("div", { staticClass: "card" }, [
-              _c("div", { staticClass: "card-image" }, [
-                _c("figure", { staticClass: "image is-4by3" }, [
-                  _c("img", {
-                    attrs: {
-                      src: _vm.getPath(candidate.image),
-                      alt: "Candidate Image"
-                    }
-                  })
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-content" }, [
-                _c("p", { staticClass: "title" }, [
-                  _vm._v(
-                    "\n\t\t\t\t      " +
-                      _vm._s(candidate.first_name) +
-                      " " +
-                      _vm._s(candidate.last_name) +
-                      "\n\t\t\t\t    "
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("footer", { staticClass: "card-footer" }, [
-                _c("p", { staticClass: "card-footer-item" }, [
-                  _c("span", [
-                    _vm._v(
-                      "\n\t\t\t\t        " +
-                        _vm._s(candidate.position) +
-                        "\n\t\t\t\t      "
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("p", { staticClass: "card-footer-item" }, [
-                  _c("span", [
-                    _vm._v(
-                      "\n\t\t\t\t        " +
-                        _vm._s(candidate.course) +
-                        "\n\t\t\t\t      "
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("p", { staticClass: "card-footer-item" }, [
-                  _vm._v(
-                    "\n\t\t\t\t    \t" +
-                      _vm._s(candidate.level) +
-                      "\n\t\t\t\t    "
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("footer", [
-                _c(
-                  "a",
-                  {
-                    staticClass: "button vote ",
-                    attrs: { href: "#" },
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        _vm.vote(_vm.currentView.position, candidate.id)
-                      }
-                    }
-                  },
-                  [
-                    _c("span", { staticClass: "icon" }, [
-                      _c("i", {
-                        class: [
-                          _vm.studentVote[_vm.makeCamel(candidate.position)] ==
-                          candidate.id
-                            ? "fa fa-heart votedIcon animated wobble"
-                            : " fa fa-heart-o voteIcon"
-                        ]
-                      })
-                    ])
-                  ]
-                )
-              ])
-            ])
-          ])
-        })
-      ],
-      2
-    ),
-    _vm._v(" "),
-    _c("div", [
-      _c(
-        "a",
-        {
-          staticClass: "button is-danger prev",
-          attrs: { href: "#", disabled: _vm.count == 0 },
-          on: {
-            click: function($event) {
-              $event.preventDefault()
-              _vm.prev($event)
-            }
-          }
-        },
-        [_vm._v("Previous")]
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "button is-primary done",
-          attrs: { href: "#", disabled: _vm.isDone() },
-          on: {
-            click: function($event) {
-              $event.preventDefault()
-              _vm.submitVotes($event)
-            }
-          }
-        },
-        [_vm._v("Done")]
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "button is-danger next",
-          attrs: { href: "#", disabled: _vm.count >= 5 },
-          on: {
-            click: function($event) {
-              $event.preventDefault()
-              _vm.next($event)
-            }
-          }
-        },
-        [_vm._v("Next")]
-      )
-    ])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-4357c691", module.exports)
-  }
-}
-
-/***/ }),
-/* 54 */
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */,
+/* 56 */,
+/* 57 */,
+/* 58 */,
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(3)
 /* script */
-var __vue_script__ = __webpack_require__(55)
+var __vue_script__ = __webpack_require__(60)
 /* template */
-var __vue_template__ = __webpack_require__(56)
+var __vue_template__ = __webpack_require__(61)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -43999,7 +43642,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 55 */
+/* 60 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -44027,7 +43670,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 56 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -44068,49 +43711,10 @@ if (false) {
 }
 
 /***/ }),
-/* 57 */
+/* 62 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 58 */,
-/* 59 */,
-/* 60 */,
-/* 61 */,
-/* 62 */,
-/* 63 */,
-/* 64 */,
-/* 65 */,
-/* 66 */,
-/* 67 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/CHUDI_AE5W5K.jpg?c062aac31ab6817ae5b2e23c4204cbbd";
-
-/***/ }),
-/* 68 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/Sanya_cyfi5p.jpg?4230be3faa1e8869a9c4ad7f81897278";
-
-/***/ }),
-/* 69 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/Ife_Y2EVXd.jpg?2fd3b3d2804d3f1da794b5774de42121";
-
-/***/ }),
-/* 70 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/Thomas_xkudQX.jpg?f38c27b6e69aff5da740cd023f7cbdb9";
-
-/***/ }),
-/* 71 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/Chinko_5zBfSG.jpg?1693de28cfce7e967a07d50d5fa1a739";
 
 /***/ })
 /******/ ]);

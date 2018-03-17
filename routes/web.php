@@ -1,33 +1,57 @@
 <?php
 
+Route::get('admin-create','AdminController@create');
 
-Route::get('admin-dashboard', function(){
-	return view('admin-dashboard');
+Route::get('admin-log', 'AdminController@showLogin');
+
+Route::post('admin-log', 'AdminController@login');
+
+Route::get('admin-logout', 'AdminController@logout');
+
+Route::get('/admin-test', 'AdminController@testAuth');
+
+
+Route::group(['middleware'=>'adminauth'], function(){
+
+	Route::get('import', 'ImportController@showImport');
+
+	Route::post('import', 'ImportController@import');
+
+	Route::get('/add-student', 'ImportController@addStudentView');
+
+	Route::post('/add-student', 'ImportController@addStudent');
+
+	Route::get('add-candidates', 'AddController@showAdd');
+
+	Route::post('add-candidates', 'AddController@add');
+
+	Route::get('add-posts', 'AddController@addPostsView');
+
+	Route::post('add-posts', 'AddController@addPosts');
+
+	Route::get('fetch-course', 'FetchController@fetchCourseView');
+
+	Route::post('fetch-course', 'FetchController@fetchCourse');
+
+	Route::get('fetch-student', 'FetchController@fetchStudentView');
+
+	Route::post('fetch-student', 'FetchController@fetchStudent');
+
+	Route::get('fetch-candidates', 'FetchController@fetchCandidateView');
+
+	Route::post('fetch-candidates', 'FetchController@fetchCandidate');
+
+	Route::get('view-votes', 'VoteController@getVotesView');
+
+	Route::get('api/get-votes', 'VoteController@getVotes');
+
+	Route::get('/view-breakdown', 'AnalyticsController@breakDownView');
 });
 
-Route::get('import', 'ImportController@showImport');
 
-Route::post('import', 'ImportController@import');
-
-Route::get('add-candidates', 'AddController@showAdd');
-
-Route::post('add-candidates', 'AddController@add');
-
-Route::get('add-posts', 'AddController@addPostsView');
-
-Route::post('add-posts', 'AddController@addPosts');
-
-Route::get('fetch-course', 'FetchController@fetchCourseView');
-
-Route::post('fetch-course', 'FetchController@fetchCourse');
-
-Route::get('fetch-student', 'FetchController@fetchStudentView');
-
-Route::post('fetch-student', 'FetchController@fetchStudent');
-
-Route::get('fetch-candidates', 'FetchController@fetchCandidateView');
-
-Route::post('fetch-candidates', 'FetchController@fetchCandidate');
+Route::get('/', function(){
+	return redirect('/student-login');
+});
 
 
 Route::group(['middleware'=>'redirectauthenticatedstudents'], function(){
@@ -52,15 +76,7 @@ Route::group(['middleware'=>'studentauth'], function(){
 
 
 
-
-Route::get('view-votes', 'VoteController@getVotesView');
-
-Route::get('api/get-votes', 'VoteController@getVotes');
-
-Route::get('/vote-test', function(){
-	return view('vote-test');
-});
+Route::get('/get-total', 'AnalyticsController@getTotal');
 
 
 
-Route::get('my-test', 'VoteController@phpTest');

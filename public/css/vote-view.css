@@ -1,0 +1,114 @@
+h3{
+    float: right;
+    position: relative;
+    left: -30px;
+    border-bottom: 3px solid #ff3860;
+    padding-bottom: 6px;
+    margin-left: 30px;
+    font-size: 17px;
+}
+
+ul.nav-ting a{
+    text-decoration: none;
+    color: black;
+}
+
+[v-cloak]{
+    display: none;
+}
+
+.card{
+    position: relative;
+    left: -40px;
+}
+.card-content{
+    text-align: center;
+}
+
+.card-footer-item{
+    height: 80px;
+    text-align: center;
+}
+
+.prev{
+    float: left;
+    position: relative;
+    left: -98px;
+    width: 100px;
+    padding: 20px; 
+    top: 10px;
+    cursor: pointer;
+}
+
+.done{
+    width: 340px;
+    position: relative;
+    left: 390px;
+    padding: 20px;
+    cursor: pointer;
+    top: 10px;
+}
+
+.next{
+    float: right;
+    position: relative;
+    left: 98px;
+    width: 100px;
+    padding: 20px;
+    top: 10px;
+    cursor: pointer;
+}
+
+h1{
+    font-family: Helveticaneue;
+    font-size: 40px;
+    text-align: center;
+    padding-bottom: 10px;
+    position: relative;
+    left: 480px;
+    color: black;
+    border-bottom: 4px solid #ff3860;
+    width: 400px;
+    margin-bottom: 50px;
+}
+
+.vote{
+    border: 1px solid white;
+    border-top: 1px solid #dbdbdb;
+    border-radius: 0px;
+    width: 100%;
+    padding: 20px 0px;
+    background-color: none;
+}
+
+.vote:hover{
+    border: none;
+    border-top: 1px solid #dbdbdb; 
+    cursor: pointer;
+}
+
+.vote:focus{
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+
+.voteIcon{
+    font-size: 24px;
+    color: grey;
+}
+
+.voteIcon:hover{
+    color: #ff3860;
+    transition: 0.7s ease-in-out;
+}
+
+.voteIcon:focus{
+    color: #ff3860;
+    transition: 0.7s ease-in-out;
+}
+
+.votedIcon{
+    font-size: 24px;
+    color: #ff3860;
+}

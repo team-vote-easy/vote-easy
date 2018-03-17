@@ -8,12 +8,16 @@ use App\Student;
 
 use App\Candidate;
 
+use Auth;
+
 class FetchController extends Controller
 {
     public function fetchCourseView(){
+        $admin = Auth::guard('admin')->user()->name;
         $courses = ["Computer Science", "Computer Technology", "Computer Information Systems", "All"];
         $levels = [100, 200, 300, 400, 'All'];
         return view('fetch-view-course', [
+            'admin'=>$admin,
             'courses'=>$courses,
             'levels'=>$levels
         ]);
@@ -60,7 +64,10 @@ class FetchController extends Controller
     }
 
     public function fetchStudentView(){
-        return view('fetch-view-student');
+        $admin = Auth::guard('admin')->user()->name;
+        return view('fetch-view-student',[
+            'admin'=>$admin
+        ]);
     }
 
     public function fetchStudent(Request $request){
@@ -71,7 +78,10 @@ class FetchController extends Controller
     /* Fetch Candidate */
 
     public function fetchCandidateView(){
-        return view('fetch-candidates');
+        $admin = Auth::guard('admin')->user()->name;
+        return view('fetch-candidates', [
+            'admin'=>$admin
+        ]);
     }
 
     public function fetchCandidate(Request $request){
@@ -97,10 +107,6 @@ class FetchController extends Controller
         }
 
         return response()->json(Candidate::position($position)->course($course)->level($level)->get());
-    }
-
-    public function vueTest(){
-        return view('vue-test');
     }
 
 }
