@@ -3,7 +3,7 @@
 		<nav class="navbar">
 			<div class="navbar-menu">
 				<div class="navbar-end">
-					<img class="navbar-item brand" src="css/images/bucc-logo.PNG" width="130" height="220" alt="BUCC">
+					<img class="navbar-item brand" src="css/images/bucc-logo.PNG" width="130" height="180" alt="BUCC">
 
 					<span class="navbar-item">
 						Signed In as: <span class="admin"> {{admin}} </span>
