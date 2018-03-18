@@ -8,7 +8,6 @@ import StatCard from './components/StatCard.vue';
 window.app = new Vue({
     el: '#root',
     data: {
-        courseData: '',
         levelData: '',
         roleData: '',
         loading: '',
@@ -16,9 +15,8 @@ window.app = new Vue({
         candidates: '',
         message: '',
         empty: false,
-        hallArray: ["Samuel Akande", "Queen Esther", "Nelson Mandela", "Bethel Splendor", "Kings Delight Hall", "Winslow", "Gideon Troopers", "Welch", "Crystal", "Platinum", "Marigold", "FAD", "Queen Esther", "Off-Campus", "All"],
+        hallArray: ["Samuel Akande", "Queen Esther", "Nelson Mandela", "Bethel Splendor", "Kings Delight Hall", "Winslow", "Gideon Troopers", "Welch", "Crystal", "Platinum", "Marigold", "FAD", "Off-Campus", "All"],
         floorArray: ["Ground Floor (GF)", "First Floor (FF)", "Second Floor (SF)", "Third Floor (TF)", "All"],
-        courseArray: ["Computer Science", "Computer Technology", "Computer Information Systems", "All"],
         levelArray: [100, 200, 300, 400, "All"],
         positionArray: ["PRO", "President", "Vice President", "Chaplain", "Sports Director", "Social Director", "Hall Senator", "All"],
         hall: '',
@@ -36,7 +34,6 @@ window.app = new Vue({
             axios.post('fetch-candidates', {
                 position: this.roleData,
                 level: this.levelData,
-                course: this.courseData,
                 hall: this.hall,
                 floor: this.floor
             })
@@ -49,7 +46,7 @@ window.app = new Vue({
                     return;
                 }
 
-                self.candidates = _.chunk(data.data, 3);
+                self.candidates = _.chunk(data.data, 2);
                 console.log(data)
             })
             .catch((e)=>{

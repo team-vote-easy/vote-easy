@@ -2,7 +2,6 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 window.Event = new Vue();
-// import VoteCard from './components/VoteCard.vue';
 import Modal from './components/Modal.vue';
 import SideBar from './components/SideBar.vue';
 
@@ -11,48 +10,56 @@ window.app = new Vue({
 	data: {
 		showModal: true,
 		votedModal: false,
-		studentVote: {
-			president: '',
-			vicePresident: '',
-			pro: '',
-			chaplain: '',
-			socialDirector: '',
-			sportsDirector: '',
-		},
+		studentVote: {},
 		currentView: '',
 		candidatesData: [],
 		count: 0,
+		tabs: '',
 		voted: false
 	},
 	created(){
 		const self = this;
-		/* API Call to fetch candidates for client-side rendering*/
-		axios.get('/api/candidates')
-			.then((data)=>{
-				var candidates = data.data;
-				var keys = Object.keys(candidates);
+		Event.$on('candidates', (candidates, senators, studentVote)=>{
+			this.studentVote = studentVote;
 
-				keys.forEach((key)=>{
-					//Remember to chunk the array into 3
-					self.candidatesData[self.count] = {
-						position: _.toUpper(_.startCase(key)),
-						candidates: candidates[key]
-					};
-					self.count+=1;
-				});
-
-				self.count = 0;
-
-				self.currentView = self.candidatesData[0];
-			})
-			.catch((e)=>{
-				console.log(e);
+			var keys = Object.keys(candidates);
+			keys = keys.sort();
+			keys.forEach((key)=>{
+				//Remember to chunk the array into 3
+				self.candidatesData[self.count] = {
+					position: _.toUpper(_.startCase(key)),
+					text: key,
+					candidates: candidates[key]
+				};
+				self.count+=1;
 			});
 
-		/*Event Handler for when a menu change event occurs */
-		Event.$on('menuChange', (index)=>{
-			self.count = index;
-			self.currentView = self.candidatesData[self.count];
+			if(senators != ''){
+				var keys = Object.keys(senators);
+				keys = keys.sort();
+				keys.forEach((key)=>{
+					self.candidatesData[self.count] = {
+						position: _.toUpper(_.startCase(key)),
+						text: key,
+						candidates: senators[key]
+					}
+					self.count+=1;
+				});
+			}
+
+			self.count = 0;
+			this.tabs = self.candidatesData.length;
+			self.currentView = self.candidatesData[0];
+		});	
+
+
+		Event.$on('menuClick', (index, candidateType)=>{
+			if(candidateType=='Senator'){
+				index+= 6;
+			}
+			console.log(index + ': ' + candidateType);
+
+			this.currentView = this.candidatesData[index];
 		});
 
 		Event.$on('voted', ()=>{
@@ -60,19 +67,20 @@ window.app = new Vue({
 		})
 	},
 	methods: {
+
 		getPath(image){
 			return 'candidate-images/'+image;
 		},
 
 		vote(position, id){
 			self = this;
-			this.studentVote[_.camelCase(position)] = id;
+			this.studentVote[position] = id;
 
 			//Send Event to sidebar component to check if sidebar option has been selected
 			Event.$emit('updateSideBar', self.studentVote);
 
 			//Move to the next candidate
-			_.delay(self.next, 1000);	
+			_.delay(self.next, 500);	
 		},
 
 		prev(){
@@ -89,7 +97,7 @@ window.app = new Vue({
 
 		next(){
 			//Check to ensure we don't go above the no of available posts
-			if(this.count==5){
+			if(this.count == (this.tabs - 1)){
 				return;
 			}
 
@@ -141,6 +149,7 @@ window.app = new Vue({
 				console.log(e);
 			})
 		},
+
 		redirect(){
 			window.location.href="student-login";
 		}

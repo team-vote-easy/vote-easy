@@ -24,20 +24,9 @@
 
 			            <div class="field is-horizontal">
 			                <div class="field-label is-normal">
-			                    <label class="label">Course & Level: </label>
+			                    <label class="label">Level: </label>
 			                </div>
 			                <div class="field-body">
-			                    <div class="field">
-			                        <div class="control is-expanded">
-			                            <div class="select">
-			                                <select name="course" v-model="courseData">
-		                                		<option value="" disabled>Select Course</option>
-		                                        <option v-for="course in courseArray" :value="course" :key="course">@{{course}}</option>
-			                                </select>
-			                            </div>
-			                        </div>
-			                    </div>
-
 			                    <div class="field">
 			                        <div class="control is-expanded">
 			                            <div class="select">
@@ -116,7 +105,7 @@
 		            <stat-card v-if="message" :message="message" :empty="empty"> </stat-card>
 
 		            <div class="columns" v-if="candidates" v-for="(candidateSet, key) in candidates" :key="key">
-						<div v-for="candidate in candidateSet" class="column is-3">
+						<div v-for="candidate in candidateSet" class="column is-4">
 							<div class="card view">
 								<div class="card-image">
 							    	<figure class="image is-4by3">
@@ -134,11 +123,16 @@
 							        		@{{candidate.position}}
 							      		</span>
 							    	</p>
-							    	<p class="card-footer-item">
+							    	<p class="card-footer-item" v-if="candidate.position=='Hall Senator'">
 							      		<span>
-							        		@{{candidate.course}}
+							        		@{{candidate.hall}}
 							      		</span>
-						    		</p>
+							    	</p>
+							    	<p class="card-footer-item" v-if="candidate.position=='Hall Senator'">
+							      		<span>
+							        		@{{candidate.floor}}
+							      		</span>
+							    	</p>
 							    	<p class="card-footer-item">
 						    			@{{candidate.level}}
 							    	</p>

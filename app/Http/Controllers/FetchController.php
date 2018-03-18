@@ -23,10 +23,15 @@ class FetchController extends Controller
 
     public function fetchHall(Request $request){
         $hall = $request->hall == null ? '' : $request->hall;
+
+        $request->hall = $request->hall == 'All' ? null : $request->hall; 
+
         $students = Student::hall($request->hall)->get();
         $count = count($students);
 
         $data = $hall == '' ? 'All Halls' : $hall;
+
+        $data = $data=='All' ? 'All Halls' : $data;
 
         $response = [
             'message' => "There are $count students from $data",
@@ -64,13 +69,6 @@ class FetchController extends Controller
             $position= $request->position;
         }
 
-        if($request->course == '' || $request->course=='All'){
-            $course = null;
-        }
-        else{
-            $course = $request->course;
-        }
-
         if($request->level == '' || $request->level=='All'){
             $level = null;
         }
@@ -92,7 +90,7 @@ class FetchController extends Controller
            $floor=$request->floor;
         }
 
-        return response()->json(Candidate::position($position)->course($course)->level($level)->hall($hall)->floor($floor)->get());
+        return response()->json(Candidate::position($position)->level($level)->hall($hall)->floor($floor)->get());
     }
 
 }

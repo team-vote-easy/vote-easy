@@ -101,15 +101,6 @@ class StudentController extends Controller
     	return response()->json($responseData);
     }
 
-    public function test(){
-    	$candidates = Candidate::where('position', 'president')->get();
-
-    	foreach ($candidates as $candidate) {
-    		$votes = Vote::candidate('president', $candidate->id)->count();
-    		echo "{$candidate->first_name} {$candidate->last_name} had {$votes} votes <hr/>";
-    	}
-    }
-
     public function postVotes(Request $request){
         $candidates = $request->all();
 
@@ -131,5 +122,36 @@ class StudentController extends Controller
     public function logout(){
     	Auth::guard('students')->logout();
     	return redirect('/student-login');
+    }
+
+    public function getCandidatesAPI(){
+        $positions = ["PRO", "President", "Vice President", "Chaplain", "Sports Director", "Social Director"];
+        $candidates = array();
+        foreach($positions as $position){
+            $candidates[$position] = Candidate::position($position)->get();
+        }
+
+        $studentHall = Auth::guard('students')->user()->hall;
+
+        $senators = Candidate::position('Hall Senator')->hall($studentHall)->get();
+
+        $senatorFloors = [];
+        $senatorData = [];
+
+
+        if(count($senators) > 0){
+            foreach ($senators as $senator) {
+                $senatorFloors[] = $senator->floor;
+            }
+        }
+        $senatorFloors = array_unique($senatorFloors);
+
+        foreach ($senatorFloors as $floor) {
+            $senatorData[$floor] = Candidate::position('Hall Senator')->hall($studentHall)->floor($floor)->get();
+        }
+
+
+        return response()->json([$candidates, $senatorData]);
+
     }
 }

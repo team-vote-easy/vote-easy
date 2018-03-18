@@ -1403,13 +1403,12 @@ window.Event = new Vue();
 window.app = new Vue({
     el: '#root',
     data: (_data = {
-        courseData: '',
         levelData: '',
         roleData: '',
         loading: '',
         message: '',
         candidates: ''
-    }, _defineProperty(_data, 'message', ''), _defineProperty(_data, 'empty', false), _defineProperty(_data, 'hallArray', ["Samuel Akande", "Queen Esther", "Nelson Mandela", "Bethel Splendor", "Kings Delight Hall", "Winslow", "Gideon Troopers", "Welch", "Crystal", "Platinum", "Marigold", "FAD", "Queen Esther", "Off-Campus", "All"]), _defineProperty(_data, 'floorArray', ["Ground Floor (GF)", "First Floor (FF)", "Second Floor (SF)", "Third Floor (TF)", "All"]), _defineProperty(_data, 'courseArray', ["Computer Science", "Computer Technology", "Computer Information Systems", "All"]), _defineProperty(_data, 'levelArray', [100, 200, 300, 400, "All"]), _defineProperty(_data, 'positionArray', ["PRO", "President", "Vice President", "Chaplain", "Sports Director", "Social Director", "Hall Senator", "All"]), _defineProperty(_data, 'hall', ''), _defineProperty(_data, 'floor', ''), _defineProperty(_data, 'showHalls', ''), _data),
+    }, _defineProperty(_data, 'message', ''), _defineProperty(_data, 'empty', false), _defineProperty(_data, 'hallArray', ["Samuel Akande", "Queen Esther", "Nelson Mandela", "Bethel Splendor", "Kings Delight Hall", "Winslow", "Gideon Troopers", "Welch", "Crystal", "Platinum", "Marigold", "FAD", "Off-Campus", "All"]), _defineProperty(_data, 'floorArray', ["Ground Floor (GF)", "First Floor (FF)", "Second Floor (SF)", "Third Floor (TF)", "All"]), _defineProperty(_data, 'levelArray', [100, 200, 300, 400, "All"]), _defineProperty(_data, 'positionArray', ["PRO", "President", "Vice President", "Chaplain", "Sports Director", "Social Director", "Hall Senator", "All"]), _defineProperty(_data, 'hall', ''), _defineProperty(_data, 'floor', ''), _defineProperty(_data, 'showHalls', ''), _data),
     methods: {
         fetchCandidate: function fetchCandidate() {
             self = this;
@@ -1421,7 +1420,6 @@ window.app = new Vue({
             axios.post('fetch-candidates', {
                 position: this.roleData,
                 level: this.levelData,
-                course: this.courseData,
                 hall: this.hall,
                 floor: this.floor
             }).then(function (data) {
@@ -1433,7 +1431,7 @@ window.app = new Vue({
                     return;
                 }
 
-                self.candidates = _.chunk(data.data, 3);
+                self.candidates = _.chunk(data.data, 2);
                 console.log(data);
             }).catch(function (e) {
                 console.log(e);

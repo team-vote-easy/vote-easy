@@ -1430,6 +1430,8 @@ window.app = new Vue({
             axios.post('/fetch-hall', {
                 hall: this.hall
             }).then(function (data) {
+                console.log(data);
+
                 self.loading = false;
                 if (data.data.students == '') {
                     _this.message = 'Sorry... there are no students that satisfy your query';

@@ -76,6 +76,8 @@ Route::group(['middleware'=>'studentauth'], function(){
 	Route::get('api/candidates', 'StudentController@getCandidates');
 
 	Route::post('/api/vote', 'StudentController@postVotes');
+
+	Route::get('/api/student/get-candidates', 'StudentController@getCandidatesAPI');
 });
 
 

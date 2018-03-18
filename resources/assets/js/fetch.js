@@ -32,6 +32,9 @@ window.app = new Vue({
                 hall: this.hall,
             })
             .then((data)=>{
+                console.log(data);
+
+                
                 self.loading = false;
                 if(data.data.students==''){
                     this.message = 'Sorry... there are no students that satisfy your query';

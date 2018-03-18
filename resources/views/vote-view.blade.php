@@ -48,9 +48,9 @@
 					 	 	</footer>
 
 						  	<footer>
-								<a href="#" class="button vote " @click.prevent="vote(currentView.position, candidate.id)"> 
+								<a href="#" class="button vote " @click.prevent="vote(currentView.text, candidate.id)"> 
 									<span class="icon">
-								  		<i :class="[studentVote[makeCamel(candidate.position)] == candidate.id  ? 'fa fa-heart votedIcon animated wobble' :' fa fa-heart-o voteIcon' ]"></i>
+								  		<i :class="[studentVote[currentView.text] == candidate.id  ? 'fa fa-heart votedIcon animated wobble' :' fa fa-heart-o voteIcon' ]"></i>
 									</span>
 								</a>
 						  	</footer>
@@ -61,7 +61,7 @@
 			<div>
 				<a href="#" @click.prevent="prev" class="button is-danger prev" :disabled="count==0">Previous</a>
 				<a href="#" @click.prevent="submitVotes" class="button is-primary done" :disabled="isDone()">Done</a>
-				<a href="#" @click.prevent="next" class="button is-danger next" :disabled="count>=5">Next</a>
+				<a href="#" @click.prevent="next" class="button is-danger next" :disabled="count>=(tabs - 1)">Next</a>
 			</div>
 
 		</div>

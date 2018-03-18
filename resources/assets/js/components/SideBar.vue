@@ -6,11 +6,25 @@
 		  </p>
 		  <ul class="menu-list">
 		    <li v-for="position in positions">
-		    	<a :href="position.url" :class="{'is-active' : position.selected}" @click.prevent="menuChange(position)">{{position.position}} 
-		    		<span v-if="hasVoted(position.position)" class="fa fa-check-circle voted"></span>
+		    	<a :href="position.url" :class="{'is-active' : position.selected}" @click.prevent="menuClick(position, 'Candidate')">{{position.position}} 
+		    		<span v-if="hasVoted(position.position, 'Candidate')" class="fa fa-check-circle voted"></span>
 		    	</a>
 		    </li>
 		  </ul>
+			
+		  <p class="menu-label" v-if="showSenators">
+		    Hall Senators
+		  </p>
+
+		  <ul class="menu-list">
+		    <li v-for="position in hallSenators">
+		    	<a :href="position.url" :class="{'is-active' : position.selected}" @click.prevent="menuClick(position, 'Senator')">{{position.position}} 
+		    		<span v-if="hasVoted(position.position, 'Senator')" class="fa fa-check-circle voted"></span>
+		    	</a>
+		    </li>
+		  </ul>
+
+
 		</aside>
 	</div>
 </template>
@@ -19,45 +33,47 @@
 	export default{
 		data(){
 			return{
-				positions: [
-					{
-						position: 'President',
-						url: '#',
-						selected: true
-					},
-					{
-						position: 'Vice President',
-						url: '#',
-						selected: false
-					},
-					{
-						position: 'PRO',
-						url: '#',
-						selected: false
-					},
-					{
-						position: 'Social Director',
-						url: '#',
-						selected: false
-					},
-					{
-						position: 'Chaplain',
-						url: '#',
-						selected: false
-					},
-					{
-						position: 'Sports Director',
-						url: '#',
-						selected: false
-					},
-				],
-				votes: ''
+				positions: [],
+				votes: '',
+				hallSenators: [],
+				numberofTabs: '',
+				showSenators: true
 			}
 		},
+
 		created(){
 			const self = this;
-			
+
+			axios.get('api/student/get-candidates')
+				.then((data)=>{
+					if(data.data[1] == ''){
+						self.showSenators = false;
+					}
+					self.fillSideBar(data.data[0], data.data[1]);
+				})	
+				.catch((e)=>{
+					console.log(e);
+				})
+
+
 			Event.$on('menuChange', (index)=>{
+				if(index > 5){
+					self.positions.forEach((position)=>{
+						position.selected = false;
+					});
+
+					var newIndex = index - 6;
+					self.hallSenators.forEach((position)=>{
+
+						position.selected = (self.hallSenators.indexOf(position)==newIndex);
+					});
+					return;
+				}
+
+				self.hallSenators.forEach((position)=>{
+
+					position.selected = false;
+				});
 				self.positions.forEach((position)=>{
 					position.selected = (self.positions.indexOf(position)==index);
 				})
@@ -68,24 +84,101 @@
 				self.votes = votes;
 			});
 		},
+
 		methods: {
-			menuChange(position){
-				var keys = this.positions.indexOf(position);
-				Event.$emit('menuChange', keys);
+			fillSideBar(positions, senators){
+				var studentVote = {};
+				var keys = Object.keys(positions);
+				keys = keys.sort();
+
+				keys.forEach((key)=>{
+					studentVote[key] = '';
+					this.positions.push({
+						position: key,
+						url: '#',
+						selected: false
+					});
+				});
+		
+				var senatorPosts = Object.keys(senators);
+				senatorPosts = senatorPosts.sort();
+				senatorPosts.forEach((post)=>{
+					studentVote[post] = '';
+					this.hallSenators.push({
+						position: post,
+						url: '#',
+						selected: false
+					})
+				});
+
+				this.positions[0].selected = true;
+				
+				var numofPosts = keys.length;
+				var numofSenators = senatorPosts.length;
+				this.numberofTabs = numofPosts + numofSenators;
+
+				Event.$emit('candidates', positions, senators, studentVote);
 			},
 
-			hasVoted(position){
 
+			menuClick(position, candidateType){
+				var key;
+				if(candidateType=='Candidate'){
+				 	key = this.positions.indexOf(position);
+
+				 	this.hallSenators.forEach((senator)=>{
+				 		senator.selected = false;
+				 	});
+
+				 	this.positions.forEach((position)=>{
+				 		position.selected = this.positions.indexOf(position) == key;
+				 	});
+
+					Event.$emit('menuClick', key, candidateType);
+				}
+
+				if(candidateType=='Senator'){
+				 	key = this.hallSenators.indexOf(position);
+
+					this.positions.forEach((position)=>{
+						position.selected = false;
+					});
+
+				 	this.hallSenators.forEach((senator)=>{
+				 		senator.selected = this.hallSenators.indexOf(senator) == key;
+				 	});
+
+					Event.$emit('menuClick', key, candidateType);
+				}
+
+				// Event.$emit('menuChange', keys);
+			},
+
+			hasVoted(position, candidateType){
 				if(this.votes == ''){
 					return false;
 				}
 
-				if(this.votes[_.camelCase(position)] != ''){
-					return true;
+				if(candidateType == 'Candidate'){
+					if(this.votes[position] != ''){
+						return true;
+					}
+					else{
+						return false;
+					}
 				}
-				else{
-					return false;
+
+				if(candidateType == 'Senator'){
+					if(this.votes[position] != ''){
+						return true;
+					}
+					else{
+						return false;
+					}
 				}
+
+				
+
 			}
 		}
 
@@ -95,7 +188,7 @@
 <style>
 	.menu{
 		position: relative;
-		top: 30px;
+		top: -25px;
 		left: -85px;
 
 	}
@@ -108,8 +201,6 @@
 		background-color: whitesmoke;
 		color: #ff3860;
 		border-right: 4px solid #ff3860;
-		/*border: 2px solid #ff3860;*/
-		/*border-radius: 4px;*/
 	}
 
 	.voted{
