@@ -1101,10 +1101,28 @@ window.app = new Vue({
 		candidatesData: [],
 		count: 0,
 		tabs: '',
-		voted: false
+		voted: false,
+		incomplete: '',
+		numOfPosts: '',
+		numOfSentators: '',
+		showNotDone: ''
 	},
 	created: function created() {
 		var _this = this;
+
+		window.addEventListener('keydown', function (e) {
+			if (e.key == 'ArrowLeft' || e.key == "ArrowUp") {
+				console.log('Moved left!');
+				_this.prev();
+				return;
+			}
+
+			if (e.key == 'ArrowRight' || e.key == "ArrowDown") {
+				console.log('Moved right!');
+				_this.next();
+				return;
+			}
+		});
 
 		var self = this;
 		Event.$on('candidates', function (candidates, senators, studentVote) {
@@ -1112,6 +1130,8 @@ window.app = new Vue({
 
 			var keys = Object.keys(candidates);
 			keys = keys.sort();
+			_this.numOfPosts = keys.length;
+
 			keys.forEach(function (key) {
 				//Remember to chunk the array into 3
 				self.candidatesData[self.count] = {
@@ -1142,9 +1162,10 @@ window.app = new Vue({
 
 		Event.$on('menuClick', function (index, candidateType) {
 			if (candidateType == 'Senator') {
-				index += 6;
+				index += self.numOfPosts;
 			}
-			console.log(index + ': ' + candidateType);
+
+			self.count = index;
 
 			_this.currentView = _this.candidatesData[index];
 		});
@@ -1190,9 +1211,6 @@ window.app = new Vue({
 			Event.$emit('menuChange', self.count);
 			this.currentView = this.candidatesData[this.count];
 		},
-		makeCamel: function makeCamel(toCamelString) {
-			return _.camelCase(toCamelString);
-		},
 		isDone: function isDone() {
 			var _this2 = this;
 
@@ -1206,21 +1224,21 @@ window.app = new Vue({
 			});
 
 			if (incomplete >= 1) {
+				this.incomplete = true;
 				return true;
 			} else {
+				this.incomplete = false;
 				return false;
 			}
 		},
 		submitVotes: function submitVotes() {
+			if (this.incomplete) {
+				this.showNotDone = true;
+				return;
+			}
 			self = this;
-			var voteData = new FormData();
-			voteData.append('president', this.studentVote.president);
-			voteData.append('vice_president', this.studentVote.vicePresident);
-			voteData.append('pro', this.studentVote.pro);
-			voteData.append('chaplain', this.studentVote.chaplain);
-			voteData.append('social_director', this.studentVote.socialDirector);
-			voteData.append('sports_director', this.studentVote.sportsDirector);
-			axios.post('api/vote', voteData).then(function (data) {
+
+			axios.post('api/vote', this.studentVote).then(function (data) {
 				console.log(data);
 				Event.$emit('voted');
 				_.delay(self.redirect, 2000);
@@ -43219,7 +43237,7 @@ exports = module.exports = __webpack_require__(45)(false);
 
 
 // module
-exports.push([module.i, "\n.menu{\n\tposition: relative;\n\ttop: -25px;\n\tleft: -85px;\n}\n.menu-list{\n\tborder-left: 3px solid #ff3860;\n}\n.menu-list a.is-active{\n\tbackground-color: whitesmoke;\n\tcolor: #ff3860;\n\tborder-right: 4px solid #ff3860;\n}\n.voted{\n\tfloat: right;\n\tcolor: #00d1b2;\n}\n", ""]);
+exports.push([module.i, "\n.menu{\n\tposition: relative;\n\ttop: -110px;\n\tleft: -89px;\n\twidth: 180px;\n}\n.menu-list{\n\tborder-left: 3px solid #ff3860;\n}\n.menu-list a{\n\tfont-size: 12.5px;\n}\n.menu-list a.is-active{\n\tbackground-color: whitesmoke;\n\tcolor: #ff3860;\n\tborder-right: 4px solid #ff3860;\n}\n.voted{\n\tfloat: right;\n\tcolor: #00d1b2;\n}\n", ""]);
 
 // exports
 
@@ -43605,13 +43623,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			votes: '',
 			hallSenators: [],
 			numberofTabs: '',
+			numofPosts: '',
 			showSenators: true
 		};
 	},
 	created: function created() {
 		var self = this;
 
-		axios.get('api/student/get-candidates').then(function (data) {
+		axios.get('api/get-candidates').then(function (data) {
 			if (data.data[1] == '') {
 				self.showSenators = false;
 			}
@@ -43621,12 +43640,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		});
 
 		Event.$on('menuChange', function (index) {
-			if (index > 5) {
+
+			if (index > self.numofPosts - 1) {
 				self.positions.forEach(function (position) {
 					position.selected = false;
 				});
 
-				var newIndex = index - 6;
+				var newIndex = index - self.numofPosts;
 				self.hallSenators.forEach(function (position) {
 
 					position.selected = self.hallSenators.indexOf(position) == newIndex;
@@ -43680,9 +43700,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 			this.positions[0].selected = true;
 
-			var numofPosts = keys.length;
+			this.numofPosts = keys.length;
 			var numofSenators = senatorPosts.length;
-			this.numberofTabs = numofPosts + numofSenators;
+			this.numberofTabs = this.numofPosts + numofSenators;
 
 			Event.$emit('candidates', positions, senators, studentVote);
 		},
@@ -43717,8 +43737,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 				Event.$emit('menuClick', key, candidateType);
 			}
-
-			// Event.$emit('menuChange', keys);
 		},
 		hasVoted: function hasVoted(position, candidateType) {
 			if (this.votes == '') {
@@ -43755,10 +43773,6 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "column is-2" }, [
     _c("aside", { staticClass: "menu" }, [
-      _c("p", { staticClass: "menu-label" }, [
-        _vm._v("\n\t    Candidates\n\t  ")
-      ]),
-      _vm._v(" "),
       _c(
         "ul",
         { staticClass: "menu-list" },

@@ -105,7 +105,7 @@
 		            <stat-card v-if="message" :message="message" :empty="empty"> </stat-card>
 
 		            <div class="columns" v-if="candidates" v-for="(candidateSet, key) in candidates" :key="key">
-						<div v-for="candidate in candidateSet" class="column is-4">
+						<div v-for="candidate in candidateSet" class="column is-3">
 							<div class="card view">
 								<div class="card-image">
 							    	<figure class="image is-4by3">

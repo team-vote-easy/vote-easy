@@ -15,15 +15,35 @@ window.app = new Vue({
 		candidatesData: [],
 		count: 0,
 		tabs: '',
-		voted: false
+		voted: false,
+		incomplete: '',
+		numOfPosts: '',
+		numOfSentators: '',
+		showNotDone: ''
 	},
 	created(){
+		window.addEventListener('keydown', (e)=>{
+			if(e.key=='ArrowLeft' || e.key=="ArrowUp"){
+				console.log('Moved left!');
+				this.prev();
+				return;
+			}
+
+			if(e.key=='ArrowRight' || e.key=="ArrowDown"){
+				console.log('Moved right!');
+				this.next();
+				return;
+			}
+		});
+
 		const self = this;
 		Event.$on('candidates', (candidates, senators, studentVote)=>{
 			this.studentVote = studentVote;
 
 			var keys = Object.keys(candidates);
 			keys = keys.sort();
+			this.numOfPosts = keys.length;
+			
 			keys.forEach((key)=>{
 				//Remember to chunk the array into 3
 				self.candidatesData[self.count] = {
@@ -55,9 +75,10 @@ window.app = new Vue({
 
 		Event.$on('menuClick', (index, candidateType)=>{
 			if(candidateType=='Senator'){
-				index+= 6;
+				index+= self.numOfPosts;
 			}
-			console.log(index + ': ' + candidateType);
+
+			self.count = index;
 
 			this.currentView = this.candidatesData[index];
 		});
@@ -107,10 +128,6 @@ window.app = new Vue({
 			this.currentView = this.candidatesData[this.count];
 		},
 
-		makeCamel(toCamelString){
-			return _.camelCase(toCamelString);
-		},
-
 		isDone(){
 			//Function to ensure all positions have been selected by the student
 			var keys = Object.keys(this.studentVote);
@@ -122,23 +139,23 @@ window.app = new Vue({
 			});
 
 			if(incomplete>=1){
+				this.incomplete = true;
 				return true;
 			}
 			else{
+				this.incomplete = false;
 				return false;
 			}
 		},
 
 		submitVotes(){
+			if(this.incomplete){
+				this.showNotDone = true;
+				return;
+			}
 			self = this;
-			var voteData = new FormData();
-			voteData.append('president', this.studentVote.president);
-			voteData.append('vice_president', this.studentVote.vicePresident);
-			voteData.append('pro', this.studentVote.pro);
-			voteData.append('chaplain', this.studentVote.chaplain);
-			voteData.append('social_director', this.studentVote.socialDirector);
-			voteData.append('sports_director', this.studentVote.sportsDirector);
-			axios.post('api/vote', voteData)
+
+			axios.post('api/vote', this.studentVote)
 			.then((data)=>{
 				console.log(data);
 				Event.$emit('voted');

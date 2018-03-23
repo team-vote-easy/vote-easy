@@ -43838,6 +43838,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					icon: 'fa fa-bar-chart',
 					selected: false
 				}, {
+					href: '/view-votes-senators',
+					text: 'View Senator Results',
+					icon: 'fa fa-pie-chart',
+					selected: false
+				}, {
 					href: '/view-breakdown',
 					text: 'View Breakdown',
 					icon: 'fa fa-line-chart',

@@ -48,6 +48,11 @@ Route::group(['middleware'=>'adminauth'], function(){
 	Route::get('api/get-votes', 'VoteController@getVotes');
 
 	Route::get('/view-breakdown', 'AnalyticsController@breakDownView');
+
+	Route::get('/view-votes-senators', 'VoteController@senatorVotesView');
+
+	Route::post('/view-votes-senators', 'VoteController@getSenatorVotes');
+
 });
 
 
@@ -73,16 +78,16 @@ Route::group(['middleware'=>'studentauth'], function(){
 
 	Route::get('api/student', 'StudentController@getStudent');
 
-	Route::get('api/candidates', 'StudentController@getCandidates');
-
 	Route::post('/api/vote', 'StudentController@postVotes');
 
-	Route::get('/api/student/get-candidates', 'StudentController@getCandidatesAPI');
+	Route::get('/api/get-candidates', 'StudentController@getCandidates');
 });
 
 
 
 Route::get('/get-total', 'AnalyticsController@getTotal');
 
+Route::get('/serialize-test', 'StudentController@serializeTest');
 
+Route::get('/unserialize-test', 'StudentController@unserializeTest');
 

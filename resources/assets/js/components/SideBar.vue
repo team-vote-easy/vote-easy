@@ -1,9 +1,9 @@
 <template>
 	<div class="column is-2">
 		<aside class="menu">
-		  <p class="menu-label">
+		  <!-- <p class="menu-label">
 		    Candidates
-		  </p>
+		  </p> -->
 		  <ul class="menu-list">
 		    <li v-for="position in positions">
 		    	<a :href="position.url" :class="{'is-active' : position.selected}" @click.prevent="menuClick(position, 'Candidate')">{{position.position}} 
@@ -37,6 +37,7 @@
 				votes: '',
 				hallSenators: [],
 				numberofTabs: '',
+				numofPosts: '',
 				showSenators: true
 			}
 		},
@@ -44,7 +45,7 @@
 		created(){
 			const self = this;
 
-			axios.get('api/student/get-candidates')
+			axios.get('api/get-candidates')
 				.then((data)=>{
 					if(data.data[1] == ''){
 						self.showSenators = false;
@@ -57,12 +58,13 @@
 
 
 			Event.$on('menuChange', (index)=>{
-				if(index > 5){
+
+				if(index > (self.numofPosts - 1)){
 					self.positions.forEach((position)=>{
 						position.selected = false;
 					});
 
-					var newIndex = index - 6;
+					var newIndex = index - self.numofPosts;
 					self.hallSenators.forEach((position)=>{
 
 						position.selected = (self.hallSenators.indexOf(position)==newIndex);
@@ -113,9 +115,9 @@
 
 				this.positions[0].selected = true;
 				
-				var numofPosts = keys.length;
+				this.numofPosts = keys.length;
 				var numofSenators = senatorPosts.length;
-				this.numberofTabs = numofPosts + numofSenators;
+				this.numberofTabs = this.numofPosts + numofSenators;
 
 				Event.$emit('candidates', positions, senators, studentVote);
 			},
@@ -150,8 +152,6 @@
 
 					Event.$emit('menuClick', key, candidateType);
 				}
-
-				// Event.$emit('menuChange', keys);
 			},
 
 			hasVoted(position, candidateType){
@@ -188,13 +188,17 @@
 <style>
 	.menu{
 		position: relative;
-		top: -25px;
-		left: -85px;
-
+		top: -110px;
+		left: -89px;
+		width: 180px;
 	}
 
 	.menu-list{
 		border-left: 3px solid #ff3860;
+	}
+
+	.menu-list a{
+		font-size: 12.5px;
 	}
 
 	.menu-list a.is-active{

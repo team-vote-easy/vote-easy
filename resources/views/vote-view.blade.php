@@ -16,7 +16,7 @@
 	
 	<div id="root" v-cloak>
 		<div class="container">
-			<h1>@{{currentView.position}}</h1>
+			<h1> @{{currentView.position}}</h1>
 			<div class="columns">
 				<side-bar > </side-bar>
 					<div v-for="candidate in currentView.candidates" class="column is-3">
@@ -36,11 +36,6 @@
 							  		<span>
 										@{{candidate.position}}
 							  		</span>
-								</p>
-								<p class="card-footer-item">
-							  		<span>
-										@{{candidate.course}}
-						  			</span>
 								</p>
 								<p class="card-footer-item">
 									@{{candidate.level}}
@@ -69,6 +64,10 @@
 		<div>
 			<modal v-if="votedModal" :green="true" @close="votedModal = false"> 
 				Thanks for voting {{$firstName}} {{$emojis[1]}} ! 
+			</modal>
+
+			<modal v-if="showNotDone" :green="false" @close="showNotDone = false">
+				Sorry, {{$firstName}} 🙁. You have to vote for at least one candidate in each post before you can submit!
 			</modal>
 		</div>
 		

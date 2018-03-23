@@ -15,6 +15,7 @@ class FetchController extends Controller
     public function fetchCourseView(){
         $admin = Auth::guard('admin')->user()->name;  
         $halls = ["Samuel Akande", "Queen Esther", "Nelson Mandela", "Bethel Splendor", "Kings Delight Hall", "Winslow", "Gideon Troopers", "Welch", "Crystal", "Platinum", "Marigold", "FAD", "Queen Esther", "Off-Campus", "All"];
+        sort($halls);
         return view('fetch-view-course', [
             'admin'=>$admin,
             'halls'=>$halls

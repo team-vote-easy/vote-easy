@@ -108,6 +108,12 @@
 									selected: false
 								},
 								{
+									href: '/view-votes-senators',
+									text: 'View Senator Results',
+									icon: 'fa fa-pie-chart',
+									selected: false
+								},
+								{
 									href: '/view-breakdown',
 									text: 'View Breakdown',
 									icon: 'fa fa-line-chart',
@@ -129,6 +135,9 @@
 </script>
 
 <style>
+	.menu{
+		position: fixed;
+	}
 
 	.navbar{
 		border-bottom: 6px solid whitesmoke;
@@ -153,4 +162,5 @@
 		padding: 1px;
 		border-bottom: 3px solid black;
 	}
+
 </style>

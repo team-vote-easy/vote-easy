@@ -16,12 +16,18 @@ window.app = new Vue({
         message: '',
         empty: false,
         hallArray: ["Samuel Akande", "Queen Esther", "Nelson Mandela", "Bethel Splendor", "Kings Delight Hall", "Winslow", "Gideon Troopers", "Welch", "Crystal", "Platinum", "Marigold", "FAD", "Off-Campus", "All"],
-        floorArray: ["Ground Floor (GF)", "First Floor (FF)", "Second Floor (SF)", "Third Floor (TF)", "All"],
+        floorArray: ["Ground Floor", "First Floor", "Second Floor", "Third Floor", "All"],
         levelArray: [100, 200, 300, 400, "All"],
-        positionArray: ["PRO", "President", "Vice President", "Chaplain", "Sports Director", "Social Director", "Hall Senator", "All"],
+        positionArray: ["PRO", "President", "Vice President", "Chaplain", "Director of Sports", "Director of Social", "General Secretary", "Director of Transport", "Treasurer", "Director of Finance", "Director of Welfare", "Senate President", "Sargent At Arms", "Assistant Gen Secretary", "Senator Chief Whip", "Deputy Senate President", "Senate Scribe", "Hall Senator", "All"],
         hall: '',
         floor: '',
         showHalls: '',
+    },
+    created(){
+        this.levelArray = this.levelArray.sort();
+        this.positionArray = this.positionArray.sort();
+        this.hallArray = this.hallArray.sort();
+        this.floorArray = this.floorArray.sort();
     },
     methods: {
        fetchCandidate: function(){
@@ -46,7 +52,7 @@ window.app = new Vue({
                     return;
                 }
 
-                self.candidates = _.chunk(data.data, 2);
+                self.candidates = _.chunk(data.data, 3);
                 console.log(data)
             })
             .catch((e)=>{

@@ -136,22 +136,9 @@
 
                     <div class="field is-horizontal">
                         <div class="field-label is-normal">
-                            <label class="label">Course + Level: </label>
+                            <label class="label">Level: </label>
                         </div>
                         <div class="field-body">
-                            <div class="field">
-                                <div class="control is-expanded">
-                                    <div class="select">
-                                        <select name="course" v-model="course">
-                                            <option value="" disabled="">Select Course</option>
-                                            @foreach($courses as $course)
-                                                <option value="{{$course}}">{{$course}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
                             <div class="field">
                                 <div class="control is-expanded">
                                     <div class="select">

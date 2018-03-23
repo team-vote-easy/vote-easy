@@ -71,6 +71,7 @@ class StudentController extends Controller
         }
 
         $emoji = $emojis[array_rand($emojis)];
+        $title = 'Vote';
 
     	return view('vote-view', [
     		'student'=>$loggedStudent,
@@ -84,21 +85,6 @@ class StudentController extends Controller
     public function getStudent(){
     	$loggedStudent = Auth::guard('students')->user();
     	return response()->json($loggedStudent);
-    }
-
-
-    public function getCandidates(Candidate $candidates){
-    	$responseData = array();
-
-    	$responseData['president'] = $candidates->where('position', 'President')->get();
-    	$responseData['vicePresident'] = $candidates->where('position', 'Vice President')->get();
-    	$responseData['pro'] = $candidates->where('position', 'PRO')->get();	
-    	$responseData['socialDirector'] = $candidates->where('position', 'Social Director')->get();
-    	$responseData['chaplain'] = $candidates->where('position', 'Chaplain')->get();
-    	$responseData['sportsDirector'] = $candidates->where('position', 'Sports Director')->get();
-    	
-
-    	return response()->json($responseData);
     }
 
     public function postVotes(Request $request){
@@ -124,8 +110,8 @@ class StudentController extends Controller
     	return redirect('/student-login');
     }
 
-    public function getCandidatesAPI(){
-        $positions = ["PRO", "President", "Vice President", "Chaplain", "Sports Director", "Social Director"];
+    public function getCandidates(){
+        $positions = ["PRO", "President", "Vice President", "Chaplain", "Director of Sports", "Director of Social", "General Secretary", "Director of Transport", "Treasurer", "Director of Finance", "Director of Welfare", "Senate President", "Sargent At Arms", "Assistant Gen Secretary", "Senator Chief Whip", "Deputy Senate President", "Senate Scribe"];
         $candidates = array();
         foreach($positions as $position){
             $candidates[$position] = Candidate::position($position)->get();
@@ -152,6 +138,40 @@ class StudentController extends Controller
 
 
         return response()->json([$candidates, $senatorData]);
+
+    }
+
+    public function serializeTest(){
+        $results = [];
+        $positions = ["PRO", "President", "Vice President", "Chaplain", "Director of Sports", "Director of Social", "General Secretary", "Director of Transport", "Treasurer", "Director of Finance", "Director of Welfare", "Senate President", "Sargent At Arms", "Assistant Gen Secretary", "Senator Chief Whip", "Deputy Senate President", "Senate Scribe", "Hall Senator"];
+        foreach($positions as $position){
+            $candidates = Candidate::position($position)->get();
+            foreach ($candidates as $candidate) {
+                $results[$position][$candidate->first_name. ' '.$candidate->last_name]['id'] = $candidate->id;
+                $results[$position][$candidate->first_name. ' '.$candidate->last_name]['votes'] = $candidate->votes == null ? 0 : $candidate->votes->count;
+            }
+        }
+
+        $testString = serialize($results);
+
+        $path = public_path().'/vote-results/result.txt';
+        $file = file_put_contents($path, $testString);
+        if($file){
+            echo 'It worked!';
+        } else{
+            echo 'Nope!';
+        }
+    }
+
+    public function unserializeTest(){
+        try {
+            $rawFile = file_get_contents(public_path().'/vote-results/result.txt');
+        } 
+        catch(ErrorException $e){
+            echo "It did not work!";
+        }
+        $data = unserialize($rawFile);
+        dd($data);
 
     }
 }

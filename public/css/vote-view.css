@@ -20,23 +20,25 @@ ul.nav-ting a{
 .card{
     position: relative;
     left: -40px;
+    top: -16px;
 }
 .card-content{
     text-align: center;
+    height: 100px;
 }
 
 .card-footer-item{
-    height: 80px;
+    height: 65px;
     text-align: center;
 }
 
 .prev{
     float: left;
     position: relative;
-    left: -98px;
+    left: 150px;
     width: 100px;
-    padding: 20px; 
-    top: 10px;
+    padding: 15px; 
+    top: -180px;
     cursor: pointer;
 }
 
@@ -45,30 +47,31 @@ ul.nav-ting a{
     position: relative;
     left: 390px;
     padding: 20px;
+    top: -180px;
     cursor: pointer;
-    top: 10px;
+    
 }
 
 .next{
     float: right;
     position: relative;
-    left: 98px;
+    left: -40px;
     width: 100px;
-    padding: 20px;
-    top: 10px;
+    padding: 15px;
+    top: -180px;
     cursor: pointer;
 }
 
 h1{
     font-family: Helveticaneue;
-    font-size: 40px;
+    font-size: 36px;
     text-align: center;
     padding-bottom: 10px;
     position: relative;
-    left: 480px;
+    left: 360px;
     color: black;
     border-bottom: 4px solid #ff3860;
-    width: 400px;
+    width: 570px;
     margin-bottom: 50px;
 }
 

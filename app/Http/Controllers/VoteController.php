@@ -16,7 +16,7 @@ use Auth;
 
 class VoteController extends Controller
 {
-	public $positions = ["PRO", "President", "Vice President", "Chaplain", "Sports Director", "Social Director"];
+	public $positions = ["PRO", "President", "Vice President", "Chaplain", "Director of Sports", "Director of Social", "General Secretary", "Director of Transport", "Treasurer", "Director of Finance", "Director of Welfare", "Senate President", "Sargent At Arms", "Assistant Gen Secretary", "Senator Chief Whip", "Deputy Senate President", "Senate Scribe"];
 
 	public function getVotesView(){
 		$admin = Auth::guard('admin')->user()->name;
@@ -47,5 +47,33 @@ class VoteController extends Controller
 			} 
 		}
 		return $result;
+	}
+
+	public function senatorVotesView(){
+		$admin = Auth::guard('admin')->user()->name;
+		$halls = ["Samuel Akande", "Queen Esther", "Nelson Mandela", "Bethel Splendor", "Kings Delight Hall", "Winslow", "Gideon Troopers", "Welch", "Crystal", "Platinum", "Marigold", "FAD", "Queen Esther", "Off-Campus"];
+        $floors=["Ground Floor", "First Floor", "Second Floor", "Third Floor"];
+        return view('view-senator-votes', [
+        	'halls'=>$halls,
+        	'floors'=>$floors,
+        	'admin'=>$admin
+        ]);
+	}
+
+	public function getSenatorVotes(Request $request){
+		$count = 0;
+		$candidateSet = array();
+		$candidates = Candidate::position('Hall Senator')->hall($request->hall)->floor($request->floor)->get();
+		foreach ($candidates as $candidate) {
+			if($candidate->votes == ''){
+				$votes = 0;
+			} else{
+				$votes = $candidate->votes->count;
+			}
+			$candidateSet[$count]['candidate'] = $candidate;
+			$candidateSet[$count]['votes'] = $votes;
+			$count++;
+		}
+		return response()->json($candidateSet);
 	}
 }
