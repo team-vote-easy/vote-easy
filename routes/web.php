@@ -58,6 +58,10 @@ Route::group(['middleware'=>'adminauth'], function(){
 	Route::get('/add-staff', 'StaffController@addStaffView');
 
 	Route::post('/add-staff', 'StaffController@addStaff');
+
+	Route::get('/view-staff', 'StaffController@viewStaffView');
+
+	Route::post('/view-staff', 'StaffController@viewStaff');
 });
 
 

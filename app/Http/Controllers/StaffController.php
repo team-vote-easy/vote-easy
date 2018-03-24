@@ -48,4 +48,16 @@ class StaffController extends Controller
    			return response()->json("Sorry couldnt create the staff!", 500);
    		}
    	}
+
+   	public function viewStaffView(){
+   		$admin = Auth::guard('admin')->user()->name;
+   		return view('fetch-staff', ['admin'=>$admin]);
+   	}
+
+   	public function viewStaff(){
+   		$staff = Staff::all();
+   		return response()->json($staff, 200);
+   	}
+
+
 }

@@ -2,6 +2,7 @@ require('./bootstrap');
 import Modal from './components/Modal.vue';
 import Dashboard from './components/Dashboard.vue';
 import LoadingModal from './components/LoadingModal.vue';
+import StaffCard from './components/StaffCard.vue';
 window.Vue = require('vue');
 window.Event = new Vue();
 
@@ -64,5 +65,5 @@ window.app = new Vue({
 			
 		}
 	},
-	components: {Modal, Dashboard, LoadingModal}
+	components: {Modal, Dashboard, LoadingModal, StaffCard}
 });

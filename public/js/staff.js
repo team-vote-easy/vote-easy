@@ -1086,7 +1086,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Dashboard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_Dashboard_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_LoadingModal_vue__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_LoadingModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_LoadingModal_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_StaffCard_vue__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_StaffCard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_StaffCard_vue__);
 __webpack_require__(12);
+
 
 
 
@@ -1150,7 +1153,7 @@ window.app = new Vue({
 			}
 		}
 	},
-	components: { Modal: __WEBPACK_IMPORTED_MODULE_0__components_Modal_vue___default.a, Dashboard: __WEBPACK_IMPORTED_MODULE_1__components_Dashboard_vue___default.a, LoadingModal: __WEBPACK_IMPORTED_MODULE_2__components_LoadingModal_vue___default.a }
+	components: { Modal: __WEBPACK_IMPORTED_MODULE_0__components_Modal_vue___default.a, Dashboard: __WEBPACK_IMPORTED_MODULE_1__components_Dashboard_vue___default.a, LoadingModal: __WEBPACK_IMPORTED_MODULE_2__components_LoadingModal_vue___default.a, StaffCard: __WEBPACK_IMPORTED_MODULE_3__components_StaffCard_vue___default.a }
 });
 
 /***/ }),
@@ -43865,6 +43868,215 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-d5524570", module.exports)
+  }
+}
+
+/***/ }),
+/* 55 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(9)
+/* script */
+var __vue_script__ = __webpack_require__(56)
+/* template */
+var __vue_template__ = __webpack_require__(57)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\StaffCard.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1a4a74a9", Component.options)
+  } else {
+    hotAPI.reload("data-v-1a4a74a9", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 56 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_lodash__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	data: function data() {
+		return {
+			staffs: '',
+			empty: ''
+		};
+	},
+	created: function created() {
+		self = this;
+		__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/view-staff').then(function (data) {
+			if (data.data == '') {
+				self.empty = true;
+				return;
+			}
+			self.staffs = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.chunk(data.data, 2);
+		}).catch(function (e) {
+			console.log(e);
+		});
+	},
+
+	methods: {}
+});
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _vm._l(_vm.staffs, function(staffSet, key) {
+        return _vm.staffs
+          ? _c(
+              "div",
+              { key: key, staticClass: "columns staff-card" },
+              _vm._l(staffSet, function(staff) {
+                return _c("div", { staticClass: "column is-5" }, [
+                  _c("div", { staticClass: "card" }, [
+                    _c("div", { staticClass: "card-content" }, [
+                      _c("p", { staticClass: "title" }, [
+                        _vm._v(
+                          "\n\t\t\t      \t\t" +
+                            _vm._s(staff.first_name + " " + staff.last_name) +
+                            " \n\t\t\t    \t"
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("footer", { staticClass: "card-footer" }, [
+                      _c("p", { staticClass: "card-footer-item" }, [
+                        _c("span", [
+                          _vm._v(
+                            "\n\t\t\t        \t\t" +
+                              _vm._s(staff.hall) +
+                              "\n\t\t\t      \t\t"
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "card-footer-item" }, [
+                        _vm._v(
+                          "\n\t\t\t    \t\t" +
+                            _vm._s(staff.phone) +
+                            "\n\t\t\t    \t"
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "card-footer-item username" }, [
+                        _vm._v(
+                          "\n\t\t\t    \t\t" +
+                            _vm._s(staff.username) +
+                            "\n\t\t\t    \t"
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "card-footer-item password" }, [
+                        _vm._v(
+                          "\n\t\t\t    \t\t" +
+                            _vm._s(staff.key) +
+                            "\n\t\t\t    \t"
+                        )
+                      ])
+                    ])
+                  ])
+                ])
+              })
+            )
+          : _vm._e()
+      }),
+      _vm._v(" "),
+      _vm.empty ? _c("h1", [_vm._v("Sorry no staff yet!")]) : _vm._e()
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-1a4a74a9", module.exports)
   }
 }
 
