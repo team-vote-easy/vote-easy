@@ -19,17 +19,18 @@ window.app = new Vue({
 		incomplete: '',
 		numOfPosts: '',
 		numOfSentators: '',
-		showNotDone: ''
+		showNotDone: '',
+		noSenators: ''
 	},
 	created(){
 		window.addEventListener('keydown', (e)=>{
-			if(e.key=='ArrowLeft' || e.key=="ArrowUp"){
+			if(e.key=='ArrowLeft'){
 				console.log('Moved left!');
 				this.prev();
 				return;
 			}
 
-			if(e.key=='ArrowRight' || e.key=="ArrowDown"){
+			if(e.key=='ArrowRight'){
 				console.log('Moved right!');
 				this.next();
 				return;
@@ -85,6 +86,11 @@ window.app = new Vue({
 
 		Event.$on('voted', ()=>{
 			this.votedModal = true;
+		});
+
+		Event.$on('noSenators', ()=>{
+			console.log("No senators!");
+			self.noSenators = true;
 		})
 	},
 	methods: {

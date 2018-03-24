@@ -1105,19 +1105,20 @@ window.app = new Vue({
 		incomplete: '',
 		numOfPosts: '',
 		numOfSentators: '',
-		showNotDone: ''
+		showNotDone: '',
+		noSenators: ''
 	},
 	created: function created() {
 		var _this = this;
 
 		window.addEventListener('keydown', function (e) {
-			if (e.key == 'ArrowLeft' || e.key == "ArrowUp") {
+			if (e.key == 'ArrowLeft') {
 				console.log('Moved left!');
 				_this.prev();
 				return;
 			}
 
-			if (e.key == 'ArrowRight' || e.key == "ArrowDown") {
+			if (e.key == 'ArrowRight') {
 				console.log('Moved right!');
 				_this.next();
 				return;
@@ -1172,6 +1173,11 @@ window.app = new Vue({
 
 		Event.$on('voted', function () {
 			_this.votedModal = true;
+		});
+
+		Event.$on('noSenators', function () {
+			console.log("No senators!");
+			self.noSenators = true;
 		});
 	},
 
@@ -43237,7 +43243,7 @@ exports = module.exports = __webpack_require__(45)(false);
 
 
 // module
-exports.push([module.i, "\n.menu{\n\tposition: relative;\n\ttop: -110px;\n\tleft: -89px;\n\twidth: 180px;\n}\n.menu-list{\n\tborder-left: 3px solid #ff3860;\n}\n.menu-list a{\n\tfont-size: 12.5px;\n}\n.menu-list a.is-active{\n\tbackground-color: whitesmoke;\n\tcolor: #ff3860;\n\tborder-right: 4px solid #ff3860;\n}\n.voted{\n\tfloat: right;\n\tcolor: #00d1b2;\n}\n", ""]);
+exports.push([module.i, "\n.menu{\n\tposition: relative;\n\ttop: -100px;\n\tleft: -89px;\n\twidth: 180px;\n}\n.menu-list{\n\tborder-left: 3px solid #ff3860;\n}\n.menu-list a{\n\tfont-size: 12.5px;\n}\n.menu-list a.is-active{\n\tbackground-color: whitesmoke;\n\tcolor: #ff3860;\n\tborder-right: 4px solid #ff3860;\n}\n.voted{\n\tfloat: right;\n\tcolor: #00d1b2;\n}\n", ""]);
 
 // exports
 
@@ -43688,6 +43694,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			});
 
 			var senatorPosts = Object.keys(senators);
+
+			if (senatorPosts == '') {
+				Event.$emit('noSenators');
+			}
+
 			senatorPosts = senatorPosts.sort();
 			senatorPosts.forEach(function (post) {
 				studentVote[post] = '';

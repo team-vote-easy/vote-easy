@@ -54,9 +54,9 @@
 			</div>
 
 			<div>
-				<a href="#" @click.prevent="prev" class="button is-danger prev" :disabled="count==0">Previous</a>
-				<a href="#" @click.prevent="submitVotes" class="button is-primary done" :disabled="isDone()">Done</a>
-				<a href="#" @click.prevent="next" class="button is-danger next" :disabled="count>=(tabs - 1)">Next</a>
+				<a href="#" @click.prevent="prev" class="button is-danger prev" :class="[noSenators== true  ? 'noSenators': '' ]" :disabled="count==0">Previous</a>
+				<a href="#" @click.prevent="submitVotes" class="button is-primary done"  :class="[noSenators== true  ? 'noSenators': '' ]" :disabled="isDone()">Done</a>
+				<a href="#" @click.prevent="next" class="button is-danger next"   :class="[noSenators== true  ? 'noSenators': '' ]" :disabled="count>=(tabs - 1)">Next</a>
 			</div>
 
 		</div>

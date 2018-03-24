@@ -120,6 +120,23 @@
 									selected: false
 								}
 							]
+						}, 
+						{
+							title: 'Staff',
+							subTabs: [
+								{
+									href: '/add-staff',
+									text: 'Add Staff',
+									icon: 'fa fa-user',
+									selected: false
+								},
+								{
+									href: '/view-staff',
+									text: 'View Staff',
+									icon: 'fa fa-user',
+									selected: false
+								},
+							]
 						}
 					]
 				}
@@ -137,6 +154,7 @@
 <style>
 	.menu{
 		position: fixed;
+		top: 100px;
 	}
 
 	.navbar{

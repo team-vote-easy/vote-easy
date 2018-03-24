@@ -11,4 +11,4 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/student.js', 'public/js');
+mix.js('resources/assets/js/staff.js', 'public/js');

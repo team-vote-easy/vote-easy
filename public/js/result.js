@@ -33061,6 +33061,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					icon: 'fa fa-line-chart',
 					selected: false
 				}]
+			}, {
+				title: 'Staff',
+				subTabs: [{
+					href: '/add-staff',
+					text: 'Add Staff',
+					icon: 'fa fa-user',
+					selected: false
+				}, {
+					href: '/view-staff',
+					text: 'View Staff',
+					icon: 'fa fa-user',
+					selected: false
+				}]
 			}]
 		};
 	},

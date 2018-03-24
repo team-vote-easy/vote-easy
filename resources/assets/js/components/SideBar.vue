@@ -102,7 +102,14 @@
 					});
 				});
 		
+
+
 				var senatorPosts = Object.keys(senators);
+
+				if(senatorPosts == ''){
+					Event.$emit('noSenators');
+				}
+
 				senatorPosts = senatorPosts.sort();
 				senatorPosts.forEach((post)=>{
 					studentVote[post] = '';
@@ -188,7 +195,7 @@
 <style>
 	.menu{
 		position: relative;
-		top: -110px;
+		top: -100px;
 		left: -89px;
 		width: 180px;
 	}
