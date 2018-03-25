@@ -1088,7 +1088,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_LoadingModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_LoadingModal_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_StaffCard_vue__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_StaffCard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_StaffCard_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_StaffDashboard_vue__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_StaffDashboard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_StaffDashboard_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_StatCard_vue__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_StatCard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_StatCard_vue__);
 __webpack_require__(12);
+
+
 
 
 
@@ -1107,7 +1113,11 @@ window.app = new Vue({
 		loading: '',
 		showModal: '',
 		success: '',
-		error: ''
+		error: '',
+		matricNumber: '',
+		studentDetails: '',
+		message: '',
+		empty: ''
 	},
 	methods: {
 		submit: function submit() {
@@ -1151,9 +1161,34 @@ window.app = new Vue({
 					self.error = e.response.data;
 				});
 			}
+		},
+		fetchStudent: function fetchStudent() {
+			self = this;
+			this.loading = true;
+			this.studentDetails = '';
+			this.message = '';
+
+			axios.post('/staff/fetch-student', {
+				matricNumber: this.matricNumber
+			}).then(function (data) {
+				console.log(data);
+				self.loading = '';
+				if (Object.keys(data.data).length === 0) {
+					self.message = 'Sorry... there are no students that satisfy your query';
+					self.empty = true;
+					return;
+				}
+				self.studentDetails = data.data;
+				self.empty = false;
+			}).catch(function (e) {
+				self.loading = '';
+				self.message = 'Seems like the server is down!';
+				self.empty = true;
+				console.log(e);
+			});
 		}
 	},
-	components: { Modal: __WEBPACK_IMPORTED_MODULE_0__components_Modal_vue___default.a, Dashboard: __WEBPACK_IMPORTED_MODULE_1__components_Dashboard_vue___default.a, LoadingModal: __WEBPACK_IMPORTED_MODULE_2__components_LoadingModal_vue___default.a, StaffCard: __WEBPACK_IMPORTED_MODULE_3__components_StaffCard_vue___default.a }
+	components: { Modal: __WEBPACK_IMPORTED_MODULE_0__components_Modal_vue___default.a, Dashboard: __WEBPACK_IMPORTED_MODULE_1__components_Dashboard_vue___default.a, LoadingModal: __WEBPACK_IMPORTED_MODULE_2__components_LoadingModal_vue___default.a, StaffCard: __WEBPACK_IMPORTED_MODULE_3__components_StaffCard_vue___default.a, StaffDashboard: __WEBPACK_IMPORTED_MODULE_4__components_StaffDashboard_vue___default.a, StatCard: __WEBPACK_IMPORTED_MODULE_5__components_StatCard_vue___default.a }
 });
 
 /***/ }),
@@ -32535,7 +32570,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				}, {
 					href: '/view-staff',
 					text: 'View Staff',
-					icon: 'fa fa-user',
+					icon: 'fa fa-eye',
 					selected: false
 				}]
 			}]
@@ -44077,6 +44112,403 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-1a4a74a9", module.exports)
+  }
+}
+
+/***/ }),
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(59)
+}
+var normalizeComponent = __webpack_require__(9)
+/* script */
+var __vue_script__ = __webpack_require__(61)
+/* template */
+var __vue_template__ = __webpack_require__(62)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\StaffDashboard.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6b971ccb", Component.options)
+  } else {
+    hotAPI.reload("data-v-6b971ccb", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 59 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(60);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(43)("d010a45e", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6b971ccb\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./StaffDashboard.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6b971ccb\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./StaffDashboard.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(42)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.menu{\n\tposition: fixed;\n\ttop: 100px;\n}\n.navbar{\n\tborder-bottom: 6px solid whitesmoke;\n}\n.brand{\n\tposition: relative;\n\tleft: -880px;\n}\n.fa{\n\tmargin-right: 5px;\n}\n.menu-list a.is-active{\n\tbackground-color: #00d1b2;\n\tcolor: white;\n}\nspan.admin{\n\tmargin: 5px 6px;\n\tpadding: 1px;\n\tborder-bottom: 3px solid black;\n}\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 61 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	props: ['link', 'staff'],
+	data: function data() {
+		return {
+			tabs: [{
+				title: 'Students',
+				subTabs: [{
+					href: '/staff/home',
+					text: 'Fetch Student',
+					icon: 'fa fa-search',
+					selected: false
+				}]
+			}, {
+				title: 'Analytics',
+				subTabs: [{
+					href: '/staff/view-breakdown',
+					text: 'View Breakdown',
+					icon: 'fa fa-line-chart',
+					selected: false
+				}]
+			}, {
+				title: 'Server',
+				subTabs: [{
+					href: '/staff/push-to-server',
+					text: 'Push To Server',
+					icon: 'fa fa-search',
+					selected: false
+				}]
+			}]
+		};
+	},
+	created: function created() {
+		var _this = this;
+
+		this.tabs.forEach(function (category) {
+			category.subTabs.forEach(function (tab) {
+				tab.selected = _this.link === tab.href;
+			});
+		});
+	}
+});
+
+/***/ }),
+/* 62 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("nav", { staticClass: "navbar" }, [
+      _c("div", { staticClass: "navbar-menu" }, [
+        _c("div", { staticClass: "navbar-end" }, [
+          _c("img", {
+            staticClass: "navbar-item brand",
+            attrs: {
+              src: "/css/images/bucc-logo.PNG",
+              width: "130",
+              height: "180",
+              alt: "BUCC"
+            }
+          }),
+          _vm._v(" "),
+          _c("span", { staticClass: "navbar-item" }, [
+            _vm._v("\n\t\t\t\t\tSigned In as: "),
+            _c("span", { staticClass: "admin" }, [
+              _vm._v(" " + _vm._s(_vm.staff) + " ")
+            ])
+          ]),
+          _vm._v(" "),
+          _vm._m(0)
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "section" }, [
+      _c("div", { staticClass: "columns" }, [
+        _c("aside", { staticClass: "column is-2" }, [
+          _c(
+            "nav",
+            { staticClass: "menu" },
+            _vm._l(_vm.tabs, function(category) {
+              return _c("div", [
+                _c("p", { staticClass: "menu-label" }, [
+                  _vm._v(" " + _vm._s(category.title))
+                ]),
+                _vm._v(" "),
+                _c(
+                  "ul",
+                  { staticClass: "menu-list" },
+                  _vm._l(category.subTabs, function(tab) {
+                    return _c("li", [
+                      _c(
+                        "a",
+                        {
+                          class: { "is-active": tab.selected },
+                          attrs: { href: tab.href }
+                        },
+                        [
+                          _c("i", { class: tab.icon }),
+                          _vm._v(
+                            "\n\t\t\t\t\t\t\t\t\t" +
+                              _vm._s(tab.text) +
+                              "\n\t\t\t\t\t\t\t\t"
+                          )
+                        ]
+                      )
+                    ])
+                  })
+                )
+              ])
+            })
+          )
+        ]),
+        _vm._v(" "),
+        _c("main", { staticClass: "column" }, [_vm._t("default")], 2)
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "navbar-item" }, [
+      _c(
+        "a",
+        {
+          staticClass: "button is-dark is-outlined is-rounded",
+          attrs: { href: "/staff/logout" }
+        },
+        [_vm._v(" Sign Out")]
+      )
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-6b971ccb", module.exports)
+  }
+}
+
+/***/ }),
+/* 63 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(9)
+/* script */
+var __vue_script__ = __webpack_require__(64)
+/* template */
+var __vue_template__ = __webpack_require__(65)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\StatCard.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-b96d200a", Component.options)
+  } else {
+    hotAPI.reload("data-v-b96d200a", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 64 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	props: ['message', 'empty'],
+	data: function data() {
+		return {};
+	}
+});
+
+/***/ }),
+/* 65 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "card",
+      class: [_vm.empty ? "empty animated shake" : "exists animated bounce"]
+    },
+    [
+      _c("div", { staticClass: "card-content" }, [
+        _c("p", { staticClass: "title" }, [
+          _vm._v("\n      " + _vm._s(_vm.message) + "\n    ")
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-b96d200a", module.exports)
   }
 }
 

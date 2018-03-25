@@ -3,6 +3,8 @@ import Modal from './components/Modal.vue';
 import Dashboard from './components/Dashboard.vue';
 import LoadingModal from './components/LoadingModal.vue';
 import StaffCard from './components/StaffCard.vue';
+import StaffDashboard from './components/StaffDashboard.vue';
+import StatCard from './components/StatCard.vue';
 window.Vue = require('vue');
 window.Event = new Vue();
 
@@ -17,7 +19,11 @@ window.app = new Vue({
 		loading: '',
 		showModal: '',
 		success: '',
-		error: ''
+		error: '',
+		matricNumber: '',
+		studentDetails: '',
+		message: '',
+		empty: ''
 	},
 	methods: {
 		submit(){
@@ -61,9 +67,35 @@ window.app = new Vue({
 					self.showModal = true;
 					self.error = e.response.data;
 				})
-			}
-			
-		}
+			}	
+		},
+		fetchStudent(){
+            self = this;
+            this.loading = true;
+            this.studentDetails = '';
+            this.message = '';
+
+            axios.post('/staff/fetch-student', {
+                matricNumber: this.matricNumber
+            })
+            .then((data)=>{
+            	console.log(data);
+                self.loading = '';
+                if(Object.keys(data.data).length === 0){
+                    self.message = 'Sorry... there are no students that satisfy your query';
+                    self.empty = true;
+                    return;
+                }
+                self.studentDetails = data.data;
+                self.empty = false;
+            })
+            .catch((e)=>{
+            	self.loading = '';
+            	self.message = 'Seems like the server is down!';
+                self.empty = true;
+                console.log(e);
+            });
+        }
 	},
-	components: {Modal, Dashboard, LoadingModal, StaffCard}
+	components: {Modal, Dashboard, LoadingModal, StaffCard, StaffDashboard, StatCard}
 });

@@ -133,7 +133,7 @@
 								{
 									href: '/view-staff',
 									text: 'View Staff',
-									icon: 'fa fa-user',
+									icon: 'fa fa-eye',
 									selected: false
 								},
 							]

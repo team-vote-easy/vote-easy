@@ -44134,7 +44134,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				}, {
 					href: '/view-staff',
 					text: 'View Staff',
-					icon: 'fa fa-user',
+					icon: 'fa fa-eye',
 					selected: false
 				}]
 			}]

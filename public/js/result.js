@@ -32943,7 +32943,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.menu{\n\tposition: fixed;\n}\n.navbar{\n\tborder-bottom: 6px solid whitesmoke;\n}\n.brand{\n\tposition: relative;\n\tleft: -870px;\n}\n.fa{\n\tmargin-right: 5px;\n}\n.menu-list a.is-active{\n\tbackground-color: #0a0a0a;\n\tcolor: white;\n}\nspan.admin{\n\tmargin: 5px 6px;\n\tpadding: 1px;\n\tborder-bottom: 3px solid black;\n}\n\n", ""]);
+exports.push([module.i, "\n.menu{\n\tposition: fixed;\n\ttop: 100px;\n}\n.navbar{\n\tborder-bottom: 6px solid whitesmoke;\n}\n.brand{\n\tposition: relative;\n\tleft: -870px;\n}\n.fa{\n\tmargin-right: 5px;\n}\n.menu-list a.is-active{\n\tbackground-color: #0a0a0a;\n\tcolor: white;\n}\nspan.admin{\n\tmargin: 5px 6px;\n\tpadding: 1px;\n\tborder-bottom: 3px solid black;\n}\n\n", ""]);
 
 // exports
 
@@ -33071,7 +33071,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				}, {
 					href: '/view-staff',
 					text: 'View Staff',
-					icon: 'fa fa-user',
+					icon: 'fa fa-eye',
 					selected: false
 				}]
 			}]

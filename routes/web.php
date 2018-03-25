@@ -8,10 +8,9 @@ Route::post('admin-log', 'AdminController@login');
 
 Route::get('admin-logout', 'AdminController@logout');
 
-Route::get('/admin-test', 'AdminController@testAuth');
+// Route::get('/admin-test', 'AdminController@testAuth');
 
-
-Route::get('/add-test', 'ImportController@addTest');
+// Route::get('/add-test', 'ImportController@addTest');
 
 Route::group(['middleware'=>'adminauth'], function(){
 
@@ -98,7 +97,18 @@ Route::get('/unserialize-test', 'StudentController@unserializeTest');
 
 
 /*--------------------------------------------------------------------------*/
+Route::get('/staff/login', 'StaffController@staffLoginView')->middleware('redirectauthenticatedstaff');
 
+Route::post('/staff/login', 'StaffController@login')->middleware('redirectauthenticatedstaff');
 
+Route::group(["middleware"=>"staffauth"], function(){
+	Route::get('/staff/home', 'StaffController@staffHome');
+
+	Route::post('/staff/fetch-student', 'StaffController@fetchStudent');
+
+	Route::get('/staff/view-breakdown', 'StaffController@breakDownView');
+	
+	Route::get('/staff/logout', 'StaffController@logout');
+});
 
 

@@ -22,6 +22,7 @@ class CreateStaffTable extends Migration
             $table->string('key');
             $table->string('hall');
             $table->string('password');
+            $table->rememberToken();
             $table->timestamps();
         });
     }
