@@ -103,6 +103,10 @@ Route::group(["middleware"=>"staffauth"], function(){
 	Route::post('/staff/fetch-student', 'StaffController@fetchStudent');
 
 	Route::get('/staff/view-breakdown', 'StaffController@breakDownView');
+
+	Route::get('/staff/push-to-server', 'StaffController@pushToServerView');
+
+	Route::post('/staff/push-to-server', 'StaffController@pushToServer');
 	
 	Route::get('/staff/logout', 'StaffController@logout');
 });

@@ -80,7 +80,7 @@
 								{
 									href: '/staff/push-to-server',
 									text: 'Push To Server',
-									icon: 'fa fa-search',
+									icon: 'fa fa-server',
 									selected: false
 								}
 							]

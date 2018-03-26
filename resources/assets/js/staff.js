@@ -95,6 +95,10 @@ window.app = new Vue({
                 self.empty = true;
                 console.log(e);
             });
+        },
+        pushServer(){
+        	console.log('🚀');
+        	// axios.post('/staff/push-to-server')
         }
 	},
 	components: {Modal, Dashboard, LoadingModal, StaffCard, StaffDashboard, StatCard}

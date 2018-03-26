@@ -10,6 +10,8 @@ use Auth;
 
 use Hash;
 
+use App\Log;
+
 use App\Student;
 
 class StaffController extends Controller
@@ -116,6 +118,22 @@ class StaffController extends Controller
     	return view('staff-view-breakdown',[
     		'totalStudents'=>$totalStudents, 'votedStudents'=>$votedStudents, 'staff'=>$staff, 'unvotedStudents'=>$unvotedStudents, 'hall'=>$hall
     	]);
+    }
+
+    public function pushToServerView(){
+    	$staff = Auth::guard('staff')->user()->username;
+    	$hall = Auth::guard('staff')->user()->hall;
+    	$lastLog = Log::orderBy('id', 'desc')->first();
+    	return view('staff-push-to-server', ['lastLog'=>$lastLog, 'staff'=>$staff, 'hall'=>$hall]);
+    }
+
+    public function pushToServer(){
+    	$date = date("h:i:s");
+    	$latestLog = Log::create([
+    		'push_time'=>$date,
+    		'staff_id'=>$Auth::guard('staff')->user()->id
+    	]);
+    	return response()->json($latestLog, 200);
     }
 
 
