@@ -8,7 +8,6 @@ import StatCard from './components/StatCard.vue';
 window.app = new Vue({
     el: '#root',
     data: {
-        courseData: '',
         levelData: '',
         roleData: '',
         loading: '',
@@ -16,9 +15,19 @@ window.app = new Vue({
         candidates: '',
         message: '',
         empty: false,
-        courseArray: ["Computer Science", "Computer Technology", "Computer Information Systems", "All"],
+        hallArray: ["Samuel Akande", "Queen Esther", "Nelson Mandela", "Bethel Splendor", "Kings Delight Hall", "Winslow", "Gideon Troopers", "Welch", "Crystal", "Platinum", "Marigold", "FAD", "Off-Campus", "All"],
+        floorArray: ["Ground Floor", "First Floor", "Second Floor", "Third Floor", "All"],
         levelArray: [100, 200, 300, 400, "All"],
-        positionArray: ["PRO", "President", "Vice President", "Chaplain", "Sports Director", "Social Director", "All"]
+        positionArray: ["PRO", "President", "Vice President", "Chaplain", "Director of Sports", "Director of Social", "General Secretary", "Director of Transport", "Treasurer", "Director of Finance", "Director of Welfare", "Senate President", "Sargent At Arms", "Assistant Gen Secretary", "Senator Chief Whip", "Deputy Senate President", "Senate Scribe", "Hall Senator", "All"],
+        hall: '',
+        floor: '',
+        showHalls: '',
+    },
+    created(){
+        this.levelArray = this.levelArray.sort();
+        this.positionArray = this.positionArray.sort();
+        this.hallArray = this.hallArray.sort();
+        this.floorArray = this.floorArray.sort();
     },
     methods: {
        fetchCandidate: function(){
@@ -31,9 +40,11 @@ window.app = new Vue({
             axios.post('fetch-candidates', {
                 position: this.roleData,
                 level: this.levelData,
-                course: this.courseData
+                hall: this.hall,
+                floor: this.floor
             })
             .then((data)=>{
+                console.log(data.data);
                 self.loading = '';
                 if(data.data.length == 0 ){
                     self.empty = true;
@@ -50,6 +61,13 @@ window.app = new Vue({
         },
         getPath(image){
             return 'candidate-images/'+image;
+        },
+        handleChange(){
+            if(this.roleData == 'Hall Senator'){
+                this.showHalls = true;
+            } else{
+                this.showHalls = '';
+            }
         }
     },
     components: {StatCard, Dashboard, LoadingModal}

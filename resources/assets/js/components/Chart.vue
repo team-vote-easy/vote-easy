@@ -1,17 +1,18 @@
 <template>
 	<div>
-		<div class="charts" id="President" style="height: 550px; width: 100%;"></div>
-		<div class="charts" id="Chaplain" style="height: 550px; width: 100%;"></div>
-		<div class="charts" id="Vice President" style="height: 550px; width: 100%;"></div>
-		<div class="charts" id="Social Director" style="height: 550px; width: 100%;"></div>
-		<div class="charts" id="Sports Director" style="height: 550px; width: 100%;"></div>
-		<div class="charts" id="PRO" style="height: 550px; width: 100%;"></div>
+		<div v-for="key in keys" class="charts box" :id="key" style="height: 550px; width: 100%;">1 </div>
 	</div>
 </template>
 
 <script>
 	export default{
+		data(){
+			return{
+				keys: ["PRO", "President", "Vice President", "Chaplain", "Director of Sports", "Director of Social", "General Secretary", "Director of Transport", "Treasurer", "Director of Finance", "Director of Welfare", "Senate President", "Sargent At Arms", "Assistant Gen Secretary", "Senator Chief Whip", "Deputy Senate President", "Senate Scribe"]
+			}
+		},
 		created(){
+			this.keys.sort();
 			this.fetchVotes();
 		},
 		methods: {
@@ -20,9 +21,8 @@
 				axios.get('api/get-votes')
 					.then((data)=>{
 						var posts = data.data;
-						var keys = Object.keys(posts);
+						var keys = Object.keys(posts).sort();
 						keys.forEach((k)=>{
-							console.log(k);
 							self.renderChart(posts[k]);
 						});	
 					})
@@ -33,21 +33,19 @@
 
 			renderChart(candidate){
 				var candidateItems = new Array();
-				var counter = 0;
 
 				candidate.candidates.forEach((c)=>{
-					candidateItems[counter] = { 
+					candidateItems.push({ 
 						name: (c.first_name + ' ' + c.last_name), 
 						y: (c.votes === null ? 0 : c.votes.count) 
-					};
-					counter++;
+					});
 				});
 
 				CanvasJS.addColorSet("warmShades", 
 				[
-					"#ebbe85",
-					"#e08471",
-					"#e0d771"              
+					"#e3d9ca",
+					"#95a792",          
+					"#363333"            
 				]);
 
 				var chart = new CanvasJS.Chart(candidate.name, {

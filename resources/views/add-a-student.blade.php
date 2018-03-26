@@ -94,33 +94,18 @@
                         </div>
                     </div>
 
-
-
                     <div class="field is-horizontal">
                         <div class="field-label is-normal">
-                            <label class="label">Course + Level: </label>
+                            <label class="label">Hall: </label>
                         </div>
                         <div class="field-body">
                             <div class="field">
                                 <div class="control is-expanded">
                                     <div class="select">
-                                        <select name="course" v-model="course">
-                                            <option disabled value="">Select Course</option>
-                                            @foreach($courses as $course)
-                                                <option value="{{$course}}">{{$course}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="field">
-                                <div class="control is-expanded">
-                                    <div class="select">
-                                        <select name="level" v-model="level">
-                                            <option disabled value="">Select Level</option>
-                                            @foreach($levels as $level)
-                                                <option value="{{$level}}"> {{$level}} </option>
+                                        <select name="hall" v-model="hall">
+                                            <option disabled value="">Select Hall</option>
+                                            @foreach($halls as $hall)
+                                                <option value="{{$hall}}"> {{$hall}} </option>
                                             @endforeach
                                         </select>
                                     </div>

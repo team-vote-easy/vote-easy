@@ -1403,13 +1403,19 @@ window.Event = new Vue();
 window.app = new Vue({
     el: '#root',
     data: (_data = {
-        courseData: '',
         levelData: '',
         roleData: '',
         loading: '',
         message: '',
         candidates: ''
-    }, _defineProperty(_data, 'message', ''), _defineProperty(_data, 'empty', false), _defineProperty(_data, 'courseArray', ["Computer Science", "Computer Technology", "Computer Information Systems", "All"]), _defineProperty(_data, 'levelArray', [100, 200, 300, 400, "All"]), _defineProperty(_data, 'positionArray', ["PRO", "President", "Vice President", "Chaplain", "Sports Director", "Social Director", "All"]), _data),
+    }, _defineProperty(_data, 'message', ''), _defineProperty(_data, 'empty', false), _defineProperty(_data, 'hallArray', ["Samuel Akande", "Queen Esther", "Nelson Mandela", "Bethel Splendor", "Kings Delight Hall", "Winslow", "Gideon Troopers", "Welch", "Crystal", "Platinum", "Marigold", "FAD", "Off-Campus", "All"]), _defineProperty(_data, 'floorArray', ["Ground Floor", "First Floor", "Second Floor", "Third Floor", "All"]), _defineProperty(_data, 'levelArray', [100, 200, 300, 400, "All"]), _defineProperty(_data, 'positionArray', ["PRO", "President", "Vice President", "Chaplain", "Director of Sports", "Director of Social", "General Secretary", "Director of Transport", "Treasurer", "Director of Finance", "Director of Welfare", "Senate President", "Sargent At Arms", "Assistant Gen Secretary", "Senator Chief Whip", "Deputy Senate President", "Senate Scribe", "Hall Senator", "All"]), _defineProperty(_data, 'hall', ''), _defineProperty(_data, 'floor', ''), _defineProperty(_data, 'showHalls', ''), _data),
+    created: function created() {
+        this.levelArray = this.levelArray.sort();
+        this.positionArray = this.positionArray.sort();
+        this.hallArray = this.hallArray.sort();
+        this.floorArray = this.floorArray.sort();
+    },
+
     methods: {
         fetchCandidate: function fetchCandidate() {
             self = this;
@@ -1421,8 +1427,10 @@ window.app = new Vue({
             axios.post('fetch-candidates', {
                 position: this.roleData,
                 level: this.levelData,
-                course: this.courseData
+                hall: this.hall,
+                floor: this.floor
             }).then(function (data) {
+                console.log(data.data);
                 self.loading = '';
                 if (data.data.length == 0) {
                     self.empty = true;
@@ -1438,6 +1446,13 @@ window.app = new Vue({
         },
         getPath: function getPath(image) {
             return 'candidate-images/' + image;
+        },
+        handleChange: function handleChange() {
+            if (this.roleData == 'Hall Senator') {
+                this.showHalls = true;
+            } else {
+                this.showHalls = '';
+            }
         }
     },
     components: { StatCard: __WEBPACK_IMPORTED_MODULE_2__components_StatCard_vue___default.a, Dashboard: __WEBPACK_IMPORTED_MODULE_0__components_Dashboard_vue___default.a, LoadingModal: __WEBPACK_IMPORTED_MODULE_1__components_LoadingModal_vue___default.a }
@@ -43452,6 +43467,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					icon: 'fa fa-bar-chart',
 					selected: false
 				}, {
+					href: '/view-votes-senators',
+					text: 'View Senator Results',
+					icon: 'fa fa-pie-chart',
+					selected: false
+				}, {
 					href: '/view-breakdown',
 					text: 'View Breakdown',
 					icon: 'fa fa-line-chart',
@@ -43488,7 +43508,7 @@ var render = function() {
             attrs: {
               src: "css/images/bucc-logo.PNG",
               width: "130",
-              height: "220",
+              height: "180",
               alt: "BUCC"
             }
           }),

@@ -74,34 +74,20 @@
 	<div id="root" v-cloak>
 		<dashboard :link="'/fetch-course'" admin={{$admin}}> 
 			<div class="box">
-				<form method="POST" action="/import" enctype="multipart/form-data" class="" @submit.prevent="submit">
+				<form method="POST" action="/fetch-course" enctype="multipart/form-data" class="" @submit.prevent="submit">
 					<h1>Search Students</h1>
-
 					<div class="field is-horizontal">
 						<div class="field-label is-normal">
-							<label class="label">Course & Level: </label>
+							<label class="label">Hall: </label>
 						</div>
 						<div class="field-body">
 							<div class="field">
 								<div class="control is-expanded">
 									<div class="select">
-										<select name="course" v-model="course">
-											<option value="" disabled="">Select Course</option>
-											@foreach($courses as $course)
-												<option value="{{$course}}">{{$course}}</option>
-											@endforeach
-										</select>
-									</div>
-								</div>
-							</div>
-
-							<div class="field">
-								<div class="control is-expanded">
-									<div class="select">
-										<select name="level" v-model="level">
-											<option value="" disabled>Select Level</option>
-											@foreach($levels as $level)
-												<option value="{{$level}}"> {{$level}} </option>
+										<select name="hall" v-model="hall">
+											<option value="" disabled="">Select Hall</option>
+											@foreach($halls as $hall)
+												<option value="{{$hall}}">{{$hall}}</option>
 											@endforeach
 										</select>
 									</div>
@@ -109,7 +95,8 @@
 							</div>
 						</div>
 					</div>
-			
+		
+
 					<div class="field">
 						<div class="control">
 							<input type="submit" name="Submit" value="Search" class="button is-dark is-medium">  

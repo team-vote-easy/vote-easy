@@ -8,9 +8,6 @@ Route::post('admin-log', 'AdminController@login');
 
 Route::get('admin-logout', 'AdminController@logout');
 
-Route::get('/admin-test', 'AdminController@testAuth');
-
-
 Route::group(['middleware'=>'adminauth'], function(){
 
 	Route::get('import', 'ImportController@showImport');
@@ -31,7 +28,7 @@ Route::group(['middleware'=>'adminauth'], function(){
 
 	Route::get('fetch-course', 'FetchController@fetchCourseView');
 
-	Route::post('fetch-course', 'FetchController@fetchCourse');
+	Route::post('fetch-hall', 'FetchController@fetchHall');
 
 	Route::get('fetch-student', 'FetchController@fetchStudentView');
 
@@ -46,8 +43,24 @@ Route::group(['middleware'=>'adminauth'], function(){
 	Route::get('api/get-votes', 'VoteController@getVotes');
 
 	Route::get('/view-breakdown', 'AnalyticsController@breakDownView');
+
+	Route::get('/view-votes-senators', 'VoteController@senatorVotesView');
+
+	Route::post('/view-votes-senators', 'VoteController@getSenatorVotes');
+
+	Route::get('/get-total', 'AnalyticsController@getTotal');
+
+	Route::get('/add-staff', 'StaffController@addStaffView');
+
+	Route::post('/add-staff', 'StaffController@addStaff');
+
+	Route::get('/view-staff', 'StaffController@viewStaffView');
+
+	Route::post('/view-staff', 'StaffController@viewStaff');
 });
 
+
+/*--------------------------------------------------------------------------*/
 
 Route::get('/', function(){
 	return redirect('/student-login');
@@ -69,14 +82,29 @@ Route::group(['middleware'=>'studentauth'], function(){
 
 	Route::get('api/student', 'StudentController@getStudent');
 
-	Route::get('api/candidates', 'StudentController@getCandidates');
-
 	Route::post('/api/vote', 'StudentController@postVotes');
+
+	Route::get('/api/get-candidates', 'StudentController@getCandidates');
 });
 
+Route::get('/serialize-test', 'StudentController@serializeTest');
+Route::get('/unserialize-test', 'StudentController@unserializeTest');
 
 
-Route::get('/get-total', 'AnalyticsController@getTotal');
 
+/*--------------------------------------------------------------------------*/
+Route::get('/staff/login', 'StaffController@staffLoginView')->middleware('redirectauthenticatedstaff');
+
+Route::post('/staff/login', 'StaffController@login')->middleware('redirectauthenticatedstaff');
+
+Route::group(["middleware"=>"staffauth"], function(){
+	Route::get('/staff/home', 'StaffController@staffHome');
+
+	Route::post('/staff/fetch-student', 'StaffController@fetchStudent');
+
+	Route::get('/staff/view-breakdown', 'StaffController@breakDownView');
+	
+	Route::get('/staff/logout', 'StaffController@logout');
+});
 
 

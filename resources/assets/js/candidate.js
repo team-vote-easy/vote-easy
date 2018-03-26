@@ -3,8 +3,6 @@ window.Vue = require('vue');
 window.Event = new Vue();
 import Modal from './components/Modal.vue';
 import Hero from './components/Hero.vue';
-// import FetchCandidates from './components/FetchCandidates.vue';
-import AddPost from './components/AddPost.vue';
 import Dashboard from './components/Dashboard.vue';
 import LoadingModal from './components/LoadingModal.vue';
 
@@ -14,13 +12,15 @@ window.app = new Vue({
         firstName: '',
         lastName: '',
         level: '',
-        course: '',
         image: '',
         role: '',
         showModal: false,
         errors: {},
         success: '',
-        loading: ''
+        loading: '',
+        showHalls: '',
+        hall: '',
+        floor: ''
     },
     methods: {
         processFile(event){
@@ -36,30 +36,43 @@ window.app = new Vue({
             formData.append('firstName', this.firstName);
             formData.append('lastName', this.lastName);
             formData.append('level', this.level);
-            formData.append('course', this.course);
             formData.append('position', this.role);
             formData.append('image', this.image, this.image.name);
-            
+            if(this.floor !== '' && this.hall != ''){
+                formData.append('floor', this.floor);
+                formData.append('hall', this.hall);
+            }
 
             axios.post('/add-candidates', formData)
             .then((data)=>{
+                console.log(data.data);
                 this.loading = false;
                 this.success = data.data;
                 this.showModal = true;
                 this.firstName = '';
                 this.lastName = '';
                 this.level = '';
-                this.course = '';
                 this.image = '';
-                this.role = '';                
+                this.hall = '';
+                this.floor = '';
+                this.role = '';
+                this.showHalls = '';                
             })
             .catch((error)=>{
                 this.loading = false;
                 console.log(error);
             });
+        },
+
+        handleChange(){
+            if(this.role == 'Hall Senator'){
+                this.showHalls = true;
+            } else{
+                this.showHalls = false;
+            }
         }
     },
-    components: {Modal, Hero, AddPost, Dashboard, LoadingModal}
+    components: {Modal, Hero, Dashboard, LoadingModal}
 })
 
 

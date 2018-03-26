@@ -1,7 +1,2 @@
 # Vote Easy
-A live voting platform for conducting elections for the Babcock University Computer Club (BUCC).
-<<<<<<< HEAD
-=======
-
-​
->>>>>>> github/darth
+A live voting platform built for conducting the 2018 Babcock University Computer Club (BUCC) Departmental Election.

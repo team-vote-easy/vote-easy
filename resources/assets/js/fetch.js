@@ -13,6 +13,7 @@ window.app = new Vue({
     data: {
         level: '',
         course: '',
+        hall: '',
         matricNumber: '',
         students: '',
         studentDetails: '',
@@ -27,18 +28,20 @@ window.app = new Vue({
             this.students = '';
 
             self = this;
-            axios.post('/fetch-course', {
-                level: this.level,
-                course: this.course
+            axios.post('/fetch-hall', {
+                hall: this.hall,
             })
             .then((data)=>{
-                self.loading = false;
+                console.log(data);
 
+                
+                self.loading = false;
                 if(data.data.students==''){
                     this.message = 'Sorry... there are no students that satisfy your query';
                     this.empty = true;
                     return;
                 }
+
 
                 this.students = _.chunk(data.data.students, 3);
                 this.message = data.data.message;

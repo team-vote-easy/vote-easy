@@ -1410,6 +1410,7 @@ window.app = new Vue({
     data: {
         level: '',
         course: '',
+        hall: '',
         matricNumber: '',
         students: '',
         studentDetails: '',
@@ -1426,12 +1427,12 @@ window.app = new Vue({
             this.students = '';
 
             self = this;
-            axios.post('/fetch-course', {
-                level: this.level,
-                course: this.course
+            axios.post('/fetch-hall', {
+                hall: this.hall
             }).then(function (data) {
-                self.loading = false;
+                console.log(data);
 
+                self.loading = false;
                 if (data.data.students == '') {
                     _this.message = 'Sorry... there are no students that satisfy your query';
                     _this.empty = true;
@@ -43525,14 +43526,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: {
@@ -43577,15 +43570,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("p", { staticClass: "card-footer-item" }, [
-              _c("span", [
-                _vm._v(
-                  "\n\t\t        " + _vm._s(student.course) + "\n\t\t      "
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "card-footer-item" }, [
-              _vm._v("\n\t\t    \t" + _vm._s(student.level) + "\n\t\t    ")
+              _vm._v("\n\t\t    \t" + _vm._s(student.hall) + "\n\t\t    ")
             ])
           ])
         ])
@@ -44021,7 +44006,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.navbar{\n\tborder-bottom: 6px solid whitesmoke;\n}\n.brand{\n\tposition: relative;\n\tleft: -870px;\n}\n.fa{\n\tmargin-right: 5px;\n}\n.menu-list a.is-active{\n\tbackground-color: #0a0a0a;\n\tcolor: white;\n}\nspan.admin{\n\tmargin: 5px 6px;\n\tpadding: 1px;\n\tborder-bottom: 3px solid black;\n}\n", ""]);
+exports.push([module.i, "\n.menu{\n\tposition: fixed;\n\ttop: 100px;\n}\n.navbar{\n\tborder-bottom: 6px solid whitesmoke;\n}\n.brand{\n\tposition: relative;\n\tleft: -870px;\n}\n.fa{\n\tmargin-right: 5px;\n}\n.menu-list a.is-active{\n\tbackground-color: #0a0a0a;\n\tcolor: white;\n}\nspan.admin{\n\tmargin: 5px 6px;\n\tpadding: 1px;\n\tborder-bottom: 3px solid black;\n}\n\n", ""]);
 
 // exports
 
@@ -44129,9 +44114,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					icon: 'fa fa-bar-chart',
 					selected: false
 				}, {
+					href: '/view-votes-senators',
+					text: 'View Senator Results',
+					icon: 'fa fa-pie-chart',
+					selected: false
+				}, {
 					href: '/view-breakdown',
 					text: 'View Breakdown',
 					icon: 'fa fa-line-chart',
+					selected: false
+				}]
+			}, {
+				title: 'Staff',
+				subTabs: [{
+					href: '/add-staff',
+					text: 'Add Staff',
+					icon: 'fa fa-user',
+					selected: false
+				}, {
+					href: '/view-staff',
+					text: 'View Staff',
+					icon: 'fa fa-eye',
 					selected: false
 				}]
 			}]
@@ -44165,7 +44168,7 @@ var render = function() {
             attrs: {
               src: "css/images/bucc-logo.PNG",
               width: "130",
-              height: "220",
+              height: "180",
               alt: "BUCC"
             }
           }),

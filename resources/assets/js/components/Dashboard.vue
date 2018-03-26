@@ -3,7 +3,7 @@
 		<nav class="navbar">
 			<div class="navbar-menu">
 				<div class="navbar-end">
-					<img class="navbar-item brand" src="css/images/bucc-logo.PNG" width="130" height="220" alt="BUCC">
+					<img class="navbar-item brand" src="css/images/bucc-logo.PNG" width="130" height="180" alt="BUCC">
 
 					<span class="navbar-item">
 						Signed In as: <span class="admin"> {{admin}} </span>
@@ -108,11 +108,34 @@
 									selected: false
 								},
 								{
+									href: '/view-votes-senators',
+									text: 'View Senator Results',
+									icon: 'fa fa-pie-chart',
+									selected: false
+								},
+								{
 									href: '/view-breakdown',
 									text: 'View Breakdown',
 									icon: 'fa fa-line-chart',
 									selected: false
 								}
+							]
+						}, 
+						{
+							title: 'Staff',
+							subTabs: [
+								{
+									href: '/add-staff',
+									text: 'Add Staff',
+									icon: 'fa fa-user',
+									selected: false
+								},
+								{
+									href: '/view-staff',
+									text: 'View Staff',
+									icon: 'fa fa-eye',
+									selected: false
+								},
 							]
 						}
 					]
@@ -129,6 +152,10 @@
 </script>
 
 <style>
+	.menu{
+		position: fixed;
+		top: 100px;
+	}
 
 	.navbar{
 		border-bottom: 6px solid whitesmoke;
@@ -153,4 +180,5 @@
 		padding: 1px;
 		border-bottom: 3px solid black;
 	}
+
 </style>

@@ -13,18 +13,10 @@
 			        {{student.matric_no}}
 			      </span>
 			    </p>
-			    <p class="card-footer-item">
-			      <span>
-			        {{student.course}}
-			      </span>
-			    </p>
-			    <p class="card-footer-item">
-			    	{{student.level}}
-			    </p>
 
-			    <!-- <p class="card-footer-item">
-			    	<strong> Password: </strong> &nbsp;&nbsp;&nbsp;&nbsp; <span class="password"> {{student.key}} </span>
-			    </p> -->
+			    <p class="card-footer-item">
+			    	{{student.hall}}
+			    </p>
 			  </footer>
 			</div>
 		</div>

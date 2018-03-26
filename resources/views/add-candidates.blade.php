@@ -88,7 +88,7 @@
                             <div class="field is-narrow">
                                 <div class="control">
                                     <div class="select is-fullwidth">
-                                        <select name="position" v-model="role">
+                                        <select name="position" v-model="role" @change="handleChange">
                                             <option value="" disabled>Select Position</option>
                                             @foreach($positions as $position)
                                                 <option value="{{$position}}"> {{$position}} </option>
@@ -100,25 +100,45 @@
                         </div>
                     </div>
 
-
-                    <div class="field is-horizontal">
+                    <div class="field is-horizontal" v-if="showHalls">
                         <div class="field-label is-normal">
-                            <label class="label">Course + Level: </label>
+                            <label class="label">Hall + Floor: </label>
                         </div>
                         <div class="field-body">
                             <div class="field">
                                 <div class="control is-expanded">
                                     <div class="select">
-                                        <select name="course" v-model="course">
-                                            <option value="" disabled="">Select Course</option>
-                                            @foreach($courses as $course)
-                                                <option value="{{$course}}">{{$course}}</option>
+                                        <select name="hall" v-model="hall">
+                                            <option value="" disabled="">Select Hall</option>
+                                            @foreach($halls as $hall)
+                                                <option value="{{$hall}}">{{$hall}}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
                             </div>
 
+                            <div class="field">
+                                <div class="control is-expanded">
+                                    <div class="select">
+                                        <select name="floor" v-model="floor">
+                                            <option value="" disabled="">Select Floor</option>
+                                            @foreach($floors as $floor)
+                                                <option value="{{$floor}}">{{$floor}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="label">Level: </label>
+                        </div>
+                        <div class="field-body">
                             <div class="field">
                                 <div class="control is-expanded">
                                     <div class="select">

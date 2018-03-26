@@ -18,14 +18,19 @@ class AddController extends Controller
 {
     public function showAdd(){
         $admin = Auth::guard('admin')->user()->name;
-    	$courses = ["Computer Science", "Computer Technology", "Computer Information Systems"];
 		$levels = [100, 200, 300, 400];
-		$positions = ["PRO", "President", "Vice President", "Chaplain", "Sports Director", "Social Director"];
-		return view('add-candidates', [
-			'courses'=>$courses,
+		$positions = ["PRO", "President", "Vice President", "Chaplain", "Director of Sports", "Director of Social", "General Secretary", "Director of Transport", "Treasurer", "Director of Finance", "Director of Welfare", "Senate President", "Sargent At Arms", "Assistant Gen Secretary", "Senator Chief Whip", "Deputy Senate President", "Senate Scribe", "Hall Senator"];
+        $halls = ["Samuel Akande", "Queen Esther", "Nelson Mandela", "Bethel Splendor", "Kings Delight Hall", "Winslow", "Gideon Troopers", "Welch", "Crystal", "Platinum", "Marigold", "FAD", "Queen Esther", "Off-Campus"];
+        $floors=["Ground Floor", "First Floor", "Second Floor", "Third Floor"];
+        sort($positions);
+        sort($halls);
+        sort($floors);
+        return view('add-candidates', [
 			'levels'=>$levels,
 			'positions'=>$positions,
-            'admin'=>$admin
+            'admin'=>$admin,
+            'halls'=>$halls,
+            'floors'=>$floors
 		]);
     }
 
@@ -36,11 +41,15 @@ class AddController extends Controller
         $fileName = "{$request->firstName}_{$random}.jpg";
         $image->move(public_path().'/candidate-images', $fileName);
 
+        $floor = $request->floor ? $request->floor : null;
+        $hall = $request->hall ? $request->hall : null;
+
     	$candidate = Candidate::create([
     		'first_name'=>$request->firstName,
     		'last_name'=>$request->lastName,
     		'level'=>$request->level,
-    		'course'=>$request->course,
+            'hall'=>$hall,
+            'floor'=>$floor,
     		'position'=>$request->position,
     		'image'=>$fileName
     	]);

@@ -16,7 +16,7 @@
 	
 	<div id="root" v-cloak>
 		<div class="container">
-			<h1>@{{currentView.position}}</h1>
+			<h1> @{{currentView.position}}</h1>
 			<div class="columns">
 				<side-bar > </side-bar>
 					<div v-for="candidate in currentView.candidates" class="column is-3">
@@ -38,19 +38,14 @@
 							  		</span>
 								</p>
 								<p class="card-footer-item">
-							  		<span>
-										@{{candidate.course}}
-						  			</span>
-								</p>
-								<p class="card-footer-item">
 									@{{candidate.level}}
 								</p>
 					 	 	</footer>
 
 						  	<footer>
-								<a href="#" class="button vote " @click.prevent="vote(currentView.position, candidate.id)"> 
+								<a href="#" class="button vote " @click.prevent="vote(currentView.text, candidate.id)"> 
 									<span class="icon">
-								  		<i :class="[studentVote[makeCamel(candidate.position)] == candidate.id  ? 'fa fa-heart votedIcon animated wobble' :' fa fa-heart-o voteIcon' ]"></i>
+								  		<i :class="[studentVote[currentView.text] == candidate.id  ? 'fa fa-heart votedIcon animated wobble' :' fa fa-heart-o voteIcon' ]"></i>
 									</span>
 								</a>
 						  	</footer>
@@ -59,9 +54,9 @@
 			</div>
 
 			<div>
-				<a href="#" @click.prevent="prev" class="button is-danger prev" :disabled="count==0">Previous</a>
-				<a href="#" @click.prevent="submitVotes" class="button is-primary done" :disabled="isDone()">Done</a>
-				<a href="#" @click.prevent="next" class="button is-danger next" :disabled="count>=5">Next</a>
+				<a href="#" @click.prevent="prev" class="button is-danger prev" :class="[noSenators== true  ? 'noSenators': '' ]" :disabled="count==0">Previous</a>
+				<a href="#" @click.prevent="submitVotes" class="button is-primary done"  :class="[noSenators== true  ? 'noSenators': '' ]" :disabled="isDone()">Done</a>
+				<a href="#" @click.prevent="next" class="button is-danger next"   :class="[noSenators== true  ? 'noSenators': '' ]" :disabled="count>=(tabs - 1)">Next</a>
 			</div>
 
 		</div>
@@ -69,6 +64,10 @@
 		<div>
 			<modal v-if="votedModal" :green="true" @close="votedModal = false"> 
 				Thanks for voting {{$firstName}} {{$emojis[1]}} ! 
+			</modal>
+
+			<modal v-if="showNotDone" :green="false" @close="showNotDone = false">
+				Sorry, {{$firstName}} 🙁. You have to vote for at least one candidate in each post before you can submit!
 			</modal>
 		</div>
 		

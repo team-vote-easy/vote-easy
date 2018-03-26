@@ -60,5 +60,7 @@ class Kernel extends HttpKernel
         'studentauth' => \App\Http\Middleware\AuthenticateStudents::class,
         'redirectauthenticatedstudents'=>  \App\Http\Middleware\RedirectStudents::class,
         'adminauth'=>  \App\Http\Middleware\AuthenticateAdmin::class,
+        'staffauth'=>  \App\Http\Middleware\AuthenticateStaff::class,
+        'redirectauthenticatedstaff'=>  \App\Http\Middleware\RedirectStaff::class,
     ];
 }

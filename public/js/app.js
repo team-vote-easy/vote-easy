@@ -1403,8 +1403,7 @@ window.Event = new Vue();
 window.app = new Vue({
     el: '#root',
     data: {
-        level: '',
-        course: '',
+        hall: '',
         file: '',
         showModal: false,
         loading: '',
@@ -1422,13 +1421,13 @@ window.app = new Vue({
         submit: function submit() {
             self = this;
             var formData = new FormData();
-            if (this.level !== '' || this.course !== '' || this.file !== '') {
-                formData.append('level', this.level);
-                formData.append('course', this.course);
+
+            if (this.file !== '' && this.hall !== '') {
+                formData.append('hall', this.hall);
                 formData.append('file', this.file, this.file.name);
             } else {
                 this.errors.title = 'Missing field error';
-                this.errors.message = 'Some fields are missing';
+                this.errors.message = 'Oops... Some fields are missing';
                 this.showModal = true;
                 console.log(this.errors);
                 return;
@@ -1438,9 +1437,8 @@ window.app = new Vue({
 
             axios.post('/import', formData).then(function (data) {
                 self.loading = false;
-                self.level = '';
-                self.course = '';
                 self.file = '';
+                self.hall = '';
                 self.success = data.data;
                 self.showModal = true;
                 console.log(data);
@@ -1456,23 +1454,20 @@ window.app = new Vue({
 
         addStudent: function addStudent() {
             self = this;
-            if (this.firstName != '' && this.lastName != '' && this.matricNumber != '' && this.level !== '' && this.course !== '') {
+            if (this.firstName != '' && this.lastName != '' && this.matricNumber != '' && this.hall != '') {
                 self.loading = true;
                 axios.post('/add-student', {
                     firstName: self.firstName,
                     lastName: self.lastName,
                     matricNumber: self.matricNumber,
-                    level: self.level,
-                    course: self.course
+                    hall: self.hall
                 }).then(function (data) {
                     var studentName = self.firstName + ' ' + self.lastName;
                     self.loading = false;
                     self.firstName = '';
                     self.lastName = '';
-                    self.level = '';
-                    self.course = '';
                     self.matricNumber = '';
-                    self.success = 'Successfully Added Student: ' + studentName;
+                    self.hall = '', self.success = 'Successfully Added Student: ' + studentName;
                     self.showModal = true;
                     console.log(data);
                 }).catch(function (e) {
@@ -43735,7 +43730,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n.navbar{\n\tborder-bottom: 6px solid whitesmoke;\n}\n.brand{\n\tposition: relative;\n\tleft: -870px;\n}\n.fa{\n\tmargin-right: 5px;\n}\n.menu-list a.is-active{\n\tbackground-color: #0a0a0a;\n\tcolor: white;\n}\nspan.admin{\n\tmargin: 5px 6px;\n\tpadding: 1px;\n\tborder-bottom: 3px solid black;\n}\n", ""]);
+exports.push([module.i, "\n.menu{\n\tposition: fixed;\n\ttop: 100px;\n}\n.navbar{\n\tborder-bottom: 6px solid whitesmoke;\n}\n.brand{\n\tposition: relative;\n\tleft: -870px;\n}\n.fa{\n\tmargin-right: 5px;\n}\n.menu-list a.is-active{\n\tbackground-color: #0a0a0a;\n\tcolor: white;\n}\nspan.admin{\n\tmargin: 5px 6px;\n\tpadding: 1px;\n\tborder-bottom: 3px solid black;\n}\n\n", ""]);
 
 // exports
 
@@ -43843,9 +43838,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					icon: 'fa fa-bar-chart',
 					selected: false
 				}, {
+					href: '/view-votes-senators',
+					text: 'View Senator Results',
+					icon: 'fa fa-pie-chart',
+					selected: false
+				}, {
 					href: '/view-breakdown',
 					text: 'View Breakdown',
 					icon: 'fa fa-line-chart',
+					selected: false
+				}]
+			}, {
+				title: 'Staff',
+				subTabs: [{
+					href: '/add-staff',
+					text: 'Add Staff',
+					icon: 'fa fa-user',
+					selected: false
+				}, {
+					href: '/view-staff',
+					text: 'View Staff',
+					icon: 'fa fa-eye',
 					selected: false
 				}]
 			}]
@@ -43879,7 +43892,7 @@ var render = function() {
             attrs: {
               src: "css/images/bucc-logo.PNG",
               width: "130",
-              height: "220",
+              height: "180",
               alt: "BUCC"
             }
           }),

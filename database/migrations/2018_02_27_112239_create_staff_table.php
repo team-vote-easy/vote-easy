@@ -17,8 +17,12 @@ class CreateStaffTable extends Migration
             $table->increments('id');
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('email')->unique();
+            $table->string('username')->unique();
+            $table->string('phone');
+            $table->string('key');
+            $table->string('hall');
             $table->string('password');
+            $table->rememberToken();
             $table->timestamps();
         });
     }
