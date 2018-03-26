@@ -8,10 +8,6 @@ Route::post('admin-log', 'AdminController@login');
 
 Route::get('admin-logout', 'AdminController@logout');
 
-// Route::get('/admin-test', 'AdminController@testAuth');
-
-// Route::get('/add-test', 'ImportController@addTest');
-
 Route::group(['middleware'=>'adminauth'], function(){
 
 	Route::get('import', 'ImportController@showImport');
