@@ -49,83 +49,92 @@ class ImportController extends Controller
     }
 
     public function import(Request $request){
-
         $hall = $request->hall == null ? 'Off-Campus' : $request->hall;
-
-        $counter = 0;
+        $existingStudents = [];
+        $addedStudents = 0;
+        $skippedStudents = 0;
         $extension = File::extension($request->file->getClientOriginalName());
         $path = $request->file->getRealPath();
-        $data = Excel::load($path, function($reader){
-
-        })->get();
-
+        $data = Excel::load($path, function($reader){  })->get();
 
     	foreach($data as $key=>$value){
-            $key = strtolower(str_random(6));
+            if($value->name == '' && $value->matric_no == '' && $value->block == ''){
+                break;
+            }
 
+            $existingStudent = Student::where('matric_no', $value->matric_no)->first();
+            if($existingStudent){
+                $existingStudents[] = $existingStudent;
+                continue;
+            }
+
+            if($value->matric_no=='' || $value->matric_no==' ' || !isset($value->matric_no)){
+                $newMatric = strtolower($value->name);
+                $newMatric = explode(' ', $newMatric);
+                $value->matric_no = "$newMatric[0]-$newMatric[1]";
+            }
+
+            if($value->name=='' || $value->name==''){
+                $skippedStudents+=1;
+                continue;
+            }
+
+            $key = strtolower(str_random(6));
     		$student = [
-    			'name'=>$value->name,
+    			'name'=>title_case($value->name),
     			'matric_no'=>$value->matric_no,
                 'key'=>$key,
                 'hall'=>$hall,
+                'block'=>$value->block,
                 'password'=> Hash::make($key),
     		];
 
-    		try{
-                Student::create($student);
-                $counter+=1;
-            } 
-            catch(QueryException $e){
-                if($e->errorInfo[1]==1062){
-                    $errorString = $e->errorInfo[2];
-                    preg_match('/..(\/)..../', $errorString, $duplicate_matric);
-                    $existing_student = Student::where('matric_no', $duplicate_matric[0])->first();
-                    $message = "Oops! An error occured while adding the student {$student['name']}. The matric number {$duplicate_matric[0]} already belongs to {$existing_student->name}, a student in {$existing_student->hall} hall";
-                    return response()->json([
-                        'status'=>'error',
-                        'message'=>$message
-                    ], 404);
-                }
-            }
+            Student::create($student);
+            $addedStudents+=1;
     	}
-        return response()->json("Sucessfully Added $counter $hall students");
+
+        if($addedStudents==0){
+            return response()->json([
+                "message"=>"Sorry! No students could be added!"
+            ], 500);
+        }
+
+        return response()->json([
+            "hall"=>$hall,
+            "addedStudents"=>$addedStudents,
+            "skippedStudents"=>$skippedStudents,
+            "duplicates"=>$existingStudents
+        ], 200);
     }
+
 
     public function addStudentView(){
         $admin = Auth::guard('admin')->user()->name;
         $halls = ["Samuel Akande", "Queen Esther", "Nelson Mandela", "Bethel Splendor", "Kings Delight Hall", "Winslow", "Gideon Troopers", "Welch", "Crystal", "Platinum", "Marigold", "FAD", "Queen Esther", "Off-Campus"];
+        $blocks = ["First Floor", "Second Floor", "Third Floor", "A", "B", "C", "D", "E", "F", "G", "H"];
         return view('add-a-student', [
             'admin'=>$admin,
-            'halls'=>$halls
+            'halls'=>$halls,
+            'blocks'=>$blocks
         ]);
     }
 
     public function addStudent(Request $request){
-        $name = "$request->firstName $request->lastName";
-        $name = strtoupper($name);
-        $key = strtolower(str_random(6));
-        try{
-            Student::create([
-                'name'=>$name,
-                'matric_no'=>$request->matricNumber,
-                'key'=>$key,
-                'password'=> Hash::make($key),
-                'hall'=>$request->hall
-            ]);
-            return response()->json('Added the student', 200);
-        } 
-        catch(QueryException $e){
-            if($e->errorInfo[1]==1062){
-                $errorString = $e->errorInfo[2];
-                preg_match('/..(\/)..../', $errorString, $duplicate_matric);
-                $existing_student = Student::where('matric_no', $duplicate_matric[0])->first();
-                $name = title_case($existing_student->name);
-                $message = "Oops! the matric number {$request->matricNumber} already exists for student $name, a student in $existing_student->hall hall";
-                return response()->json($message, 500);
-            }
-            else{
-                return response()->json('Database is Down!', 500);
-            }
+        if(Student::where('matric_no', $request->matricNumber)->first()){
+            return response()->json("Student exists already", 500);
         }
+        $name = "$request->firstName $request->lastName";
+        $name = title_case($name);
+        $key = strtolower(str_random(6));
+        Student::create([
+            'name'=>$name,
+            'matric_no'=>$request->matricNumber,
+            'key'=>$key,
+            'password'=> Hash::make($key),
+            'hall'=>$request->hall,
+            'block'=>$request->block
+        ]);
+        return response()->json('Added the student', 200);
+        
     }
 }

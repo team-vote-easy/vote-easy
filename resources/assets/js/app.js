@@ -11,6 +11,7 @@ window.app = new Vue({
     el: '#root',
     data: {
         hall: '',
+        block: '',
         file: '',
         showModal: false,
         loading: '',
@@ -45,32 +46,33 @@ window.app = new Vue({
 
             axios.post('/import', formData)
             .then(function(data){
+                console.log(data);
+                var response = data.data;
                 self.loading = false;
                 self.file = '';
                 self.hall = '';
-                self.success = data.data;
                 self.showModal = true;
-                console.log(data);
+                self.success=`Successfully added ${response.addedStudents} students in ${response.hall}. Skipped ${response.skippedStudents} students. ${response.duplicates.length} duplicate students were found`;
             })
             .catch(function(error){
                 console.log(error);
-                console.log('Na me the error');
+                var duplicateStudents = error.response.data.duplicates;
                 self.loading = false;
-                self.errors.title = 'Student already exists!';
-                self.errors.message = error.response.data.message;
+                self.errors.message = `Sorry duplicate students were found! Please recheck excel file`;
                 self.showModal = true;
             })
         },
 
         addStudent: function(){
             self = this;
-            if(this.firstName != '' && this.lastName !='' && this.matricNumber !='' && this.hall != ''){
+            if(this.firstName != '' && this.lastName !='' && this.matricNumber !='' && this.hall != '' && this.block !=''){
                 self.loading = true;
                 axios.post('/add-student', {
                     firstName: self.firstName,
                     lastName: self.lastName,
                     matricNumber: self.matricNumber,
-                    hall: self.hall
+                    hall: self.hall,
+                    block: self.block
                 })
                     .then((data)=>{
                         var studentName = self.firstName + ' ' + self.lastName;
@@ -78,17 +80,17 @@ window.app = new Vue({
                         self.firstName = '';
                         self.lastName = '';
                         self.matricNumber = '';
-                        self.hall = '',
+                        self.hall = '';
+                        self.block = '';
                         self.success = `Successfully Added Student: ${studentName}`;
                         self.showModal = true;
                         console.log(data);
                     })
                     .catch((e)=>{
                         self.loading = false;
-                        self.errors.title = 'Student already exists!';
-                        self.errors.message = e.response.data;
+                        self.errors.message = `Sorry! The matric number already belongs to a student`;
                         self.showModal = true;
-                        console.log(self.errors.message);
+                        console.log(e);
                     })
 
             }
