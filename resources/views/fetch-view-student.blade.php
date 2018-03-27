@@ -109,7 +109,12 @@
 						</p>
 						<p class="card-footer-item">
 						  <span>
-							@{{studentDetails.hall == 'Off-Campus' ? studentDetails.hall : `${studentDetails.hall} Hall`}} 
+							@{{studentDetails.hall == 'Off-Campus' ? studentDetails.hall : studentDetails.hall}} 
+						  </span>
+						</p>
+						<p class="card-footer-item">
+						  <span>
+							@{{studentDetails.block == null ? 'Block Not Specified' : `${studentDetails.block} Block`}} 
 						  </span>
 						</p>
 						<p class="card-footer-item">

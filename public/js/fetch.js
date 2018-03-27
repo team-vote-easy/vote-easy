@@ -43457,7 +43457,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.password{\n\tborder-bottom: 3px solid #00d1b2;\n}\n", ""]);
+exports.push([module.i, "\n.card-footer-item{\n\ttext-align: center;\n}\n.password{\n\tborder-bottom: 3px solid #00d1b2;\n}\n", ""]);
 
 // exports
 
@@ -43526,6 +43526,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: {
@@ -43553,7 +43557,7 @@ var render = function() {
     { staticClass: "columns" },
     _vm._l(_vm.students, function(student) {
       return _c("div", { staticClass: "column is-4" }, [
-        _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card student-card" }, [
           _c("div", { staticClass: "card-content" }, [
             _c("p", { staticClass: "title" }, [
               _vm._v("\n\t\t      " + _vm._s(student.name) + " \n\t\t    ")
@@ -43571,6 +43575,18 @@ var render = function() {
             _vm._v(" "),
             _c("p", { staticClass: "card-footer-item" }, [
               _vm._v("\n\t\t    \t" + _vm._s(student.hall) + "\n\t\t    ")
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-footer-item" }, [
+              _vm._v(
+                "\n\t\t    \t" +
+                  _vm._s(
+                    student.block == null
+                      ? "Block not specified"
+                      : student.block
+                  ) +
+                  "\n\t\t    "
+              )
             ])
           ])
         ])

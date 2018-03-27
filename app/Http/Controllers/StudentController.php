@@ -33,7 +33,7 @@ class StudentController extends Controller
         }
 
 
-    	$rules = ['matricNumber' => 'required|max:7', 'password'=>'required'];
+    	$rules = ['matricNumber' => 'required', 'password'=>'required'];
         $messages = [
             'matricNumber.required' => "Please enter a matric number!",
             'password.required'=> 'Please enter a password!'

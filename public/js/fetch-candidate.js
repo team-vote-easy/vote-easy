@@ -1408,12 +1408,12 @@ window.app = new Vue({
         loading: '',
         message: '',
         candidates: ''
-    }, _defineProperty(_data, 'message', ''), _defineProperty(_data, 'empty', false), _defineProperty(_data, 'hallArray', ["Samuel Akande", "Queen Esther", "Nelson Mandela", "Bethel Splendor", "Kings Delight Hall", "Winslow", "Gideon Troopers", "Welch", "Crystal", "Platinum", "Marigold", "FAD", "Off-Campus", "All"]), _defineProperty(_data, 'floorArray', ["Ground Floor", "First Floor", "Second Floor", "Third Floor", "All"]), _defineProperty(_data, 'levelArray', [100, 200, 300, 400, "All"]), _defineProperty(_data, 'positionArray', ["PRO", "President", "Vice President", "Chaplain", "Director of Sports", "Director of Social", "General Secretary", "Director of Transport", "Treasurer", "Director of Finance", "Director of Welfare", "Senate President", "Sargent At Arms", "Assistant Gen Secretary", "Senator Chief Whip", "Deputy Senate President", "Senate Scribe", "Hall Senator", "All"]), _defineProperty(_data, 'hall', ''), _defineProperty(_data, 'floor', ''), _defineProperty(_data, 'showHalls', ''), _data),
+    }, _defineProperty(_data, 'message', ''), _defineProperty(_data, 'empty', false), _defineProperty(_data, 'hallArray', ["Samuel Akande", "Queen Esther", "Nelson Mandela", "Bethel Splendor", "Kings Delight Hall", "Winslow", "Gideon Troopers", "Welch", "Crystal", "Platinum", "Marigold", "FAD", "Off-Campus", "All"]), _defineProperty(_data, 'blockArray', ["First Floor", "Second Floor", "Third Floor", "A", "B", "C", "D", "E", "F", "G", "H"]), _defineProperty(_data, 'levelArray', [100, 200, 300, 400, "All"]), _defineProperty(_data, 'positionArray', ["PRO", "President", "Vice President", "Chaplain", "Director of Sports", "Director of Social", "General Secretary", "Director of Transport", "Treasurer", "Director of Finance", "Director of Welfare", "Senate President", "Sargent At Arms", "Assistant Gen Secretary", "Senator Chief Whip", "Deputy Senate President", "Senate Scribe", "Hall Senator", "All"]), _defineProperty(_data, 'hall', ''), _defineProperty(_data, 'block', ''), _defineProperty(_data, 'showHalls', ''), _data),
     created: function created() {
         this.levelArray = this.levelArray.sort();
         this.positionArray = this.positionArray.sort();
         this.hallArray = this.hallArray.sort();
-        this.floorArray = this.floorArray.sort();
+        this.blockArray = this.blockArray.sort();
     },
 
     methods: {
@@ -1428,9 +1428,8 @@ window.app = new Vue({
                 position: this.roleData,
                 level: this.levelData,
                 hall: this.hall,
-                floor: this.floor
+                block: this.block
             }).then(function (data) {
-                console.log(data.data);
                 self.loading = '';
                 if (data.data.length == 0) {
                     self.empty = true;
@@ -43326,7 +43325,7 @@ exports = module.exports = __webpack_require__(10)(false);
 
 
 // module
-exports.push([module.i, "\n.navbar{\n\tborder-bottom: 6px solid whitesmoke;\n}\n.brand{\n\tposition: relative;\n\tleft: -870px;\n}\n.fa{\n\tmargin-right: 5px;\n}\n.menu-list a.is-active{\n\tbackground-color: #0a0a0a;\n\tcolor: white;\n}\nspan.admin{\n\tmargin: 5px 6px;\n\tpadding: 1px;\n\tborder-bottom: 3px solid black;\n}\n", ""]);
+exports.push([module.i, "\n.menu{\n\tposition: fixed;\n\ttop: 100px;\n}\n.navbar{\n\tborder-bottom: 6px solid whitesmoke;\n}\n.brand{\n\tposition: relative;\n\tleft: -870px;\n}\n.fa{\n\tmargin-right: 5px;\n}\n.menu-list a.is-active{\n\tbackground-color: #0a0a0a;\n\tcolor: white;\n}\nspan.admin{\n\tmargin: 5px 6px;\n\tpadding: 1px;\n\tborder-bottom: 3px solid black;\n}\n\n", ""]);
 
 // exports
 
@@ -43475,6 +43474,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					href: '/view-breakdown',
 					text: 'View Breakdown',
 					icon: 'fa fa-line-chart',
+					selected: false
+				}]
+			}, {
+				title: 'Staff',
+				subTabs: [{
+					href: '/add-staff',
+					text: 'Add Staff',
+					icon: 'fa fa-user',
+					selected: false
+				}, {
+					href: '/view-staff',
+					text: 'View Staff',
+					icon: 'fa fa-eye',
 					selected: false
 				}]
 			}]

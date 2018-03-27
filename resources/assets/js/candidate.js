@@ -20,7 +20,8 @@ window.app = new Vue({
         loading: '',
         showHalls: '',
         hall: '',
-        floor: ''
+        block: '',
+        incomplete: ''
     },
     methods: {
         processFile(event){
@@ -29,8 +30,16 @@ window.app = new Vue({
         },
 
         submit: function(){
-            self = this;
+            var incomplete = 0;
+            var fields = ["firstName", "lastName", "level", "role", "level", "image"];
+            fields.forEach((field)=>{if(this._data[field]=='')incomplete+=1});
+            if(incomplete>0){
+                this.incomplete = true;
+                this.showModal =true;
+                return;
+            }
 
+            self = this;
             this.loading = true;
             var formData = new FormData();
             formData.append('firstName', this.firstName);
@@ -38,14 +47,13 @@ window.app = new Vue({
             formData.append('level', this.level);
             formData.append('position', this.role);
             formData.append('image', this.image, this.image.name);
-            if(this.floor !== '' && this.hall != ''){
-                formData.append('floor', this.floor);
+            if(this.block !== '' && this.hall != ''){
+                formData.append('block', this.block);
                 formData.append('hall', this.hall);
             }
 
             axios.post('/add-candidates', formData)
             .then((data)=>{
-                console.log(data.data);
                 this.loading = false;
                 this.success = data.data;
                 this.showModal = true;
@@ -54,13 +62,12 @@ window.app = new Vue({
                 this.level = '';
                 this.image = '';
                 this.hall = '';
-                this.floor = '';
+                this.block = '';
                 this.role = '';
                 this.showHalls = '';                
             })
             .catch((error)=>{
                 this.loading = false;
-                console.log(error);
             });
         },
 

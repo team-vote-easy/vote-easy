@@ -21,16 +21,16 @@ class AddController extends Controller
 		$levels = [100, 200, 300, 400];
 		$positions = ["PRO", "President", "Vice President", "Chaplain", "Director of Sports", "Director of Social", "General Secretary", "Director of Transport", "Treasurer", "Director of Finance", "Director of Welfare", "Senate President", "Sargent At Arms", "Assistant Gen Secretary", "Senator Chief Whip", "Deputy Senate President", "Senate Scribe", "Hall Senator"];
         $halls = ["Samuel Akande", "Queen Esther", "Nelson Mandela", "Bethel Splendor", "Kings Delight Hall", "Winslow", "Gideon Troopers", "Welch", "Crystal", "Platinum", "Marigold", "FAD", "Queen Esther", "Off-Campus"];
-        $floors=["Ground Floor", "First Floor", "Second Floor", "Third Floor"];
+        $blocks = ["First Floor", "Second Floor", "Third Floor", "A", "B", "C", "D", "E", "F", "G", "H"];
         sort($positions);
         sort($halls);
-        sort($floors);
+        sort($blocks);
         return view('add-candidates', [
 			'levels'=>$levels,
 			'positions'=>$positions,
             'admin'=>$admin,
             'halls'=>$halls,
-            'floors'=>$floors
+            'blocks'=>$blocks
 		]);
     }
 
@@ -41,7 +41,7 @@ class AddController extends Controller
         $fileName = "{$request->firstName}_{$random}.jpg";
         $image->move(public_path().'/candidate-images', $fileName);
 
-        $floor = $request->floor ? $request->floor : null;
+        $block = $request->block ? $request->block : null;
         $hall = $request->hall ? $request->hall : null;
 
     	$candidate = Candidate::create([
@@ -49,31 +49,12 @@ class AddController extends Controller
     		'last_name'=>$request->lastName,
     		'level'=>$request->level,
             'hall'=>$hall,
-            'floor'=>$floor,
+            'block'=>$block,
     		'position'=>$request->position,
     		'image'=>$fileName
     	]);
 
     	return response()->json($candidate, 200);
-    }
-
-    public function addPostsView(){
-        return view('add-post-view');
-    }
-
-    public function addPosts(Request $request){
-        $postExists = Post::where('post', $request->post)->first();
-        if($postExists){
-            return response()->json('Sorry! Post Exists already!', 513);
-        }
-
-        $newPost = Post::create([
-            'post'=>$request->post
-        ]);
-
-        if($newPost){
-            return response()->json("Successfully Added Post: {$newPost->post}");
-        }
     }
 
     

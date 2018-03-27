@@ -46,7 +46,6 @@ window.app = new Vue({
 
             axios.post('/import', formData)
             .then(function(data){
-                console.log(data);
                 var response = data.data;
                 self.loading = false;
                 self.file = '';
@@ -55,7 +54,6 @@ window.app = new Vue({
                 self.success=`Successfully added ${response.addedStudents} students in ${response.hall}. Skipped ${response.skippedStudents} students. ${response.duplicates.length} duplicate students were found`;
             })
             .catch(function(error){
-                console.log(error);
                 var duplicateStudents = error.response.data.duplicates;
                 self.loading = false;
                 self.errors.message = `Sorry duplicate students were found! Please recheck excel file`;
@@ -84,13 +82,11 @@ window.app = new Vue({
                         self.block = '';
                         self.success = `Successfully Added Student: ${studentName}`;
                         self.showModal = true;
-                        console.log(data);
                     })
                     .catch((e)=>{
                         self.loading = false;
                         self.errors.message = `Sorry! The matric number already belongs to a student`;
                         self.showModal = true;
-                        console.log(e);
                     })
 
             }

@@ -82,10 +82,10 @@
                             <div class="field">
                                 <div class="control is-expanded">
                                     <div class="select">
-                                        <select name="floor" v-model="floor">
-                                            <option value="" disabled="">Select Floor</option>
-                                            @foreach($floors as $floor)
-                                                <option value="{{$floor}}">{{$floor}}</option>
+                                        <select name="block" v-model="block">
+                                            <option value="" disabled="">Select Block</option>
+                                            @foreach($blocks as $block)
+                                                <option value="{{$block}}">{{$block}}</option>
                                             @endforeach
                                         </select>
                                     </div>
