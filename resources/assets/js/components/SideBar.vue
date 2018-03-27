@@ -1,28 +1,30 @@
 <template>
 	<div class="column is-2">
 		<aside class="menu">
-		  <!-- <p class="menu-label">
-		    Candidates
-		  </p> -->
-		  <ul class="menu-list">
-		    <li v-for="position in positions">
-		    	<a :href="position.url" :class="{'is-active' : position.selected}" @click.prevent="menuClick(position, 'Candidate')">{{position.position}} 
-		    		<span v-if="hasVoted(position.position, 'Candidate')" class="fa fa-check-circle voted"></span>
-		    	</a>
-		    </li>
-		  </ul>
-			
 		  <p class="menu-label" v-if="showSenators">
-		    Hall Senators
+		    Hall Senator
 		  </p>
 
 		  <ul class="menu-list">
 		    <li v-for="position in hallSenators">
-		    	<a :href="position.url" :class="{'is-active' : position.selected}" @click.prevent="menuClick(position, 'Senator')">{{position.position}} 
-		    		<span v-if="hasVoted(position.position, 'Senator')" class="fa fa-check-circle voted"></span>
+		    	<a :href="position.url" :class="{'is-active' : position.selected}" @click.prevent="menuClick(position, 'Senator')">
+					{{position.position}} Block
+		    		<span v-if="hasVoted(position.position)" class="fa fa-check-circle voted"></span>
 		    	</a>
 		    </li>
 		  </ul>
+
+		  <p class="menu-label">
+		    Candidates
+		  </p>
+		  <ul class="menu-list">
+		    <li v-for="position in positions">
+		    	<a :href="position.url" :class="{'is-active' : position.selected}" @click.prevent="menuClick(position, 'Candidate')">{{position.position}} 
+		    		<span v-if="hasVoted(position.position)" class="fa fa-check-circle voted"></span>
+		    	</a>
+		    </li>
+		  </ul>
+			
 
 
 		</aside>
@@ -38,6 +40,7 @@
 				hallSenators: [],
 				numberofTabs: '',
 				numofPosts: '',
+				numofSenators: '',
 				showSenators: true
 			}
 		},
@@ -58,26 +61,23 @@
 
 
 			Event.$on('menuChange', (index)=>{
-
-				if(index > (self.numofPosts - 1)){
-					self.positions.forEach((position)=>{
+				if(index > (self.numofSenators - 1)){
+					self.hallSenators.forEach((position)=>{
 						position.selected = false;
 					});
 
-					var newIndex = index - self.numofPosts;
-					self.hallSenators.forEach((position)=>{
-
-						position.selected = (self.hallSenators.indexOf(position)==newIndex);
+					var newIndex = index - self.numofSenators;
+					self.positions.forEach((position)=>{
+						position.selected = (self.positions.indexOf(position)==newIndex);
 					});
 					return;
 				}
 
-				self.hallSenators.forEach((position)=>{
-
+				self.positions.forEach((position)=>{
 					position.selected = false;
 				});
-				self.positions.forEach((position)=>{
-					position.selected = (self.positions.indexOf(position)==index);
+				self.hallSenators.forEach((position)=>{
+					position.selected = (self.hallSenators.indexOf(position)==index);
 				})
 			});
 
@@ -102,14 +102,10 @@
 					});
 				});
 		
-
-
 				var senatorPosts = Object.keys(senators);
-
 				if(senatorPosts == ''){
 					Event.$emit('noSenators');
 				}
-
 				senatorPosts = senatorPosts.sort();
 				senatorPosts.forEach((post)=>{
 					studentVote[post] = '';
@@ -120,11 +116,15 @@
 					})
 				});
 
-				this.positions[0].selected = true;
+				if(senators != ''){
+					this.hallSenators[0].selected = true;	
+				} else{
+					this.positions[0].selected = true;
+				}
 				
 				this.numofPosts = keys.length;
-				var numofSenators = senatorPosts.length;
-				this.numberofTabs = this.numofPosts + numofSenators;
+				this.numofSenators = senatorPosts.length;
+				this.numberofTabs = this.numofPosts + this.numofSenators;
 
 				Event.$emit('candidates', positions, senators, studentVote);
 			},
@@ -161,28 +161,18 @@
 				}
 			},
 
-			hasVoted(position, candidateType){
+			hasVoted(position){
 				if(this.votes == ''){
 					return false;
 				}
 
-				if(candidateType == 'Candidate'){
-					if(this.votes[position] != ''){
-						return true;
-					}
-					else{
-						return false;
-					}
+				if(this.votes[position] != ''){
+					return true;
+				}
+				else{
+					return false;
 				}
 
-				if(candidateType == 'Senator'){
-					if(this.votes[position] != ''){
-						return true;
-					}
-					else{
-						return false;
-					}
-				}
 
 				
 

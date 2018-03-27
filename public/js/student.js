@@ -1104,7 +1104,7 @@ window.app = new Vue({
 		voted: false,
 		incomplete: '',
 		numOfPosts: '',
-		numOfSentators: '',
+		numofSenators: '',
 		showNotDone: '',
 		noSenators: ''
 	},
@@ -1113,13 +1113,11 @@ window.app = new Vue({
 
 		window.addEventListener('keydown', function (e) {
 			if (e.key == 'ArrowLeft') {
-				console.log('Moved left!');
 				_this.prev();
 				return;
 			}
 
 			if (e.key == 'ArrowRight') {
-				console.log('Moved right!');
 				_this.next();
 				return;
 			}
@@ -1129,10 +1127,23 @@ window.app = new Vue({
 		Event.$on('candidates', function (candidates, senators, studentVote) {
 			_this.studentVote = studentVote;
 
+			if (senators != '') {
+				var keys = Object.keys(senators);
+				keys = keys.sort();
+				_this.numofSenators = keys.length;
+				keys.forEach(function (key) {
+					self.candidatesData[self.count] = {
+						position: _.toUpper(_.startCase(key)) + ' BLOCK',
+						text: key,
+						candidates: senators[key]
+					};
+					self.count += 1;
+				});
+			}
+
 			var keys = Object.keys(candidates);
 			keys = keys.sort();
 			_this.numOfPosts = keys.length;
-
 			keys.forEach(function (key) {
 				//Remember to chunk the array into 3
 				self.candidatesData[self.count] = {
@@ -1143,30 +1154,17 @@ window.app = new Vue({
 				self.count += 1;
 			});
 
-			if (senators != '') {
-				var keys = Object.keys(senators);
-				keys = keys.sort();
-				keys.forEach(function (key) {
-					self.candidatesData[self.count] = {
-						position: _.toUpper(_.startCase(key)),
-						text: key,
-						candidates: senators[key]
-					};
-					self.count += 1;
-				});
-			}
-
 			self.count = 0;
 			_this.tabs = self.candidatesData.length;
 			self.currentView = self.candidatesData[0];
 		});
 
 		Event.$on('menuClick', function (index, candidateType) {
-			if (candidateType == 'Senator') {
-				index += self.numOfPosts;
+			if (candidateType == 'Candidate') {
+				index += self.numofSenators;
 			}
 
-			self.count = index;
+			self.count = parseInt(index);
 
 			_this.currentView = _this.candidatesData[index];
 		});
@@ -1176,7 +1174,6 @@ window.app = new Vue({
 		});
 
 		Event.$on('noSenators', function () {
-			console.log("No senators!");
 			self.noSenators = true;
 		});
 	},
@@ -1202,7 +1199,7 @@ window.app = new Vue({
 			}
 
 			var self = this;
-			this.count -= 1;
+			this.count--;
 			Event.$emit('menuChange', self.count);
 			this.currentView = this.candidatesData[this.count];
 		},
@@ -1213,7 +1210,7 @@ window.app = new Vue({
 			}
 
 			var self = this;
-			this.count += 1;
+			this.count++;
 			Event.$emit('menuChange', self.count);
 			this.currentView = this.candidatesData[this.count];
 		},
@@ -43621,6 +43618,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
@@ -43630,6 +43629,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			hallSenators: [],
 			numberofTabs: '',
 			numofPosts: '',
+			numofSenators: '',
 			showSenators: true
 		};
 	},
@@ -43646,26 +43646,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		});
 
 		Event.$on('menuChange', function (index) {
-
-			if (index > self.numofPosts - 1) {
-				self.positions.forEach(function (position) {
+			if (index > self.numofSenators - 1) {
+				self.hallSenators.forEach(function (position) {
 					position.selected = false;
 				});
 
-				var newIndex = index - self.numofPosts;
-				self.hallSenators.forEach(function (position) {
-
-					position.selected = self.hallSenators.indexOf(position) == newIndex;
+				var newIndex = index - self.numofSenators;
+				self.positions.forEach(function (position) {
+					position.selected = self.positions.indexOf(position) == newIndex;
 				});
 				return;
 			}
 
-			self.hallSenators.forEach(function (position) {
-
+			self.positions.forEach(function (position) {
 				position.selected = false;
 			});
-			self.positions.forEach(function (position) {
-				position.selected = self.positions.indexOf(position) == index;
+			self.hallSenators.forEach(function (position) {
+				position.selected = self.hallSenators.indexOf(position) == index;
 			});
 		});
 
@@ -43694,11 +43691,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			});
 
 			var senatorPosts = Object.keys(senators);
-
 			if (senatorPosts == '') {
 				Event.$emit('noSenators');
 			}
-
 			senatorPosts = senatorPosts.sort();
 			senatorPosts.forEach(function (post) {
 				studentVote[post] = '';
@@ -43709,11 +43704,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				});
 			});
 
-			this.positions[0].selected = true;
+			if (senators != '') {
+				this.hallSenators[0].selected = true;
+			} else {
+				this.positions[0].selected = true;
+			}
 
 			this.numofPosts = keys.length;
-			var numofSenators = senatorPosts.length;
-			this.numberofTabs = this.numofPosts + numofSenators;
+			this.numofSenators = senatorPosts.length;
+			this.numberofTabs = this.numofPosts + this.numofSenators;
 
 			Event.$emit('candidates', positions, senators, studentVote);
 		},
@@ -43749,25 +43748,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				Event.$emit('menuClick', key, candidateType);
 			}
 		},
-		hasVoted: function hasVoted(position, candidateType) {
+		hasVoted: function hasVoted(position) {
 			if (this.votes == '') {
 				return false;
 			}
 
-			if (candidateType == 'Candidate') {
-				if (this.votes[position] != '') {
-					return true;
-				} else {
-					return false;
-				}
-			}
-
-			if (candidateType == 'Senator') {
-				if (this.votes[position] != '') {
-					return true;
-				} else {
-					return false;
-				}
+			if (this.votes[position] != '') {
+				return true;
+			} else {
+				return false;
 			}
 		}
 	}
@@ -43784,37 +43773,9 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "column is-2" }, [
     _c("aside", { staticClass: "menu" }, [
-      _c(
-        "ul",
-        { staticClass: "menu-list" },
-        _vm._l(_vm.positions, function(position) {
-          return _c("li", [
-            _c(
-              "a",
-              {
-                class: { "is-active": position.selected },
-                attrs: { href: position.url },
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    _vm.menuClick(position, "Candidate")
-                  }
-                }
-              },
-              [
-                _vm._v(_vm._s(position.position) + " \n\t    \t\t"),
-                _vm.hasVoted(position.position, "Candidate")
-                  ? _c("span", { staticClass: "fa fa-check-circle voted" })
-                  : _vm._e()
-              ]
-            )
-          ])
-        })
-      ),
-      _vm._v(" "),
       _vm.showSenators
         ? _c("p", { staticClass: "menu-label" }, [
-            _vm._v("\n\t    Hall Senators\n\t  ")
+            _vm._v("\n\t    Hall Senator\n\t  ")
           ])
         : _vm._e(),
       _vm._v(" "),
@@ -43836,8 +43797,44 @@ var render = function() {
                 }
               },
               [
+                _vm._v(
+                  "\n\t\t\t\t" +
+                    _vm._s(position.position) +
+                    " Block\n\t    \t\t"
+                ),
+                _vm.hasVoted(position.position)
+                  ? _c("span", { staticClass: "fa fa-check-circle voted" })
+                  : _vm._e()
+              ]
+            )
+          ])
+        })
+      ),
+      _vm._v(" "),
+      _c("p", { staticClass: "menu-label" }, [
+        _vm._v("\n\t    Candidates\n\t  ")
+      ]),
+      _vm._v(" "),
+      _c(
+        "ul",
+        { staticClass: "menu-list" },
+        _vm._l(_vm.positions, function(position) {
+          return _c("li", [
+            _c(
+              "a",
+              {
+                class: { "is-active": position.selected },
+                attrs: { href: position.url },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.menuClick(position, "Candidate")
+                  }
+                }
+              },
+              [
                 _vm._v(_vm._s(position.position) + " \n\t    \t\t"),
-                _vm.hasVoted(position.position, "Senator")
+                _vm.hasVoted(position.position)
                   ? _c("span", { staticClass: "fa fa-check-circle voted" })
                   : _vm._e()
               ]

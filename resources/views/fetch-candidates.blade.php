@@ -130,7 +130,7 @@
 							    	</p>
 							    	<p class="card-footer-item" v-if="candidate.position=='Hall Senator'">
 							      		<span>
-							        		@{{candidate.block}}
+							        		@{{candidate.block}} Block
 							      		</span>
 							    	</p>
 							  	</footer>

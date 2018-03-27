@@ -63,7 +63,7 @@ window.app = new Vue({
 
         addStudent: function(){
             self = this;
-            if(this.firstName != '' && this.lastName !='' && this.matricNumber !='' && this.hall != '' && this.block !=''){
+            if(this.firstName != '' && this.lastName !='' && this.matricNumber !='' && this.hall != ''){
                 self.loading = true;
                 axios.post('/add-student', {
                     firstName: self.firstName,

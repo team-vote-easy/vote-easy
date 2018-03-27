@@ -107,7 +107,7 @@
             
                 <div class="field">
                     <div class="control">
-                      <input type="submit" name="Submit" value="Login {{$emojis[array_rand($emojis)]}}" class="button is-success is-medium">  
+                      <input type="submit" name="Submit" value="Login" class="button is-success is-medium">  
                     </div>
                 </div>
             </form>
