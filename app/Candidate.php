@@ -36,11 +36,11 @@ class Candidate extends Model
       return $query->where('hall', $hall);
     }
 
-    public function scopeFloor($query, $floor){
-      if($floor==null) {
+    public function scopeBlock($query, $block){
+      if($block==null) {
         return;
       }
-      return $query->where('floor', $floor);
+      return $query->where('block', $block);
     }
 
     public function votes(){

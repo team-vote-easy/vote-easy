@@ -84,14 +84,14 @@ class FetchController extends Controller
            $hall=$request->hall;
         }
 
-        if($request->floor == '' || $request->floor=='All'){
-            $floor = null;
+        if($request->block == '' || $request->block=='All'){
+            $block = null;
         }
         else{
-           $floor=$request->floor;
+           $block=$request->block;
         }
 
-        return response()->json(Candidate::position($position)->level($level)->hall($hall)->floor($floor)->get());
+        return response()->json(Candidate::position($position)->level($level)->hall($hall)->block($block)->get());
     }
 
 }

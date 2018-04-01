@@ -102,7 +102,7 @@
 
                     <div class="field is-horizontal" v-if="showHalls">
                         <div class="field-label is-normal">
-                            <label class="label">Hall + Floor: </label>
+                            <label class="label">Hall + Block: </label>
                         </div>
                         <div class="field-body">
                             <div class="field">
@@ -121,10 +121,10 @@
                             <div class="field">
                                 <div class="control is-expanded">
                                     <div class="select">
-                                        <select name="floor" v-model="floor">
-                                            <option value="" disabled="">Select Floor</option>
-                                            @foreach($floors as $floor)
-                                                <option value="{{$floor}}">{{$floor}}</option>
+                                        <select name="block" v-model="block">
+                                            <option value="" disabled="">Select Block</option>
+                                            @foreach($blocks as $block)
+                                                <option value="{{$block}}">{{$block}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -182,6 +182,10 @@
 
                 <modal v-if="showModal && errors.message" @close="showModal = false; errors={} " :green="false">
                     @{{errors.message}}
+                </modal>
+
+                <modal v-if="showModal && incomplete" @close="showModal = false; errors={} " :green="false">
+                    Please select all fields!
                 </modal>
 
                 <modal v-if="showModal && success" @close="showModal = false; success='' " :green="true">

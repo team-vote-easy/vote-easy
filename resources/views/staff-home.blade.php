@@ -113,6 +113,11 @@
 						  </span>
 						</p>
 						<p class="card-footer-item">
+						  <span>
+							@{{studentDetails.block}}
+						  </span>
+						</p>
+						<p class="card-footer-item">
 						  @{{ studentDetails.voted ? 'Voted' : 'Not Voted' }}
 						</p>
 

@@ -96,7 +96,7 @@
 
                     <div class="field is-horizontal">
                         <div class="field-label is-normal">
-                            <label class="label">Hall: </label>
+                            <label class="label">Hall + Block: </label>
                         </div>
                         <div class="field-body">
                             <div class="field">
@@ -106,6 +106,19 @@
                                             <option disabled value="">Select Hall</option>
                                             @foreach($halls as $hall)
                                                 <option value="{{$hall}}"> {{$hall}} </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <div class="control is-expanded">
+                                    <div class="select">
+                                        <select name="block" v-model="block">
+                                            <option disabled value="">Select Block</option>
+                                            @foreach($blocks as $block)
+                                                <option value="{{$block}}"> {{$block}} </option>
                                             @endforeach
                                         </select>
                                     </div>

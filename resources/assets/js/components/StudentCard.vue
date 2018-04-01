@@ -1,7 +1,7 @@
 <template>
 	<div class="columns">
 		<div v-for="student in students" class="column is-4">
-			<div class="card">
+			<div class="card student-card">
 			  <div class="card-content">
 			    <p class="title">
 			      {{student.name}} 
@@ -16,6 +16,10 @@
 
 			    <p class="card-footer-item">
 			    	{{student.hall}}
+			    </p>
+
+			    <p class="card-footer-item">
+			    	{{student.block==null ? "Block not specified" : student.block}}
 			    </p>
 			  </footer>
 			</div>
@@ -42,8 +46,10 @@
 </script>
 
 <style>
+	.card-footer-item{
+		text-align: center;
+	}
 	.password{
 		border-bottom: 3px solid #00d1b2;
-
 	}
 </style>

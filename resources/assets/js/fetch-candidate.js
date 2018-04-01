@@ -5,6 +5,7 @@ import Dashboard from './components/Dashboard.vue';
 import LoadingModal from './components/LoadingModal.vue';
 import StatCard from './components/StatCard.vue';
 
+
 window.app = new Vue({
     el: '#root',
     data: {
@@ -16,18 +17,18 @@ window.app = new Vue({
         message: '',
         empty: false,
         hallArray: ["Samuel Akande", "Queen Esther", "Nelson Mandela", "Bethel Splendor", "Kings Delight Hall", "Winslow", "Gideon Troopers", "Welch", "Crystal", "Platinum", "Marigold", "FAD", "Off-Campus", "All"],
-        floorArray: ["Ground Floor", "First Floor", "Second Floor", "Third Floor", "All"],
+        blockArray: ["First Floor", "Second Floor", "Third Floor", "A", "B", "C", "D", "E", "F", "G", "H"],
         levelArray: [100, 200, 300, 400, "All"],
         positionArray: ["PRO", "President", "Vice President", "Chaplain", "Director of Sports", "Director of Social", "General Secretary", "Director of Transport", "Treasurer", "Director of Finance", "Director of Welfare", "Senate President", "Sargent At Arms", "Assistant Gen Secretary", "Senator Chief Whip", "Deputy Senate President", "Senate Scribe", "Hall Senator", "All"],
         hall: '',
-        floor: '',
+        block: '',
         showHalls: '',
     },
     created(){
         this.levelArray = this.levelArray.sort();
         this.positionArray = this.positionArray.sort();
         this.hallArray = this.hallArray.sort();
-        this.floorArray = this.floorArray.sort();
+        this.blockArray = this.blockArray.sort();
     },
     methods: {
        fetchCandidate: function(){
@@ -41,10 +42,9 @@ window.app = new Vue({
                 position: this.roleData,
                 level: this.levelData,
                 hall: this.hall,
-                floor: this.floor
+                block: this.block
             })
             .then((data)=>{
-                console.log(data.data);
                 self.loading = '';
                 if(data.data.length == 0 ){
                     self.empty = true;

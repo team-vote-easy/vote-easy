@@ -18,20 +18,18 @@ window.app = new Vue({
 		voted: false,
 		incomplete: '',
 		numOfPosts: '',
-		numOfSentators: '',
+		numofSenators: '',
 		showNotDone: '',
 		noSenators: ''
 	},
 	created(){
 		window.addEventListener('keydown', (e)=>{
 			if(e.key=='ArrowLeft'){
-				console.log('Moved left!');
 				this.prev();
 				return;
 			}
 
 			if(e.key=='ArrowRight'){
-				console.log('Moved right!');
 				this.next();
 				return;
 			}
@@ -41,10 +39,23 @@ window.app = new Vue({
 		Event.$on('candidates', (candidates, senators, studentVote)=>{
 			this.studentVote = studentVote;
 
+			if(senators != ''){
+				var keys = Object.keys(senators);
+				keys = keys.sort();
+				this.numofSenators = keys.length;
+				keys.forEach((key)=>{
+					self.candidatesData[self.count] = {
+						position: (_.toUpper(_.startCase(key)) + ' BLOCK'),
+						text: key,
+						candidates: senators[key]
+					}
+					self.count+=1;
+				});
+			}
+
 			var keys = Object.keys(candidates);
 			keys = keys.sort();
 			this.numOfPosts = keys.length;
-			
 			keys.forEach((key)=>{
 				//Remember to chunk the array into 3
 				self.candidatesData[self.count] = {
@@ -55,18 +66,6 @@ window.app = new Vue({
 				self.count+=1;
 			});
 
-			if(senators != ''){
-				var keys = Object.keys(senators);
-				keys = keys.sort();
-				keys.forEach((key)=>{
-					self.candidatesData[self.count] = {
-						position: _.toUpper(_.startCase(key)),
-						text: key,
-						candidates: senators[key]
-					}
-					self.count+=1;
-				});
-			}
 
 			self.count = 0;
 			this.tabs = self.candidatesData.length;
@@ -75,11 +74,11 @@ window.app = new Vue({
 
 
 		Event.$on('menuClick', (index, candidateType)=>{
-			if(candidateType=='Senator'){
-				index+= self.numOfPosts;
+			if(candidateType=='Candidate'){
+				index+= self.numofSenators;
 			}
 
-			self.count = index;
+			self.count = parseInt(index);
 
 			this.currentView = this.candidatesData[index];
 		});
@@ -89,12 +88,10 @@ window.app = new Vue({
 		});
 
 		Event.$on('noSenators', ()=>{
-			console.log("No senators!");
 			self.noSenators = true;
 		})
 	},
 	methods: {
-
 		getPath(image){
 			return 'candidate-images/'+image;
 		},
@@ -117,7 +114,7 @@ window.app = new Vue({
 			}
 
 			const self = this;
-			this.count-=1;
+			this.count--;
 			Event.$emit('menuChange', self.count);
 			this.currentView = this.candidatesData[this.count];
 		},
@@ -129,7 +126,7 @@ window.app = new Vue({
 			}
 
 			const self = this;
-			this.count+=1;
+			this.count++;
 			Event.$emit('menuChange', self.count);
 			this.currentView = this.candidatesData[this.count];
 		},

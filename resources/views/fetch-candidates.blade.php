@@ -80,9 +80,9 @@
 	                            <div class="field">
 	                                <div class="control is-expanded">
 	                                    <div class="select">
-	                                        <select name="floor" v-model="floor">
-	                                            <option value="" disabled=>Select Floor</option>
-	                                            <option v-for="floor in floorArray" :value="floor" :key="floor"> @{{floor}}  </option>
+	                                        <select name="block" v-model="block">
+	                                            <option value="" disabled=>Select Block</option>
+	                                            <option v-for="block in blockArray" :value="block" :key="block"> @{{block}}  </option>
 	                                        </select>
 	                                    </div>
 	                                </div>
@@ -130,11 +130,8 @@
 							    	</p>
 							    	<p class="card-footer-item" v-if="candidate.position=='Hall Senator'">
 							      		<span>
-							        		@{{candidate.floor}}
+							        		@{{candidate.block}} Block
 							      		</span>
-							    	</p>
-							    	<p class="card-footer-item">
-						    			@{{candidate.level}}
 							    	</p>
 							  	</footer>
 							</div>

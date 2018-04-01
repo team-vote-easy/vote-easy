@@ -1409,7 +1409,7 @@ var app = new Vue({
 	el: '#root',
 	data: {
 		hall: '',
-		floor: '',
+		block: '',
 		loading: '',
 		candidates: '',
 		uncomplete: '',
@@ -1424,23 +1424,23 @@ var app = new Vue({
 			self.empty = '';
 			self.message = '';
 
-			if (this.floor == '' || this.hall == '') {
+			if (this.block == '' || this.hall == '') {
 				this.uncomplete = true;
 				return;
 			}
 
 			this.loading = true;
 
-			axios.post('/view-votes-senators', { hall: this.hall, floor: this.floor }).then(function (data) {
+			axios.post('/view-votes-senators', { hall: this.hall, block: this.block }).then(function (data) {
 				self.loading = false;
 				if (data.data == '') {
 					self.empty = true;
 					Event.$emit('destroyChart');
-					self.message = 'Sorry! No results for ' + self.floor + ' senators in ' + self.hall;
+					self.message = 'Sorry! No results for ' + self.block + ' Block senators in ' + self.hall;
 					return;
 				}
 				console.log(data.data[0]);
-				self.title = self.hall + ' ' + self.floor + ' Hall Senator';
+				self.title = self.hall + ' ' + self.block + ' Hall Senator';
 				self.candidates = data.data;
 				Event.$emit('candidates', self.candidates, self.title);
 			}).catch(function (e) {

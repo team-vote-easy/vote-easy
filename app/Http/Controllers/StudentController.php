@@ -33,7 +33,7 @@ class StudentController extends Controller
         }
 
 
-    	$rules = ['matricNumber' => 'required|max:7', 'password'=>'required'];
+    	$rules = ['matricNumber' => 'required', 'password'=>'required'];
         $messages = [
             'matricNumber.required' => "Please enter a matric number!",
             'password.required'=> 'Please enter a password!'
@@ -49,9 +49,6 @@ class StudentController extends Controller
         }
 
     	if(Auth::guard('students')->attempt(['matric_no'=>$request->matricNumber, 'password'=>$request->password])){
-    		$loggedStudent = Student::where('id', Auth::guard('students')->user()->id)->first();
-    		$loggedStudent->voted = true;
-    		$loggedStudent->save();
     		return redirect('/vote');
     	}
     	else{
@@ -80,16 +77,17 @@ class StudentController extends Controller
     	]);
     }
 
-
-
     public function getStudent(){
     	$loggedStudent = Auth::guard('students')->user();
     	return response()->json($loggedStudent);
     }
 
     public function postVotes(Request $request){
-        $candidates = $request->all();
+        $loggedStudent = Student::where('id', Auth::guard('students')->user()->id)->first();
+        $loggedStudent->voted = true;
+        $loggedStudent->save();
 
+        $candidates = $request->all();
         foreach($candidates as $candidate){
             $vote = Vote::where('candidate_id', $candidate)->first();
             if($vote){
@@ -118,23 +116,26 @@ class StudentController extends Controller
         }
 
         $studentHall = Auth::guard('students')->user()->hall;
+        $studentBlock = Auth::guard('students')->user()->block;
 
-        $senators = Candidate::position('Hall Senator')->hall($studentHall)->get();
+        $senators = Candidate::position('Hall Senator')->hall($studentHall)->block($studentBlock)->get();
 
         $senatorFloors = [];
         $senatorData = [];
+        $senatorBlocks = [];
 
 
         if(count($senators) > 0){
             foreach ($senators as $senator) {
-                $senatorFloors[] = $senator->floor;
+                $senatorBlocks[] = $senator->block;
             }
+            $senatorBlocks = array_unique($senatorBlocks);
+            foreach ($senatorBlocks as $block) {
+                $senatorData[$block] = Candidate::position('Hall Senator')->hall($studentHall)->block($block)->get();
+            }            
         }
-        $senatorFloors = array_unique($senatorFloors);
 
-        foreach ($senatorFloors as $floor) {
-            $senatorData[$floor] = Candidate::position('Hall Senator')->hall($studentHall)->floor($floor)->get();
-        }
+
 
 
         return response()->json([$candidates, $senatorData]);

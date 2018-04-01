@@ -52,10 +52,10 @@ class VoteController extends Controller
 	public function senatorVotesView(){
 		$admin = Auth::guard('admin')->user()->name;
 		$halls = ["Samuel Akande", "Queen Esther", "Nelson Mandela", "Bethel Splendor", "Kings Delight Hall", "Winslow", "Gideon Troopers", "Welch", "Crystal", "Platinum", "Marigold", "FAD", "Queen Esther", "Off-Campus"];
-        $floors=["Ground Floor", "First Floor", "Second Floor", "Third Floor"];
+        $blocks = ["First Floor", "Second Floor", "Third Floor", "A", "B", "C", "D", "E", "F", "G", "H"];
         return view('view-senator-votes', [
         	'halls'=>$halls,
-        	'floors'=>$floors,
+        	'blocks'=>$blocks,
         	'admin'=>$admin
         ]);
 	}
@@ -63,7 +63,7 @@ class VoteController extends Controller
 	public function getSenatorVotes(Request $request){
 		$count = 0;
 		$candidateSet = array();
-		$candidates = Candidate::position('Hall Senator')->hall($request->hall)->floor($request->floor)->get();
+		$candidates = Candidate::position('Hall Senator')->hall($request->hall)->block($request->block)->get();
 		foreach ($candidates as $candidate) {
 			if($candidate->votes == ''){
 				$votes = 0;
