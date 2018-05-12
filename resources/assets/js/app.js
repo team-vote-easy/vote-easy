@@ -35,7 +35,6 @@ window.app = new Vue({
                 formData.append('file', this.file, this.file.name);
             }
             else{
-                this.errors.title = 'Missing field error'
                 this.errors.message = 'Oops... Some fields are missing';
                 this.showModal = true;
                 console.log(this.errors);
@@ -80,7 +79,8 @@ window.app = new Vue({
                         self.matricNumber = '';
                         self.hall = '';
                         self.block = '';
-                        self.success = `Successfully Added Student: ${studentName}`;
+                        var key = data.data;
+                        self.success = key;
                         self.showModal = true;
                     })
                     .catch((e)=>{
@@ -91,7 +91,8 @@ window.app = new Vue({
 
             }
             else{
-                console.log('some fields are missing');
+                this.errors.message = 'Oops... Some fields are missing';
+                this.showModal = true;
             }
         }
     },

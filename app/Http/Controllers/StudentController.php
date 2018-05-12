@@ -89,6 +89,10 @@ class StudentController extends Controller
 
         $candidates = $request->all();
         foreach($candidates as $candidate){
+            if($candidate==null){
+                continue;
+            }
+            
             $vote = Vote::where('candidate_id', $candidate)->first();
             if($vote){
                 $vote->increment('count', 1);
@@ -109,9 +113,12 @@ class StudentController extends Controller
     }
 
     public function getCandidates(){
-        $positions = ["PRO", "President", "Vice President", "Chaplain", "Director of Sports", "Director of Social", "General Secretary", "Director of Transport", "Treasurer", "Director of Finance", "Director of Welfare", "Senate President", "Sargent At Arms", "Assistant Gen Secretary", "Senator Chief Whip", "Deputy Senate President", "Senate Scribe"];
+        $positions = ["President", "Vice President (Main)", "General Secretary", "Assistant General Secretary", "Treasurer", "Director of Financial Records", "Director of Public Relations (Main)", "Director of Socials (Main)", "Director of Sports (Main)", "Director of Transport and Ventures (Main)", "Director of Welfare (Main)", "Sergeant At Arms", "Chaplain"];
+
+        $iperuCandidates = ["President", "Vice President (Iperu)", "General Secretary", "Assistant General Secretary", "Treasurer", "Director of Financial Records", "Director of Public Relations (Iperu)", "Director of Sports (Iperu)", "Director of Transport and Ventures (Iperu)", "Director of Welfare (Iperu)", "Sergeant At Arms", "Chaplain"];
+
         $candidates = array();
-        foreach($positions as $position){
+        foreach($iperuCandidates as $position){
             $candidates[$position] = Candidate::position($position)->get();
         }
 
@@ -129,17 +136,21 @@ class StudentController extends Controller
             foreach ($senators as $senator) {
                 $senatorBlocks[] = $senator->block;
             }
-            $senatorBlocks = array_unique($senatorBlocks);
-            foreach ($senatorBlocks as $block) {
-                $senatorData[$block] = Candidate::position('Hall Senator')->hall($studentHall)->block($block)->get();
-            }            
+
+            if(Auth::guard('students')->user()->hall=='Off-Campus'){
+                $senatorBlocks = array_unique($senatorBlocks);
+                foreach ($senatorBlocks as $block) {
+                    $senatorData['Off-Campus'] = Candidate::position('Hall Senator')->hall($studentHall)->block($block)->get();
+                }    
+            }
+            else{
+                $senatorBlocks = array_unique($senatorBlocks);
+                foreach ($senatorBlocks as $block) {
+                    $senatorData[$block] = Candidate::position('Hall Senator')->hall($studentHall)->block($block)->get();
+                }              
+            }
         }
-
-
-
-
         return response()->json([$candidates, $senatorData]);
-
     }
 
     public function serializeTest(){

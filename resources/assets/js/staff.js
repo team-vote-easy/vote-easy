@@ -23,7 +23,22 @@ window.app = new Vue({
 		matricNumber: '',
 		studentDetails: '',
 		message: '',
-		empty: ''
+		empty: '',
+		lastPushed: '',
+		pushLoading: '',
+		pushSuccess: '',
+		pushFailure: ''
+	},
+	created(){
+		self = this;
+		axios.post('/api/get-staff-log')
+			.then((data)=>{
+				console.log(data);
+				self.lastPushed = data.data == '' ? 'Not Pushed Yet' : data.data;
+			})
+			.catch((e)=>{
+				console.log(e);
+			});
 	},
 	methods: {
 		submit(){
@@ -79,7 +94,6 @@ window.app = new Vue({
                 matricNumber: this.matricNumber
             })
             .then((data)=>{
-            	console.log(data);
                 self.loading = '';
                 if(Object.keys(data.data).length === 0){
                     self.message = 'Sorry... there are no students that satisfy your query';
@@ -97,8 +111,23 @@ window.app = new Vue({
             });
         },
         pushServer(){
+        	self = this;
+        	this.pushLoading = true;
         	console.log('🚀');
-        	// axios.post('/staff/push-to-server')
+        	axios.post('/staff/api/push-to-server')
+        		.then((data)=>{
+        			self.pushLoading = false;
+        			self.showModal = true;
+        			self.pushSuccess = true;
+        			self.lastPushed = data.data;
+        			console.log(data);
+        		})
+        		.catch((e)=>{
+        			self.showModal = true;
+        			self.pushFailure = true;
+        			self.pushLoading = false;
+        			console.log(e)
+        		})
         }
 	},
 	components: {Modal, Dashboard, LoadingModal, StaffCard, StaffDashboard, StatCard}

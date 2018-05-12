@@ -11,7 +11,7 @@
             font-family: Helveticaneue;
             font-size: 90px;
             text-align: center;
-            left: 40px;
+            left: -60px;
             padding-bottom: 1px;
             position: relative;
             color: black;
@@ -53,6 +53,7 @@
             margin-left: 30px;
             height: 200px;
             position: relative;
+            left: -100px;
             top: -60px;
         }
 

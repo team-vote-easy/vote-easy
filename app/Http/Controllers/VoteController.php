@@ -16,7 +16,7 @@ use Auth;
 
 class VoteController extends Controller
 {
-	public $positions = ["PRO", "President", "Vice President", "Chaplain", "Director of Sports", "Director of Social", "General Secretary", "Director of Transport", "Treasurer", "Director of Finance", "Director of Welfare", "Senate President", "Sargent At Arms", "Assistant Gen Secretary", "Senator Chief Whip", "Deputy Senate President", "Senate Scribe"];
+	public $positions = ["President", "Vice President (Main)", "Vice President (Iperu)", "General Secretary", "Assistant General Secretary", "Treasurer", "Director of Financial Records", "Director of Public Relations (Main)", "Director of Public Relations (Iperu)", "Director of Socials (Main)", "Director of Socials (Iperu)", "Director of Sports (Main)", "Director of Sports (Iperu)", "Director of Transport and Ventures (Main)", "Director of Transport and Ventures (Iperu)", "Director of Welfare (Main)", "Director of Welfare (Iperu)", "Sergeant At Arms", "Chaplain"];
 
 	public function getVotesView(){
 		$admin = Auth::guard('admin')->user()->name;
@@ -51,8 +51,10 @@ class VoteController extends Controller
 
 	public function senatorVotesView(){
 		$admin = Auth::guard('admin')->user()->name;
-		$halls = ["Samuel Akande", "Queen Esther", "Nelson Mandela", "Bethel Splendor", "Kings Delight Hall", "Winslow", "Gideon Troopers", "Welch", "Crystal", "Platinum", "Marigold", "FAD", "Queen Esther", "Off-Campus"];
-        $blocks = ["First Floor", "Second Floor", "Third Floor", "A", "B", "C", "D", "E", "F", "G", "H"];
+		$halls = ["Samuel Akande", "Queen Esther", "Nelson Mandela", "Bethel Splendor", "Neal Wilson", "Nyberg", "Ogden", "Winslow", "Gideon Troopers", "Welch", "Crystal", "Platinum", "Felicia Adebisi Dada (FAD)", "Queen Esther", "Off-Campus", "Ameyo Adadevoh", "Gamaliel", "Havilah Gold", "Justice Deborah"];
+        $blocks = ["GF", "FF", "TF", "SF", "A", "B", "C", "D", "E", "F", "G", "H", "100", "200", "300", "400"];
+        sort($halls);
+        sort($blocks);
         return view('view-senator-votes', [
         	'halls'=>$halls,
         	'blocks'=>$blocks,

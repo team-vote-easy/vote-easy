@@ -1129,7 +1129,7 @@ window.app = new Vue({
 
 			if (senators != '') {
 				var keys = Object.keys(senators);
-				keys = keys.sort();
+
 				_this.numofSenators = keys.length;
 				keys.forEach(function (key) {
 					self.candidatesData[self.count] = {
@@ -1142,7 +1142,7 @@ window.app = new Vue({
 			}
 
 			var keys = Object.keys(candidates);
-			keys = keys.sort();
+
 			_this.numOfPosts = keys.length;
 			keys.forEach(function (key) {
 				//Remember to chunk the array into 3
@@ -1251,6 +1251,16 @@ window.app = new Vue({
 		},
 		redirect: function redirect() {
 			window.location.href = "student-login";
+		},
+		singleCandidate: function singleCandidate(currentView) {
+			if (currentView.candidates) {
+				var count = currentView.candidates.length;
+				if (count == 1) {
+					return true;
+				}
+				return false;
+			}
+			return false;
 		}
 	},
 	components: { Modal: __WEBPACK_IMPORTED_MODULE_0__components_Modal_vue___default.a, SideBar: __WEBPACK_IMPORTED_MODULE_1__components_SideBar_vue___default.a }
@@ -43129,7 +43139,7 @@ var render = function() {
         "div",
         {
           staticClass: "box animated shake notification",
-          class: [_vm.green ? "is-primary" : "is-danger"],
+          class: [_vm.green ? "is-success" : "is-danger"],
           staticStyle: { "text-align": "center", "font-size": "20px" }
         },
         [_vm._t("default")],
@@ -43240,7 +43250,7 @@ exports = module.exports = __webpack_require__(45)(false);
 
 
 // module
-exports.push([module.i, "\n.menu{\n\tposition: relative;\n\ttop: -100px;\n\tleft: -89px;\n\twidth: 180px;\n}\n.menu-list{\n\tborder-left: 3px solid #ff3860;\n}\n.menu-list a{\n\tfont-size: 12.5px;\n}\n.menu-list a.is-active{\n\tbackground-color: whitesmoke;\n\tcolor: #ff3860;\n\tborder-right: 4px solid #ff3860;\n}\n.voted{\n\tfloat: right;\n\tcolor: #00d1b2;\n}\n", ""]);
+exports.push([module.i, "\n.menu{\n\tposition: relative;\n\ttop: -100px;\n\tleft: -93px;\n\twidth: 210px;\n}\n.menu-list{\n\tborder-left: 3px solid #ff3860;\n}\n.menu-list a{\n\tfont-size: 12.5px;\n}\n.menu-list a.is-active{\n\tbackground-color: whitesmoke;\n\tcolor: #ff3860;\n\tborder-right: 4px solid #ff3860;\n}\n.voted{\n\tfloat: right;\n\tcolor: #00d1b2;\n}\n", ""]);
 
 // exports
 
@@ -43679,7 +43689,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 			var studentVote = {};
 			var keys = Object.keys(positions);
-			keys = keys.sort();
 
 			keys.forEach(function (key) {
 				studentVote[key] = '';
@@ -43694,7 +43703,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			if (senatorPosts == '') {
 				Event.$emit('noSenators');
 			}
-			senatorPosts = senatorPosts.sort();
+
 			senatorPosts.forEach(function (post) {
 				studentVote[post] = '';
 				_this.hallSenators.push({

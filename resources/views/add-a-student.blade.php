@@ -50,6 +50,11 @@
        [v-cloak] {
             display: none;
         }
+
+        .staff-key{
+            border-bottom: 3px solid white;
+            font-size: 30px;
+        }
     </style>
 </head>
 <body>
@@ -138,7 +143,7 @@
                 </modal>
 
                 <modal v-if="showModal && success" @close="showModal = false; success='' " :green="true">
-                    @{{success}}
+                    Successfully added the student. Password is: <span class="staff-key"> @{{success}} </span>
                 </modal>
             </div>
 

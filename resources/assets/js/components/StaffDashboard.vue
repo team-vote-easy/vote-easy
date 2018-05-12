@@ -3,7 +3,6 @@
 		<nav class="navbar">
 			<div class="navbar-menu">
 				<div class="navbar-end">
-					<img class="navbar-item brand" src="/css/images/bucc-logo.PNG" width="130" height="180" alt="BUCC">
 					
 					<span class="navbar-item">
 						Signed In as: <span class="admin"> {{staff}} </span>
@@ -106,11 +105,6 @@
 
 	.navbar{
 		border-bottom: 6px solid whitesmoke;
-	}
-
-	.brand{
-		position: relative;
-		left: -880px;
 	}
 
 	.fa{

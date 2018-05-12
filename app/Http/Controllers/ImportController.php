@@ -23,7 +23,8 @@ class ImportController extends Controller
 	public function showImport(){
         $admin = Auth::guard('admin')->user()->name;
 		$courses = ["Computer Science", "Computer Technology", "Computer Information Systems"];
-        $halls = ["Samuel Akande", "Queen Esther", "Nelson Mandela", "Bethel Splendor", "Kings Delight Hall", "Winslow", "Gideon Troopers", "Welch", "Crystal", "Platinum", "Marigold", "FAD", "Queen Esther", "Off-Campus"];
+        $halls = ["Samuel Akande", "Queen Esther", "Nelson Mandela", "Bethel Splendor", "Neal Wilson", "Nyberg", "Ogden", "Winslow", "Gideon Troopers", "Welch", "Crystal", "Platinum", "Felicia Adebisi Dada (FAD)", "Queen Esther", "Off-Campus", "Ameyo Adadevoh", "Gamaliel", "Havilah Gold", "Justice Deborah"];
+        sort($halls);
 		$levels = [100, 200, 300, 400];
 		return view('import', [
 			'courses'=>$courses,
@@ -32,21 +33,6 @@ class ImportController extends Controller
             'halls'=>$halls
 		]);
 	}
-
-    public function addTest(){
-        $key = str_random(6);
-        $student = Student::create([
-            'name'=>'Shaku Shaku',
-            'matric_no'=>'14/1000',
-            'course'=> null,
-            'hall'=>'Gideon Troopers',
-            'level'=>null,
-            'key'=>$key,
-            'password'=>Hash::make($key)
-        ]);
-
-        return $student;
-    }
 
     public function import(Request $request){
         $hall = $request->hall == null ? 'Off-Campus' : $request->hall;
@@ -110,8 +96,10 @@ class ImportController extends Controller
 
     public function addStudentView(){
         $admin = Auth::guard('admin')->user()->name;
-        $halls = ["Samuel Akande", "Queen Esther", "Nelson Mandela", "Bethel Splendor", "Kings Delight Hall", "Winslow", "Gideon Troopers", "Welch", "Crystal", "Platinum", "Marigold", "FAD", "Queen Esther", "Off-Campus"];
-        $blocks = ["First Floor", "Second Floor", "Third Floor", "A", "B", "C", "D", "E", "F", "G", "H"];
+        $halls =["Samuel Akande", "Queen Esther", "Nelson Mandela", "Bethel Splendor", "Neal Wilson", "Nyberg", "Ogden", "Winslow", "Gideon Troopers", "Welch", "Crystal", "Platinum", "Felicia Adebisi Dada (FAD)", "Queen Esther", "Off-Campus", "Ameyo Adadevoh", "Gamaliel", "Havilah Gold", "Justice Deborah"];
+        $blocks = ["GF", "FF", "TF", "SF", "A", "B", "C", "D", "E", "F", "G", "H", "100", "200", "300", "400", "None"];
+        sort($halls);
+        sort($blocks);
         return view('add-a-student', [
             'admin'=>$admin,
             'halls'=>$halls,
@@ -134,7 +122,7 @@ class ImportController extends Controller
             'hall'=>$request->hall,
             'block'=>$request->block
         ]);
-        return response()->json('Added the student', 200);
+        return response()->json($key, 200);
         
     }
 }

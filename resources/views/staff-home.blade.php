@@ -114,7 +114,7 @@
 						</p>
 						<p class="card-footer-item">
 						  <span>
-							@{{studentDetails.block}}
+							@{{studentDetails.block}} Block
 						  </span>
 						</p>
 						<p class="card-footer-item">

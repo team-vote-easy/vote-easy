@@ -41,7 +41,7 @@ window.app = new Vue({
 
 			if(senators != ''){
 				var keys = Object.keys(senators);
-				keys = keys.sort();
+				
 				this.numofSenators = keys.length;
 				keys.forEach((key)=>{
 					self.candidatesData[self.count] = {
@@ -54,7 +54,7 @@ window.app = new Vue({
 			}
 
 			var keys = Object.keys(candidates);
-			keys = keys.sort();
+		
 			this.numOfPosts = keys.length;
 			keys.forEach((key)=>{
 				//Remember to chunk the array into 3
@@ -172,6 +172,17 @@ window.app = new Vue({
 
 		redirect(){
 			window.location.href="student-login";
+		},
+
+		singleCandidate(currentView){
+			if(currentView.candidates){
+				var count = currentView.candidates.length;
+				if(count==1){
+					return true;
+				}
+				return false;
+			}
+			return false;
 		}
 	},
 	components: {Modal, SideBar},
