@@ -71,23 +71,24 @@ window.app = new Vue({
                     hall: self.hall,
                     block: self.block
                 })
-                    .then((data)=>{
-                        var studentName = self.firstName + ' ' + self.lastName;
-                        self.loading = false;
-                        self.firstName = '';
-                        self.lastName = '';
-                        self.matricNumber = '';
-                        self.hall = '';
-                        self.block = '';
-                        var key = data.data;
-                        self.success = key;
-                        self.showModal = true;
-                    })
-                    .catch((e)=>{
-                        self.loading = false;
-                        self.errors.message = `Sorry! The matric number already belongs to a student`;
-                        self.showModal = true;
-                    })
+                .then((data)=>{
+                    var studentName = self.firstName + ' ' + self.lastName;
+                    self.loading = false;
+                    self.firstName = '';
+                    self.lastName = '';
+                    self.matricNumber = '';
+                    self.hall = '';
+                    self.block = '';
+                    var key = data.data;
+                    self.success = key;
+                    self.showModal = true;
+                })
+                .catch((e)=>{
+                    self.loading = false;
+                    self.errors.message = `Sorry! The matric number already belongs to a student`;
+                    self.showModal = true;
+                    console.log(e);
+                })
 
             }
             else{
