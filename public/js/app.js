@@ -1473,6 +1473,7 @@ window.app = new Vue({
                     self.showModal = true;
                     console.log(data);
                 }).catch(function (e) {
+                    console.log(e);
                     self.loading = false;
                     self.errors.message = 'Sorry! The matric number already belongs to a student';
                     self.showModal = true;

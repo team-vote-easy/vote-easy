@@ -85,6 +85,7 @@ window.app = new Vue({
                     console.log(data);
                 })
                 .catch((e)=>{
+                    console.log(e);
                     self.loading = false;
                     self.errors.message = `Sorry! The matric number already belongs to a student`;
                     self.showModal = true;
