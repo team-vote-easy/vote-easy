@@ -35,7 +35,6 @@ window.app = new Vue({
                 formData.append('file', this.file, this.file.name);
             }
             else{
-                this.errors.title = 'Missing field error'
                 this.errors.message = 'Oops... Some fields are missing';
                 this.showModal = true;
                 console.log(this.errors);
@@ -72,26 +71,30 @@ window.app = new Vue({
                     hall: self.hall,
                     block: self.block
                 })
-                    .then((data)=>{
-                        var studentName = self.firstName + ' ' + self.lastName;
-                        self.loading = false;
-                        self.firstName = '';
-                        self.lastName = '';
-                        self.matricNumber = '';
-                        self.hall = '';
-                        self.block = '';
-                        self.success = `Successfully Added Student: ${studentName}`;
-                        self.showModal = true;
-                    })
-                    .catch((e)=>{
-                        self.loading = false;
-                        self.errors.message = `Sorry! The matric number already belongs to a student`;
-                        self.showModal = true;
-                    })
+                .then((data)=>{
+                    var studentName = self.firstName + ' ' + self.lastName;
+                    self.loading = false;
+                    self.firstName = '';
+                    self.lastName = '';
+                    self.matricNumber = '';
+                    self.hall = '';
+                    self.block = '';
+                    var key = data.data;
+                    self.success = key;
+                    self.showModal = true;
+                    console.log(data);
+                })
+                .catch((e)=>{
+                    console.log(e);
+                    self.loading = false;
+                    self.errors.message = `Sorry! The matric number already belongs to a student`;
+                    self.showModal = true;
+                })
 
             }
             else{
-                console.log('some fields are missing');
+                this.errors.message = 'Oops... Some fields are missing';
+                this.showModal = true;
             }
         }
     },

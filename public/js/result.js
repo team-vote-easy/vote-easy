@@ -32533,11 +32533,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
 		return {
-			keys: ["PRO", "President", "Vice President", "Chaplain", "Director of Sports", "Director of Social", "General Secretary", "Director of Transport", "Treasurer", "Director of Finance", "Director of Welfare", "Senate President", "Sargent At Arms", "Assistant Gen Secretary", "Senator Chief Whip", "Deputy Senate President", "Senate Scribe"]
+			keys: ["President", "Vice President (Main)", "Vice President (Iperu)", "General Secretary", "Assistant General Secretary", "Treasurer", "Director of Financial Records", "Director of Public Relations (Main)", "Director of Public Relations (Iperu)", "Director of Socials (Main)", "Director of Socials (Iperu)", "Director of Sports (Main)", "Director of Sports (Iperu)", "Director of Transport and Ventures (Main)", "Director of Transport and Ventures (Iperu)", "Director of Welfare (Main)", "Director of Welfare (Iperu)", "Sergeant At Arms", "Chaplain"]
 		};
 	},
 	created: function created() {
-		this.keys.sort();
 		this.fetchVotes();
 	},
 
@@ -32546,7 +32545,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			self = this;
 			axios.get('api/get-votes').then(function (data) {
 				var posts = data.data;
-				var keys = Object.keys(posts).sort();
+				var keys = Object.keys(posts);
 				keys.forEach(function (k) {
 					self.renderChart(posts[k]);
 				});
@@ -32618,15 +32617,11 @@ var render = function() {
   return _c(
     "div",
     _vm._l(_vm.keys, function(key) {
-      return _c(
-        "div",
-        {
-          staticClass: "charts box",
-          staticStyle: { height: "550px", width: "100%" },
-          attrs: { id: key }
-        },
-        [_vm._v("1 ")]
-      )
+      return _c("div", {
+        staticClass: "charts box",
+        staticStyle: { height: "550px", width: "100%" },
+        attrs: { id: key }
+      })
     })
   )
 }
@@ -33001,7 +32996,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['link', 'admin'],
@@ -33100,16 +33094,6 @@ var render = function() {
     _c("nav", { staticClass: "navbar" }, [
       _c("div", { staticClass: "navbar-menu" }, [
         _c("div", { staticClass: "navbar-end" }, [
-          _c("img", {
-            staticClass: "navbar-item brand",
-            attrs: {
-              src: "css/images/bucc-logo.PNG",
-              width: "130",
-              height: "180",
-              alt: "BUCC"
-            }
-          }),
-          _vm._v(" "),
           _c("span", { staticClass: "navbar-item" }, [
             _vm._v("\n\t\t\t\t\tSigned In as: "),
             _c("span", { staticClass: "admin" }, [
@@ -33284,7 +33268,7 @@ var render = function() {
         "div",
         {
           staticClass: "box animated shake notification",
-          class: [_vm.green ? "is-primary" : "is-danger"],
+          class: [_vm.green ? "is-success" : "is-danger"],
           staticStyle: { "text-align": "center", "font-size": "20px" }
         },
         [_vm._t("default")],

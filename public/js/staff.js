@@ -18518,8 +18518,22 @@ window.app = new Vue({
 		matricNumber: '',
 		studentDetails: '',
 		message: '',
-		empty: ''
+		empty: '',
+		lastPushed: '',
+		pushLoading: '',
+		pushSuccess: '',
+		pushFailure: ''
 	},
+	created: function created() {
+		self = this;
+		axios.post('/api/get-staff-log').then(function (data) {
+			console.log(data);
+			self.lastPushed = data.data == '' ? 'Not Pushed Yet' : data.data;
+		}).catch(function (e) {
+			console.log(e);
+		});
+	},
+
 	methods: {
 		submit: function submit() {
 			var _this = this;
@@ -18572,7 +18586,6 @@ window.app = new Vue({
 			axios.post('/staff/fetch-student', {
 				matricNumber: this.matricNumber
 			}).then(function (data) {
-				console.log(data);
 				self.loading = '';
 				if (Object.keys(data.data).length === 0) {
 					self.message = 'Sorry... there are no students that satisfy your query';
@@ -18589,8 +18602,21 @@ window.app = new Vue({
 			});
 		},
 		pushServer: function pushServer() {
+			self = this;
+			this.pushLoading = true;
 			console.log('🚀');
-			// axios.post('/staff/push-to-server')
+			axios.post('/staff/api/push-to-server').then(function (data) {
+				self.pushLoading = false;
+				self.showModal = true;
+				self.pushSuccess = true;
+				self.lastPushed = data.data;
+				console.log(data);
+			}).catch(function (e) {
+				self.showModal = true;
+				self.pushFailure = true;
+				self.pushLoading = false;
+				console.log(e);
+			});
 		}
 	},
 	components: { Modal: __WEBPACK_IMPORTED_MODULE_0__components_Modal_vue___default.a, Dashboard: __WEBPACK_IMPORTED_MODULE_1__components_Dashboard_vue___default.a, LoadingModal: __WEBPACK_IMPORTED_MODULE_2__components_LoadingModal_vue___default.a, StaffCard: __WEBPACK_IMPORTED_MODULE_3__components_StaffCard_vue___default.a, StaffDashboard: __WEBPACK_IMPORTED_MODULE_4__components_StaffDashboard_vue___default.a, StatCard: __WEBPACK_IMPORTED_MODULE_5__components_StatCard_vue___default.a }
@@ -32302,7 +32328,7 @@ var render = function() {
         "div",
         {
           staticClass: "box animated shake notification",
-          class: [_vm.green ? "is-primary" : "is-danger"],
+          class: [_vm.green ? "is-success" : "is-danger"],
           staticStyle: { "text-align": "center", "font-size": "20px" }
         },
         [_vm._t("default")],
@@ -32504,7 +32530,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['link', 'admin'],
@@ -32603,16 +32628,6 @@ var render = function() {
     _c("nav", { staticClass: "navbar" }, [
       _c("div", { staticClass: "navbar-menu" }, [
         _c("div", { staticClass: "navbar-end" }, [
-          _c("img", {
-            staticClass: "navbar-item brand",
-            attrs: {
-              src: "css/images/bucc-logo.PNG",
-              width: "130",
-              height: "180",
-              alt: "BUCC"
-            }
-          }),
-          _vm._v(" "),
           _c("span", { staticClass: "navbar-item" }, [
             _vm._v("\n\t\t\t\t\tSigned In as: "),
             _c("span", { staticClass: "admin" }, [
@@ -33136,7 +33151,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n.menu{\n\tposition: fixed;\n\ttop: 100px;\n}\n.navbar{\n\tborder-bottom: 6px solid whitesmoke;\n}\n.brand{\n\tposition: relative;\n\tleft: -880px;\n}\n.fa{\n\tmargin-right: 5px;\n}\n.menu-list a.is-active{\n\tbackground-color: #00d1b2;\n\tcolor: white;\n}\nspan.admin{\n\tmargin: 5px 6px;\n\tpadding: 1px;\n\tborder-bottom: 3px solid black;\n}\n\n", ""]);
+exports.push([module.i, "\n.menu{\n\tposition: fixed;\n\ttop: 100px;\n}\n.navbar{\n\tborder-bottom: 6px solid whitesmoke;\n}\n.fa{\n\tmargin-right: 5px;\n}\n.menu-list a.is-active{\n\tbackground-color: #00d1b2;\n\tcolor: white;\n}\nspan.admin{\n\tmargin: 5px 6px;\n\tpadding: 1px;\n\tborder-bottom: 3px solid black;\n}\n\n", ""]);
 
 // exports
 
@@ -33147,7 +33162,6 @@ exports.push([module.i, "\n.menu{\n\tposition: fixed;\n\ttop: 100px;\n}\n.navbar
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
 //
 //
 //
@@ -33250,16 +33264,6 @@ var render = function() {
     _c("nav", { staticClass: "navbar" }, [
       _c("div", { staticClass: "navbar-menu" }, [
         _c("div", { staticClass: "navbar-end" }, [
-          _c("img", {
-            staticClass: "navbar-item brand",
-            attrs: {
-              src: "/css/images/bucc-logo.PNG",
-              width: "130",
-              height: "180",
-              alt: "BUCC"
-            }
-          }),
-          _vm._v(" "),
           _c("span", { staticClass: "navbar-item" }, [
             _vm._v("\n\t\t\t\t\tSigned In as: "),
             _c("span", { staticClass: "admin" }, [

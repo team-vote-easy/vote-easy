@@ -19,7 +19,7 @@
 			<h1> @{{currentView.position}}</h1>
 			<div class="columns">
 				<side-bar > </side-bar>
-					<div v-for="candidate in currentView.candidates" class="column is-3">
+					<div v-for="candidate in currentView.candidates" :class="[currentView.position=='PRESIDENT' || currentView.position=='OFF CAMPUS BLOCK' ? 'column is-2 presidents' : 'column is-3']">
 						<div class="card">
 							<div class="card-image">
 								<figure class="image is-4by3">
@@ -37,9 +37,6 @@
 										@{{candidate.position}}
 							  		</span>
 								</p>
-								<p class="card-footer-item">
-									@{{candidate.level}}
-								</p>
 					 	 	</footer>
 
 						  	<footer>
@@ -50,6 +47,13 @@
 								</a>
 						  	</footer>
 						</div>
+					</div>
+					<div class="column is-3" v-if="singleCandidate(currentView)">
+						<a href="#" @click.prevent="vote(currentView.text, null) "> 
+							<span class="icon"> 
+								<i :class="[studentVote[currentView.text]===null ? 'fa fa-arrow-circle-right animated shake skipped' : 'fa fa-arrow-circle-right skip']">Skip</i>
+							</span> 
+						</a>
 					</div>
 			</div>
 

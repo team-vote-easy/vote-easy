@@ -1408,7 +1408,7 @@ window.app = new Vue({
         loading: '',
         message: '',
         candidates: ''
-    }, _defineProperty(_data, 'message', ''), _defineProperty(_data, 'empty', false), _defineProperty(_data, 'hallArray', ["Samuel Akande", "Queen Esther", "Nelson Mandela", "Bethel Splendor", "Kings Delight Hall", "Winslow", "Gideon Troopers", "Welch", "Crystal", "Platinum", "Marigold", "FAD", "Off-Campus", "All"]), _defineProperty(_data, 'blockArray', ["First Floor", "Second Floor", "Third Floor", "A", "B", "C", "D", "E", "F", "G", "H"]), _defineProperty(_data, 'levelArray', [100, 200, 300, 400, "All"]), _defineProperty(_data, 'positionArray', ["PRO", "President", "Vice President", "Chaplain", "Director of Sports", "Director of Social", "General Secretary", "Director of Transport", "Treasurer", "Director of Finance", "Director of Welfare", "Senate President", "Sargent At Arms", "Assistant Gen Secretary", "Senator Chief Whip", "Deputy Senate President", "Senate Scribe", "Hall Senator", "All"]), _defineProperty(_data, 'hall', ''), _defineProperty(_data, 'block', ''), _defineProperty(_data, 'showHalls', ''), _data),
+    }, _defineProperty(_data, 'message', ''), _defineProperty(_data, 'empty', false), _defineProperty(_data, 'hallArray', ["Samuel Akande", "Queen Esther", "Nelson Mandela", "Bethel Splendor", "Neal Wilson", "Nyberg", "Ogden", "Winslow", "Gideon Troopers", "Welch", "Crystal", "Platinum", "Felicia Adebisi Dada (FAD)", "Queen Esther", "Off-Campus", "Ameyo Adadevoh", "Gamaliel", "Havilah Gold", "Justice Deborah", "All"]), _defineProperty(_data, 'blockArray', ["GF", "FF", "TF", "SF", "A", "B", "C", "D", "E", "F", "G", "H", "100", "200", "300", "400"]), _defineProperty(_data, 'levelArray', [100, 200, 300, 400, "All"]), _defineProperty(_data, 'positionArray', ["President", "Vice President (Main)", "Vice President (Iperu)", "General Secretary", "Assistant General Secretary", "Treasurer", "Director of Financial Records", "Director of Public Relations (Main)", "Director of Public Relations (Iperu)", "Director of Socials (Main)", "Director of Socials (Iperu)", "Director of Sports (Main)", "Director of Sports (Iperu)", "Director of Transport and Ventures (Main)", "Director of Transport and Ventures (Iperu)", "Director of Welfare (Main)", "Director of Welfare (Iperu)", "Sergeant At Arms", "Chaplain", "Hall Senator"]), _defineProperty(_data, 'hall', ''), _defineProperty(_data, 'block', ''), _defineProperty(_data, 'showHalls', ''), _data),
     created: function created() {
         this.levelArray = this.levelArray.sort();
         this.positionArray = this.positionArray.sort();
@@ -43416,7 +43416,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['link', 'admin'],
@@ -43515,16 +43514,6 @@ var render = function() {
     _c("nav", { staticClass: "navbar" }, [
       _c("div", { staticClass: "navbar-menu" }, [
         _c("div", { staticClass: "navbar-end" }, [
-          _c("img", {
-            staticClass: "navbar-item brand",
-            attrs: {
-              src: "css/images/bucc-logo.PNG",
-              width: "130",
-              height: "180",
-              alt: "BUCC"
-            }
-          }),
-          _vm._v(" "),
           _c("span", { staticClass: "navbar-item" }, [
             _vm._v("\n\t\t\t\t\tSigned In as: "),
             _c("span", { staticClass: "admin" }, [

@@ -1,0 +1,47 @@
+[v-cloak] {
+    display: none;
+}
+
+h2{
+    font-family: Helveticaneue;
+    font-size: 70px;
+    text-align: center;
+    left: -30px;
+    padding-bottom: 1px;
+    position: relative;
+    color: black;
+    top: -65px;
+}
+
+hr{
+    border: 3px solid #00d1b2;
+    width: 40%;
+    position: relative;
+    top: -30px;
+    left: 30%; 
+}
+
+.time-pushed hr{
+    width: 100%;
+    left: 0%;
+}
+
+.server{
+    width: 280px;
+    position: relative;
+    padding: 20px;
+    left: -330px;
+    top: 100px;
+    padding: 40px;
+    font-size: 25px;
+}
+
+.time-pushed{
+    font-family: Arial;
+    font-size: 30px;
+    text-align: center;
+    padding-bottom: 1px;
+    position: relative;
+    color: black;
+    top: -90px;
+}

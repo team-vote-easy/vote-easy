@@ -105,10 +105,10 @@ Route::group(["middleware"=>"staffauth"], function(){
 	Route::get('/staff/view-breakdown', 'StaffController@breakDownView');
 
 	Route::get('/staff/push-to-server', 'StaffController@pushToServerView');
-
-	Route::post('/staff/push-to-server', 'StaffController@pushToServer');
 	
+	Route::post('/staff/api/push-to-server', 'StaffController@pushToServer');
+
+	Route::post('/api/get-staff-log', 'StaffController@getStaffLog');
+
 	Route::get('/staff/logout', 'StaffController@logout');
 });
-
-

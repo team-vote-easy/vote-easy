@@ -47,9 +47,9 @@ window.app = new Vue({
             formData.append('level', this.level);
             formData.append('position', this.role);
             formData.append('image', this.image, this.image.name);
-            if(this.block !== '' && this.hall != ''){
+            formData.append('hall', this.hall);
+            if(this.block !== ''){
                 formData.append('block', this.block);
-                formData.append('hall', this.hall);
             }
 
             axios.post('/add-candidates', formData)

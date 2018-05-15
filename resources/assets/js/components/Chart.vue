@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div v-for="key in keys" class="charts box" :id="key" style="height: 550px; width: 100%;">1 </div>
+		<div v-for="key in keys" class="charts box" :id="key" style="height: 550px; width: 100%;"> </div>
 	</div>
 </template>
 
@@ -8,11 +8,11 @@
 	export default{
 		data(){
 			return{
-				keys: ["PRO", "President", "Vice President", "Chaplain", "Director of Sports", "Director of Social", "General Secretary", "Director of Transport", "Treasurer", "Director of Finance", "Director of Welfare", "Senate President", "Sargent At Arms", "Assistant Gen Secretary", "Senator Chief Whip", "Deputy Senate President", "Senate Scribe"]
+				keys: [ "President", "Vice President (Main)", "Vice President (Iperu)", "General Secretary", "Assistant General Secretary", "Treasurer", "Director of Financial Records", "Director of Public Relations (Main)", "Director of Public Relations (Iperu)", "Director of Socials (Main)", "Director of Socials (Iperu)", "Director of Sports (Main)", "Director of Sports (Iperu)", "Director of Transport and Ventures (Main)", "Director of Transport and Ventures (Iperu)", "Director of Welfare (Main)", "Director of Welfare (Iperu)", "Sergeant At Arms", "Chaplain"
+					]
 			}
 		},
 		created(){
-			this.keys.sort();
 			this.fetchVotes();
 		},
 		methods: {
@@ -21,7 +21,7 @@
 				axios.get('api/get-votes')
 					.then((data)=>{
 						var posts = data.data;
-						var keys = Object.keys(posts).sort();
+						var keys = Object.keys(posts);	
 						keys.forEach((k)=>{
 							self.renderChart(posts[k]);
 						});	

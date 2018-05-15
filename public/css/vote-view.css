@@ -38,7 +38,7 @@ ul.nav-ting a{
     left: 150px;
     width: 100px;
     padding: 20px; 
-    top: -150px;
+    margin-top: -30px;
     cursor: pointer;
 }
 
@@ -47,7 +47,7 @@ ul.nav-ting a{
     position: relative;
     left: 390px;
     padding: 20px;
-    top: -150px;
+    margin-top: -30px;
     cursor: pointer;
     
 }
@@ -58,20 +58,20 @@ ul.nav-ting a{
     left: -40px;
     width: 100px;
     padding: 20px;
-    top: -150px;
+    margin-top: -30px;
     cursor: pointer;
 }
 
 h1{
     font-family: Helveticaneue;
-    font-size: 36px;
+    font-size: 30px;
     text-align: center;
     padding-bottom: 10px;
     position: relative;
-    left: 360px;
+    left: 300px;
     color: black;
     border-bottom: 4px solid #ff3860;
-    width: 570px;
+    width: 750px;
     margin-bottom: 50px;
 }
 
@@ -118,5 +118,39 @@ h1{
 
 .noSenators{
     position: relative;
-    top: -68px;
+    top: 30px;
+}
+
+.skip{
+    color: black;
+    font-size: 50px;
+    position: relative;
+    left: 280px;
+    top: 200px;
+    border-bottom: 3px solid whitesmoke;
+}
+
+.skipped{
+    color: #f25475;
+    font-size: 50px;
+    position: relative;
+    left: 280px;
+    top: 200px;
+    border-bottom: 3px solid #f25475;
+}
+
+.presidents{
+    position: relative;
+    left: -105px;
+}
+
+.presidents .card-content{
+    text-align: center;
+}
+
+.column.is-2, .column.is-2-tablet {
+    -webkit-box-flex: 0;
+        -ms-flex: none;
+            flex: none;
+    width: 23.86667%;
 }

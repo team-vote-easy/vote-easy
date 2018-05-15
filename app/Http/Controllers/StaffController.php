@@ -14,11 +14,19 @@ use App\Log;
 
 use App\Student;
 
+use App\Vote;
+
+use GuzzleHttp\Client;
+
+use Carbon\Carbon;
+date_default_timezone_set("Africa/Lagos");
+
 class StaffController extends Controller
 {
 	public function addStaffView(){
 		$admin = Auth::guard('admin')->user()->name;
-		$halls = ["Samuel Akande", "Queen Esther", "Nelson Mandela", "Bethel Splendor", "Kings Delight Hall", "Winslow", "Gideon Troopers", "Welch", "Crystal", "Platinum", "Marigold", "FAD", "Queen Esther", "Off-Campus"];
+		$halls = ["Samuel Akande", "Queen Esther", "Nelson Mandela", "Bethel Splendor", "Neal Wilson", "Nyberg", "Ogden", "Winslow", "Gideon Troopers", "Welch", "Crystal", "Platinum", "Felicia Adebisi Dada (FAD)", "Queen Esther", "Off-Campus", "Ameyo Adadevoh", "Gamaliel", "Havilah Gold", "Justice Deborah", "White"];
+		sort($halls);
 
 		return view('add-staff', [
 			'admin'=>$admin,
@@ -127,13 +135,42 @@ class StaffController extends Controller
     	return view('staff-push-to-server', ['lastLog'=>$lastLog, 'staff'=>$staff, 'hall'=>$hall]);
     }
 
-    public function pushToServer(){
-    	$date = date("h:i:s");
-    	$latestLog = Log::create([
-    		'push_time'=>$date,
-    		'staff_id'=>$Auth::guard('staff')->user()->id
+    public function pushToServer(){   	
+    	$client = new Client();
+    	$votes = Vote::all();
+    	$hall = Auth::guard('staff')->user()->hall;
+    	$staff = Auth::guard('staff')->user()->id;
+    	$response = $client->request('POST', 'http://busa-admin.test/api/push-votes', [
+ 			'json'=>[
+ 				'hall'=>$hall,
+ 				'staff'=>$staff,
+ 				'votes'=>$votes
+ 			]
     	]);
-    	return response()->json($latestLog, 200);
+
+    	$existingLog = Log::where('staff_id', $staff)->first();
+    	if($existingLog){
+    		$existingLog->push_time = date("h:i:sa");
+    		$existingLog->save();
+    	} else{
+	    	Log::create([
+	    		"push_time"=> date("h:i:sa"),
+	    		"staff_id"=>$staff
+	    	]);
+    	}
+
+    	return $response->getBody()->getContents();
+    }
+
+    public function getStaffLog(){
+    	$staff = Auth::guard('staff')->user()->id;
+    	$time = Log::where('staff_id', $staff)->first();
+
+    	if($time){
+    		return response()->json($time->push_time, 200);
+    	} else{
+    		return response()->json('', 200);
+    	}
     }
 
 

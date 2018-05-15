@@ -1445,9 +1445,9 @@ window.app = new Vue({
             formData.append('level', this.level);
             formData.append('position', this.role);
             formData.append('image', this.image, this.image.name);
-            if (this.block !== '' && this.hall != '') {
+            formData.append('hall', this.hall);
+            if (this.block !== '') {
                 formData.append('block', this.block);
-                formData.append('hall', this.hall);
             }
 
             axios.post('/add-candidates', formData).then(function (data) {
@@ -43351,7 +43351,7 @@ var render = function() {
         "div",
         {
           staticClass: "box animated shake notification",
-          class: [_vm.green ? "is-primary" : "is-danger"],
+          class: [_vm.green ? "is-success" : "is-danger"],
           staticStyle: { "text-align": "center", "font-size": "20px" }
         },
         [_vm._t("default")],
@@ -43781,7 +43781,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['link', 'admin'],
@@ -43880,16 +43879,6 @@ var render = function() {
     _c("nav", { staticClass: "navbar" }, [
       _c("div", { staticClass: "navbar-menu" }, [
         _c("div", { staticClass: "navbar-end" }, [
-          _c("img", {
-            staticClass: "navbar-item brand",
-            attrs: {
-              src: "css/images/bucc-logo.PNG",
-              width: "130",
-              height: "180",
-              alt: "BUCC"
-            }
-          }),
-          _vm._v(" "),
           _c("span", { staticClass: "navbar-item" }, [
             _vm._v("\n\t\t\t\t\tSigned In as: "),
             _c("span", { staticClass: "admin" }, [

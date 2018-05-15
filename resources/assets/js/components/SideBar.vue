@@ -91,7 +91,6 @@
 			fillSideBar(positions, senators){
 				var studentVote = {};
 				var keys = Object.keys(positions);
-				keys = keys.sort();
 
 				keys.forEach((key)=>{
 					studentVote[key] = '';
@@ -106,7 +105,7 @@
 				if(senatorPosts == ''){
 					Event.$emit('noSenators');
 				}
-				senatorPosts = senatorPosts.sort();
+
 				senatorPosts.forEach((post)=>{
 					studentVote[post] = '';
 					this.hallSenators.push({
@@ -186,8 +185,8 @@
 	.menu{
 		position: relative;
 		top: -100px;
-		left: -89px;
-		width: 180px;
+		left: -93px;
+		width: 210px;
 	}
 
 	.menu-list{
