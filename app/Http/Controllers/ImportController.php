@@ -116,14 +116,14 @@ class ImportController extends Controller
         // $name = "$request->firstName $request->lastName";
         // $name = title_case($name);
         // $key = strtolower(str_random(6));
-        // Student::create([
-        //     'name'=>$name,
-        //     'matric_no'=>$request->matricNumber,
-        //     'key'=>$key,
-        //     'password'=> Hash::make($key),
-        //     'hall'=>$request->hall,
-        //     'block'=>$request->block
-        // ]);
+        Student::create([
+            'name'=>'frank donga',
+            'matric_no'=>$request->matricNumber,
+            'key'=>'eh',
+            'password'=> 'aaaaa',
+            'hall'=>$request->hall,
+            'block'=>$request->block
+        ]);
         return response()->json($status, 200);
         
     }

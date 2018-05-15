@@ -82,6 +82,7 @@ window.app = new Vue({
                     var key = data.data;
                     self.success = key;
                     self.showModal = true;
+                    console.log(data);
                 })
                 .catch((e)=>{
                     self.loading = false;
