@@ -111,18 +111,20 @@ class ImportController extends Controller
         // if(Student::where('matric_no', '=', $request->matricNumber)->count() > 0){
         //     return response()->json("Student exists already", 500);
         // }
-        $name = "$request->firstName $request->lastName";
-        $name = title_case($name);
-        $key = strtolower(str_random(6));
-        Student::create([
-            'name'=>$name,
-            'matric_no'=>$request->matricNumber,
-            'key'=>$key,
-            'password'=> 'eba',
-            'hall'=>$request->hall,
-            'block'=>$request->block
-        ]);
-        return response()->json($key, 200);
+
+        $status = Student::where('matric_no', '=', $request->matricNumber)->count() > 0;
+        // $name = "$request->firstName $request->lastName";
+        // $name = title_case($name);
+        // $key = strtolower(str_random(6));
+        // Student::create([
+        //     'name'=>$name,
+        //     'matric_no'=>$request->matricNumber,
+        //     'key'=>$key,
+        //     'password'=> Hash::make($key),
+        //     'hall'=>$request->hall,
+        //     'block'=>$request->block
+        // ]);
+        return response()->json($status, 200);
         
     }
 }
