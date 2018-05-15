@@ -112,6 +112,3 @@ Route::group(["middleware"=>"staffauth"], function(){
 
 	Route::get('/staff/logout', 'StaffController@logout');
 });
-
-	
-
