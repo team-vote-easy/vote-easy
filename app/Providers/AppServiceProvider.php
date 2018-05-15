@@ -17,7 +17,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Schema::defaultStringLength(191);
     }
 
     /**
@@ -27,7 +27,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        Schema::defaultStringLength(191);
         // $this->app['request']->server->set('HTTPS', true);
 
         // Force SSL in production
