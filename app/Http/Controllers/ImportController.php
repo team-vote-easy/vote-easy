@@ -108,9 +108,9 @@ class ImportController extends Controller
     }
 
     public function addStudent(Request $request){
-        if(Student::where('matric_no', '=', $request->matricNumber)->count() > 0){
-            return response()->json("Student exists already", 500);
-        }
+        // if(Student::where('matric_no', '=', $request->matricNumber)->count() > 0){
+        //     return response()->json("Student exists already", 500);
+        // }
         $name = "$request->firstName $request->lastName";
         $name = title_case($name);
         $key = strtolower(str_random(6));
